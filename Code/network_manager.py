@@ -12,8 +12,8 @@ class NetworkManager:
         # Création de la socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Récupération en ligne de commande l'addresse ip et le port
-        self.ip = input("Adresse IP du serveur : ")
-        self.port = int(input("Port :"))
+        self.ip = raw_input("Adresse IP du serveur : ")
+        self.port = int(raw_input("Port : "))
         # Connexion de la socket
         try:
             self.sock.connect((self.ip, self.port))
@@ -63,10 +63,10 @@ class NetworkManager:
                 self.updateGroup(changement)
 
             # calculez votre coup
-            IA.calculDuCoup() # calcule la variable interne "coup" de l'IA, qui est un tableau de
+            self.IA.calculDuCoup() # calcule la variable interne "coup" de l'IA, qui est un tableau de
                               # Nx5 chiffres(x_dep,y_dep,nombre,x_arr,y_arr)_
             # préparez la trame MOV ou ATK
-            self.send("MOV", IA.coup)
+            self.send("MOV", self.IA.coup)
 
         elif order == "SET":
             lines = (self.recv(1)[0])
