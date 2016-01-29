@@ -21,9 +21,9 @@ class NetworkManager:
             print("Connection error: ", error)
 
         # Autres Initialisations
-        self.Plateau = PlateauDeJeu() #initialisation de la map, avec 0 ligne, 0 colonnes, 0 maisons, 0 humains, 0 vampires, 0 LG
-        #le plateau de jeu en lui meme est un tableau nxm, avec à chaque case carte[x][y] = [<lettre de l'espèce>, nombre de l'espèce]
-        self.IA = Intelligence(self.Plateau) #initialisation de l'heuristique à développer (bien mettre tout à 0 pour la réinitialisation)
+        self.Plateau = PlateauDeJeu() # initialisation de la map, avec 0 ligne, 0 colonnes, 0 maisons, 0 humains, 0 vampires, 0 LG
+        # le plateau de jeu en lui meme est un tableau nxm, avec à chaque case carte[x][y] = [<lettre de l'espèce>, nombre de l'espèce]
+        self.IA = Intelligence(self.Plateau) # initialisation de l'heuristique à développer (bien mettre tout à 0 pour la réinitialisation)
 
     def send(self, *messages):
         """Send a given set of messages to the server."""
@@ -37,44 +37,35 @@ class NetworkManager:
                     print(message)
                 print(data);
                 self.sock.send(data)
-            except error:
-                 print("Couldn't send message: ", message, error)
-            # le tag "error" ne compile pas... todo
+            except :
+                 print("Couldn't send message: ", message)
 
     def recv(self, length):
         return struct.unpack('=B',self.sock.recv(length))
 
 
     def update(self):
-        primitiveOrder = self.sock.recv(3) #pas décodé
+        primitiveOrder = self.sock.recv(3) # pas décodé
         order = primitiveOrder.decode("utf-8")
         if not order:
             print("Bizarre, c'est vide")
 
         if order == "UPD":
-            #mettez à jour votre Plateau à partir des tuples contenus dans changes
+            # mettez à jour votre Plateau à partir des tuples contenus dans changes
             n = self.recv(1)[0]
             changes = []
             for i in range(n):
                 changement=[]
-                for j in range(5): #devrait changer avec la forme self.recv(5)[0]
+                for j in range(5): # devrait changer avec la forme self.recv(5)[0]
                     changement.append(self.recv(1)[0]) # chaque change a la forme [X, Y, nombre_H, nombre_V, nombre_L]
                 changes.append(changement)
-            for change in changes:
-                for group in self.Plateau.groupes:
-                    for change in changes:
-                        x = change[0]
-                        y = change[1]
-                        humains=change[2]
-                        vamp=change[3]
-                        lg=change[4]
+            for changement in changes:
+                self.updateGroup(changement)
 
-                        #if (group.x==x & group.y ==y): todo
-
-
-            #calculez votre coup
-            IA.calculDuCoup() #calcule la variable interne "coup" de l'IA, qui est un tableau de Nx5 chiffres(x_dep,y_dep,nombre,x_arr,y_arr)_
-            #préparez la trame MOV ou ATK
+            # calculez votre coup
+            IA.calculDuCoup() # calcule la variable interne "coup" de l'IA, qui est un tableau de
+                              # Nx5 chiffres(x_dep,y_dep,nombre,x_arr,y_arr)_
+            # préparez la trame MOV ou ATK
             self.send("MOV", IA.coup)
 
         elif order == "SET":
@@ -97,15 +88,15 @@ class NetworkManager:
             changes = []
             for i in range(n):
                 changement=[]
-                for j in range(5): #devrait changer en prenant la forme self.recv(5)[0]
+                for j in range(5): # devrait changer en prenant la forme changement = self.recv(5)[0]
                     changement.append(self.recv(1)[0]) # chaque change a la forme [X, Y, nombre_H, nombre_V, nombre_L]
                 changes.append(changement)
-            for change in changes:
-                x = change[0]
-                y = change[1]
-                humains=change[2]
-                vamp=change[3]
-                lg=change[4]
+            for changement in changes:
+                x = changement[0]
+                y = changement[1]
+                humains=changement[2]
+                vamp=changement[3]
+                lg=changement[4]
                 if humains>0:
                     self.Plateau.addGroup(x,y,humains,Species.human)
                 elif vamp>0:
@@ -113,19 +104,52 @@ class NetworkManager:
                 elif lg>0:
                     self.Plateau.addGroup(x,y,lg,Species.werewolf)
                 else :
-                    print("espèce non attendue reçue en MAP")
+                    print("espèce non attendue reçue en commande MAP")
 
 
 
         elif order == "END":
-            self.Plateau = PlateauDeJeu() #réinitialise le Plateau
-            self.IA = Intelligence() #réinitialise l' IA
-            #ici on met fin à la partie en cours
-            #Réinitialisez votre modèle
+            self.Plateau = PlateauDeJeu() # réinitialise le Plateau
+            self.IA = Intelligence(self.Plateau) # réinitialise l' IA
+            # ici on met fin à la partie en cours
+            # Réinitialisez votre modèle
 
         elif order == "BYE":
             self.sock.close()
-            #autres choses à faire pour la mise en fin
+            # autres choses à faire pour la mise en fin
             self.game_over=1
         else:
             print("commande non attendue recue", order)
+
+    def updateGroup(self, *change):
+            x = change[0], y = change[1], num_humans = change[2], num_vamp = change[3], num_wolves = change[4]
+
+            # détermination de l'espèce concernée par le changement
+            if num_humans > 0:
+                effectif = num_humans
+                espece = Species.human
+            elif num_vamp > 0:
+                effectif = num_humans
+                espece = Species.human
+            elif num_wolves > 0:
+                effectif = num_humans
+                espece = Species.human
+            elif num_humans == 0 & num_vamp == 0 & num_wolves == 0:
+                effectif = 0
+            else:
+                print("espèce non attendue reçue en commande UPD")
+
+            # parcours des groupes et mise à jour du bon
+            notfound = 1
+            for group in self.Plateau.groupes:
+                if group.x == x & group.y == y:
+                    notfound = 0
+                    if effectif == 0:
+                        self.Plateau.groupes.remove(group)
+                    else:
+                        group.eff = effectif
+                        group.species = espece
+                    break
+            # si on a pas trouvé de groupe correspondant, on le crée
+            if notfound:
+                self.Plateau.addGroup(x, y, effectif, espece)
