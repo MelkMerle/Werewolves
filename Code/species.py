@@ -4,6 +4,6 @@ from enum import Enum
 
 
 class Species(Enum):
-    human = 1
-    werewolf = 2
-    vampire = 3
+    human = 'human'
+    werewolf = 'werewolf'
+    vampire = 'vampire'
