@@ -8,8 +8,8 @@ from network_manager import NetworkManager
 
 
 #only for testing purposes
-ip = "127.0.0.1"
-port = int(5555)
+# ip = "127.0.0.1"
+# port = int(5555)
 
 # Lancement du network manager
 manager = NetworkManager()
