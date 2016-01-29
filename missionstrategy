@@ -7,10 +7,19 @@ AttackHuman
 AttackEnemy
 	Quand la cible est un groupe d’ennemis (se déplaçant)
 	=> Calcul du point d’intersection en fonction du vecteur de déplacement de l’ennemi
+	=> Donne le déplacement le plus court vers ce point d'intersection
 
 MergeWithOther
 	Quand le but est de se rassembler avec un autre groupe pour grossir le nombre de membres 
 	=> Calcul du point d’intersection en fonction du vecteur de déplacement de l’allié
+	=> Donne le déplacement le plus court vers ce point d'intersection
+
+SplitGroup
+	Quand le but est de se diviser en deux (ou plus) groupes
+	=> Donne les déplacements des différents groups créés
+	
+Flee
+	
 
 Rajouts possibles :
 Zombie
