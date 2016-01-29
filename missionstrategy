@@ -1,12 +1,12 @@
 MISSIONS
 
 AttackHuman
-  Quand la cible est un groupe d’humains (immobiles). 
-  => Calcul du chemin le plus court
+	Quand la cible est un groupe d’humains (immobiles). 
+	=> Calcul du chemin le plus court
   
 AttackEnemy
-  Quand la cible est un groupe d’ennemis (se déplaçant)
-  => Calcul du point d’intersection en fonction du vecteur de déplacement de l’ennemi
+	Quand la cible est un groupe d’ennemis (se déplaçant)
+	=> Calcul du point d’intersection en fonction du vecteur de déplacement de l’ennemi
 
 MergeWithOther
 	Quand le but est de se rassembler avec un autre groupe pour grossir le nombre de membres 
