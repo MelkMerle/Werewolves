@@ -2,6 +2,7 @@
 
 from species import Species
 
+
 class Group:
 
     def __init__(self, x=0, y=0, eff=0, species=Species.human):
@@ -9,7 +10,7 @@ class Group:
         self.y = y
         self.eff = eff
         self.species = species
-        # self.mission = ??
+        # self.mission = ?? todo
 
     # def __del__(self):
     # todo
