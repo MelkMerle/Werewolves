@@ -2,7 +2,8 @@
 
 import socket, struct
 from Plateau import PlateauDeJeu
-Intelligence
+from IA import Intelligence
+from species import Species
 
 class NetworkManager:
 
@@ -37,7 +38,8 @@ class NetworkManager:
                 print(data);
                 self.sock.send(data)
             except error:
-                print("Couldn't send message: ", message, error)
+                 print("Couldn't send message: ", message, error)
+            # le tag "error" ne compile pas... todo
 
     def recv(self, length):
         return struct.unpack('=B',self.sock.recv(length))
@@ -54,22 +56,21 @@ class NetworkManager:
             n = self.recv(1)[0]
             changes = []
             for i in range(n):
-                for j in range(5):
-                    changes.append(self.recv(1)[0]) # chaque change a la forme [X, Y, nombre_H, nombre_V, nombre_L]
+                changement=[]
+                for j in range(5): #devrait changer avec la forme self.recv(5)[0]
+                    changement.append(self.recv(1)[0]) # chaque change a la forme [X, Y, nombre_H, nombre_V, nombre_L]
+                changes.append(changement)
             for change in changes:
-                x = change[0]
-                y = change[1]
-                humains=change[2]
-                vamp=change[3]
-                lg=change[4]
-                if humains>0:
-                    self.Plateau.carte[x][y]=['H', humains]
-                elif vamp>0:
-                    self.Plateau.carte[x][y]=['V', vamp]
-                elif lg>0:
-                    self.Plateau.carte[x][y]=['L', lg]
-                else:
-                    self.Plateau.carte[x][y]=['O', 0]
+                for group in self.Plateau.groupes:
+                    for change in changes:
+                        x = change[0]
+                        y = change[1]
+                        humains=change[2]
+                        vamp=change[3]
+                        lg=change[4]
+
+                        #if (group.x==x & group.y ==y): todo
+
 
             #calculez votre coup
             IA.calculDuCoup() #calcule la variable interne "coup" de l'IA, qui est un tableau de Nx5 chiffres(x_dep,y_dep,nombre,x_arr,y_arr)_
@@ -96,7 +97,7 @@ class NetworkManager:
             changes = []
             for i in range(n):
                 changement=[]
-                for j in range(5): #devrait changer avec la forme self.recv(5)[0]
+                for j in range(5): #devrait changer en prenant la forme self.recv(5)[0]
                     changement.append(self.recv(1)[0]) # chaque change a la forme [X, Y, nombre_H, nombre_V, nombre_L]
                 changes.append(changement)
             for change in changes:
@@ -105,21 +106,19 @@ class NetworkManager:
                 humains=change[2]
                 vamp=change[3]
                 lg=change[4]
-                # if humains>0:
-                #     self.Plateau.carte[x][y]=['H', humains]
-                # elif vamp>0:
-                #     self.Plateau.carte[x][y]=['V', vamp]
-                # elif lg>0:
-                #     self.Plateau.carte[x][y]=['L', lg]
-                # else:
-                #     self.Plateau.carte[x][y]=['O', 0]
-
-                for group in self.Plateau.groupes
+                if humains>0:
+                    self.Plateau.addGroup(x,y,humains,Species.human)
+                elif vamp>0:
+                    self.Plateau.addGroup(x,y,vamp,Species.vampire)
+                elif lg>0:
+                    self.Plateau.addGroup(x,y,lg,Species.werewolf)
+                else :
+                    print("espèce non attendue reçue en MAP")
 
 
 
         elif order == "END":
-            self.Plateau = Map() #réinitialise le Plateau
+            self.Plateau = PlateauDeJeu() #réinitialise le Plateau
             self.IA = Intelligence() #réinitialise l' IA
             #ici on met fin à la partie en cours
             #Réinitialisez votre modèle
