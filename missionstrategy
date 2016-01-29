@@ -1,0 +1,21 @@
+MISSIONS
+
+AttackHuman
+  Quand la cible est un groupe d’humains (immobiles). 
+  => Calcul du chemin le plus court
+  
+AttackEnemy
+  Quand la cible est un groupe d’ennemis (se déplaçant)
+  => Calcul du point d’intersection en fonction du vecteur de déplacement de l’ennemi
+
+MergeWithOther
+	Quand le but est de se rassembler avec un autre groupe pour grossir le nombre de membres 
+	=> Calcul du point d’intersection en fonction du vecteur de déplacement de l’allié
+
+Rajouts possibles :
+Zombie
+	Quand le but est de perturber l’IA ennemi
+	=> Si groupe ennemi est à plus de 2 cases, se rapprocher
+	=> Sinon s’éloigner
+
+
