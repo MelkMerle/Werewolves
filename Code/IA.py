@@ -26,6 +26,13 @@ class Intelligence (PlateauDeJeux):
     def CalulateNextSate(mission, state):
         #here we calculate the nextstate, considering a specific mission set
         if(mission==1)
+            #look for humans
+            foes= state.getMembers(state, 2)
+            #look where I am
+            me=state.getMembers(state,self.mySpecie = 0)
+            #now move towards closest human group
+            
+        
             
         return nextState
     
