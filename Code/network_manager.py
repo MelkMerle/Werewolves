@@ -32,13 +32,13 @@ class NetworkManager:
                 if(isinstance(message, int)):
                     data = struct.pack('=B', message)
                 elif (isinstance(message, str)):
-                    data = bytes(message, 'utf-8')
+                    data = bytes(message)
                 else:
                     print(message)
                 print(data);
                 self.sock.send(data)
-            except :
-                 print("Couldn't send message: ", message)
+            except Exception as error:
+                 print("Couldn't send message: ", message, error)
 
     def recv(self, length):
         return struct.unpack('=B',self.sock.recv(length))
