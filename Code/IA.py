@@ -1,49 +1,40 @@
-from Plateau import PlateauDeJeu
+
 import time
 
-
-class Intelligence (PlateauDeJeu):
+class Intelligence (PlateauDeJeux):
 
     def __init__(self,plateau):
         self.mySpecie = 0
-        self.state = plateau    #le plateau (liste des groupes, lignes, colonnes), pourra eventuellement etre modifie
-                                #selon l'interface desiree par l'IA
         self.startTime = time.time()
         self.maxValue =10
         
     
-    def timeleft(self):
-        return (5*60)-(time.time() - self.startTime)
-
-    def calculateHeuristics(state, myspecie):
-        # here we do so mathematics voodoo
+    def timeleft():
+		return (5*60)-(time.time() - self.startTime)
+	
+	
+	def calculateHeuristics(state, myspecie):
+		# here we do so mathematics voodoo
         return heuristics
 
 
-    def enumeratePossibleMissions(self, state):
+    def enumeratePossibleMissions(state):
         #here we do the possibility elaging, basically, returning an array of mission
         missionAssigement=[1]
         return missionAssigement
     
-    def CalulateNextSate(self, mission, state):
+    def CalulateNextSate(mission, state):
         #here we calculate the nextstate, considering a specific mission set
-        if(mission==1):
-            #look for humans
-            foes= state.getMembers(state, 2)
-            #look where I am
-            me=state.getMembers(state,self.mySpecie = 0)
-            #now move towards closest human group
-            
-        
+        if(mission==1)
             
         return nextState
     
     
      #Principal function, returning the best possible mission set
-    def Choose(self, state,specie):
+    def Choose(state,specie):
         allmission=[]
         for mission in enumeratePossibleMissions(state):
-            missiontotest=[CalulateNextState(mission, state),0]
+            missiontotest=[CalulateNextSate(mission, state),0]
             missiontotest[1]=minmax(missiontotest[0],!specie,1)
             allmission.append(missiontotest)
         if(specie!=self.mySpecie):
@@ -58,7 +49,7 @@ class Intelligence (PlateauDeJeu):
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
 
-    def minmax(self, state, specie, recursiveValue):
+    def minmax(state, specie, recursiveValue):
         allmission=[]
         for mission in enumeratePossibleMissions(state):
             missiontotest=[CalulateNextSate(mission, state),0]
