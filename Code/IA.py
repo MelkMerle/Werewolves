@@ -1,20 +1,22 @@
-
+from Plateau import PlateauDeJeu
 import time
 
-class Intelligence (PlateauDeJeux):
+
+class Intelligence (PlateauDeJeu):
 
     def __init__(self,plateau):
         self.mySpecie = 0
+        self.state = plateau    #le plateau (liste des groupes, lignes, colonnes), pourra eventuellement etre modifie
+                                #selon l'interface desiree par l'IA
         self.startTime = time.time()
         self.maxValue =10
         
     
-    def timeleft():
-		return (5*60)-(time.time() - self.startTime)
-	
-	
-	def calculateHeuristics(state, myspecie):
-		# here we do so mathematics voodoo
+    def timeleft(self):
+        return (5*60)-(time.time() - self.startTime)
+
+    def calculateHeuristics(state, myspecie):
+        # here we do so mathematics voodoo
         return heuristics
 
 
@@ -25,7 +27,14 @@ class Intelligence (PlateauDeJeux):
     
     def CalulateNextSate(mission, state):
         #here we calculate the nextstate, considering a specific mission set
-        if(mission==1)
+        if(mission==1):
+            #look for humans
+            foes= state.getMembers(state, 2)
+            #look where I am
+            me=state.getMembers(state,self.mySpecie = 0)
+            #now move towards closest human group
+            
+        
             
         return nextState
     
