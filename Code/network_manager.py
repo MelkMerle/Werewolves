@@ -33,7 +33,11 @@ class NetworkManager:
                     data = struct.pack('=B', message)
                 elif (isinstance(message, str)):
                     data = bytes(message)
+                elif (isinstance(message, list)):
+                    for mess in message:
+                        self.send(mess)
                 else:
+                    print "couldn't pack"
                     print(message)
                 print(data);
                 self.sock.send(data)
