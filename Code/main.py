@@ -1,3 +1,4 @@
+# coding=utf-8
 import socket, struct
 
 
@@ -5,15 +6,16 @@ def send(sock, *messages):
     """Send a given set of messages to the server."""
     for message in messages:
         try:
+            
             if(isinstance(message, int)):
                 data = struct.pack('=B', message)
             elif (isinstance(message, str)):
-                data = bytes(message, 'utf-8')
+                data = bytes(message)
             else:
                 print(message)
             print(data);
             sock.send(data)
-        except error :
+        except Exception as error :
             print("Couldn't send message: ", message, error)
 
 lignes = 0
@@ -26,7 +28,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # ip = input("Adresse IP du serveur : ")
 # port = int(input("Port :"))
 
-ip = "127.0.0.1"
+ip = "172.20.10.4"
 port = int(5555)
 
 #Connexion de la socket
