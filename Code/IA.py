@@ -19,11 +19,14 @@ class Intelligence (PlateauDeJeux):
 
 
     def enumeratePossibleMissions(state):
-    #here we do the possibility elaging, basically, returning an array of mission
+        #here we do the possibility elaging, basically, returning an array of mission
+        missionAssigement=[1]
         return missionAssigement
     
-    def CalulateNextSate(missionAssignement, state):
+    def CalulateNextSate(mission, state):
         #here we calculate the nextstate, considering a specific mission set
+        if(mission==1)
+            
         return nextState
     
     
@@ -32,7 +35,7 @@ class Intelligence (PlateauDeJeux):
         allmission=[]
         for mission in enumeratePossibleMissions(state):
             missiontotest=[CalulateNextSate(mission, state),0]
-            missiontotest[1]=minmax(missiontotest[0],!specie,recursiveValue+1)
+            missiontotest[1]=minmax(missiontotest[0],!specie,1)
             allmission.append(missiontotest)
         if(specie!=self.mySpecie):
             return allmission.sort(key=lambda x: int(x[1]))[0][0]
