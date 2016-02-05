@@ -36,10 +36,10 @@ class NetworkManager:
                 elif (isinstance(message, list)):
                     for mess in message:
                         self.send(mess)
+                    return
                 else:
-                    print "couldn't pack"
-                    print(message)
-                print(data);
+                    print ("couldn't pack message: ", message)
+                print('data = ',data);
                 self.sock.send(data)
             except Exception as error:
                  print("Couldn't send message: ", message, error)
@@ -56,6 +56,7 @@ class NetworkManager:
 
         if order == "UPD":
             # mettez à jour votre Plateau à partir des tuples contenus dans changes
+            print "j'ai reçu UPD"
             n = self.recv(1)[0]
             changes = []
             for i in range(n):
@@ -80,7 +81,11 @@ class NetworkManager:
             self.IA.colonnes = columns
 
         elif order == "HUM":
-           print "commande dépréciée"
+           n = self.recv(1)[0]
+           for i in range(n):
+                #je ne comprends pas bien comment fonctionne sock.recv, et pourquoi il faut un [0] partout, du coup j'ai fait ça, plutot que self.recv(2) sans boucle sur j... à discuter
+                for j in range(2):
+                    self.recv(1)[0]
 
         elif order == "HME":
             x = self.recv(1)[0]
