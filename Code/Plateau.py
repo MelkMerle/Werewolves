@@ -28,9 +28,9 @@ class PlateauDeJeu:
                 members.append(group)
         return members
 
-    def MoveMembers(self,x, y, xsec,ysec, numtomove)
-        members=getGroup(self,x,y)
-        if(members !=none)
+    def MoveMembers(self,x, y, xsec,ysec, numtomove):
+        members = self.getGroup(self,x,y)
+        if(members != none):
 
 
 
