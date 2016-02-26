@@ -38,5 +38,5 @@ class Mission:
         #générer plateau a partir du coup todo
 
     def evaluateCoup(self):
-        # todo
+         # todo
         return 0
