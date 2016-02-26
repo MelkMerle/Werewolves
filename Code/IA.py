@@ -81,4 +81,4 @@ class Intelligence (PlateauDeJeu):
 
 
 
-		
+        
