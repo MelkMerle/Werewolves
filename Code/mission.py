@@ -30,3 +30,13 @@ class Mission:
 
     def __str__(self):
         return "Group of {} {}, en ({},{})".format(self.eff, self.species.value, self.x, self.y)
+
+
+
+    def execute(self):
+        self.evaluateCoup()
+        #générer plateau a partir du coup todo
+
+    def evaluateCoup(self):
+        # todo
+        return 0

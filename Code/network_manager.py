@@ -66,14 +66,14 @@ class NetworkManager:
                     changement.append(self.recv(1)[0]) # chaque change a la forme [X, Y, nombre_H, nombre_V, nombre_L]
                 changes.append(changement)
             for changement in changes:
-                self.updateGroup(changement)
+                self.updateGroups(changement)
 
             # calculez votre coup
-            self.IA.Choose(self.Plateau,self.IA.mySpecie)
-            self.IA.calculDuCoup() # calcule la variable interne "coup" de l'IA, qui est un tableau de
+            coup = self.IA.Choose(self.Plateau,self.IA.mySpecie)
+            # calcule le coup de l'IA, qui est un tableau de
                               # Nx5 chiffres(x_dep,y_dep,nombre,x_arr,y_arr)_
             # préparez la trame MOV ou ATK
-            self.send("MOV", self.IA.coup)
+            self.send("MOV", coup)
 
         elif order == "SET":
             lines = (self.recv(1)[0])
@@ -133,7 +133,7 @@ class NetworkManager:
         else:
             print("commande non attendue recue", order)
 
-    def updateGroup(self, *change):
+    def updateGroups(self, *change):
             x = change[0], y = change[1], num_humans = change[2], num_vamp = change[3], num_wolves = change[4]
 
             # détermination de l'espèce concernée par le changement
