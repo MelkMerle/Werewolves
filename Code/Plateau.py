@@ -28,6 +28,7 @@ class PlateauDeJeu:
                 members.append(group)
         return members
 
+    #quelle est l'idée de cette fonction ?
     def MoveMembers(self,x, y, xsec,ysec, numtomove):
         members = self.getGroup(self,x,y)
         if(members != none):
