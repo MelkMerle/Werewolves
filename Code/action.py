@@ -32,7 +32,8 @@ class Action:
             return
         elif self.mission_type == MissionType.run:  #todo
             self.possibleGain = 0 #todo
-        return (self.possibleGain+self.possibleEnemyLoss-self.possibleEnemyGain-self.possibleLoss)
+        mark= (self.possibleGain+self.possibleEnemyLoss-self.possibleEnemyGain-self.possibleLoss)
+        return mark
 
 
     def __str__(self):
