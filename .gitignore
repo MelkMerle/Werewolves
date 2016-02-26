@@ -1,0 +1,39 @@
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+*.pyc
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+
+Test/V3.3/*.txt
+# Sim
+nunchuk_project/nunchuk_project.sim/*
+!grandpapa_simulation_behav.wdb
+!papa_simulation_behav.wdb
