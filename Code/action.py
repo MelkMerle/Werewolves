@@ -33,9 +33,7 @@ class Action:
 
 
 
-    def execute(self):
-        self.evaluateCoup()
-        #générer plateau a partir du coup todo
+
 
     def evaluateCoup(self):
          # todo
