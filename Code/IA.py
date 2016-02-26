@@ -1,3 +1,5 @@
+
+from Plateau import PlateauDeJeu
 from species import Species
 import time
 
@@ -13,10 +15,7 @@ class Intelligence ():
     def timeleft(self):
         return (5*60)-(time.time() - self.startTime)
 
-    def calculateHeuristics(self, state, specie):
-        # here we do so mathematics voodoo
-        heuristics=0
-        return heuristics
+
 
     def enumeratePossibleMissions(self,state):
         #here we do the possibility elaging, basically, returning an array of mission
@@ -31,20 +30,41 @@ class Intelligence ():
         return
 
 
+    def calculateHeuristics(self,state):
+        # here we do so mathematics voodoo
+        heuristics=0
+        wwGroups = state.getMembers(Species.werewolf)
+        vpGroups = state.getMembers(Species.vampire)
+        wwNumber= 0
+        vpNumber= 0
+        for g in wwGroups:
+            wwNumber = wwNumber + g.eff
+        for g in vpGroups:
+            vpNumber = vpNumber + g.eff
+
+        if (self.mySpecies == Species.werewolf):
+            heuristics = wwNumber - vpNumber
+        else:
+            heuristics = vpNumber - wwNumber
+        return heuristics
+
     def CalulateNextSate(mission, state):
         #here we calculate the nextstate, considering a specific mission set
         nextState=mission.execute(state)
         return nextState
 
+
      #Principal function, returning the best possible mission set
     def Choose(self, state, specie):
         allmission=[]
         for mission in self.enumeratePossibleMissions(state):
-            missiontotest=[self.CalulateNextSate(mission, state),0,0]
+            missiontotest=[self.CalulateNextSate(mission, state),0]
             missiontotest[1]=self.minmax(missiontotest[0],self.mySpecie.invert(),1)
-            missiontotest[2]=mission.coup
             allmission.append(missiontotest)
-        return allmission.sort(key=lambda x: int(x[1]))[len(allmission)][2]
+        if(specie!=self.mySpecie):
+            return allmission.sort(key=lambda x: int(x[1]))[0][0]
+        else:
+            return allmission.sort(key=lambda x: int(x[1]))[len(allmission)][0]
 
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
@@ -62,14 +82,6 @@ class Intelligence ():
             return allmission.sort(key=lambda x: int(x[1]))[0][1]
         else:
             return allmission.sort(key=lambda x: int(x[1]))[len(allmission)][1]
-
-
-
-
-
-
-
-
 
 
 
