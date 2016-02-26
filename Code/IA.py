@@ -20,12 +20,12 @@ class Intelligence (PlateauDeJeu):
         return heuristics
 
 
-    def enumeratePossibleMissions(state):
+    def enumeratePossibleMissions(self, state):
         #here we do the possibility elaging, basically, returning an array of mission
         missionAssigement=[1]
         return missionAssigement
     
-    def CalulateNextSate(mission, state):
+    def CalulateNextSate(self, mission, state):
         #here we calculate the nextstate, considering a specific mission set
         if(mission==1):
             #look for humans
@@ -40,7 +40,7 @@ class Intelligence (PlateauDeJeu):
     
     
      #Principal function, returning the best possible mission set
-    def Choose(state,specie):
+    def Choose(self, state,specie):
         allmission=[]
         for mission in enumeratePossibleMissions(state):
             missiontotest=[CalulateNextSate(mission, state),0]
@@ -58,7 +58,7 @@ class Intelligence (PlateauDeJeu):
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
 
-    def minmax(state, specie, recursiveValue):
+    def minmax(self, state, specie, recursiveValue):
         allmission=[]
         for mission in enumeratePossibleMissions(state):
             missiontotest=[CalulateNextSate(mission, state),0]
