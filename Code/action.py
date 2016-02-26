@@ -4,7 +4,7 @@ from group import Group
 from mission_type import MissionType
 
 
-class Mission:
+class Action:
 
     def __init__(self, mission_type, target_group):
         self.mission_type = mission_type
