@@ -40,13 +40,11 @@ class Intelligence ():
     def Choose(self, state, specie):
         allmission=[]
         for mission in self.enumeratePossibleMissions(state):
-            missiontotest=[self.CalulateNextSate(mission, state),0]
+            missiontotest=[self.CalulateNextSate(mission, state),0,0]
             missiontotest[1]=self.minmax(missiontotest[0],self.mySpecie.invert(),1)
+            missiontotest[2]=mission.coup
             allmission.append(missiontotest)
-        if(specie!=self.mySpecie):
-            return allmission.sort(key=lambda x: int(x[1]))[0][0]
-        else:
-            return allmission.sort(key=lambda x: int(x[1]))[len(allmission)][0]
+        return allmission.sort(key=lambda x: int(x[1]))[len(allmission)][2]
 
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
