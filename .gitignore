@@ -33,6 +33,7 @@
 *.dSYM/
 
 Test/V3.3/*.txt
+Code/.idea/*
 # Sim
 nunchuk_project/nunchuk_project.sim/*
 !grandpapa_simulation_behav.wdb
