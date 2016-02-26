@@ -29,9 +29,9 @@ class PlateauDeJeu:
         return members
 
     #quelle est l'idée de cette fonction ?
-    def MoveMembers(self,x, y, xsec,ysec, numtomove):
-        members = self.getGroup(self,x,y)
-        if(members != none):
+    # def MoveMembers(self,x, y, xsec,ysec, numtomove):
+    #     members = self.getGroup(self,x,y)
+    #     if(members != none):
 
 
 
