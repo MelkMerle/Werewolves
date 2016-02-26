@@ -43,7 +43,7 @@ class Intelligence (PlateauDeJeu):
     def Choose(self, state,specie):
         allmission=[]
         for mission in enumeratePossibleMissions(state):
-            missiontotest=[CalulateNextSate(mission, state),0]
+            missiontotest=[CalulateNextState(mission, state),0]
             missiontotest[1]=minmax(missiontotest[0],!specie,1)
             allmission.append(missiontotest)
         if(specie!=self.mySpecie):
