@@ -23,11 +23,11 @@ for actionSimple in actions[0]:
     mission_type = actionSimple.mission_type
     assigned = actionSimple.assignedGroup
     target = actionSimple.target_group
-    print("Action de type " + str(mission_type) + " : " + str(assigned) + " vers " + str(target))
+    print("Action de type " + str(mission_type) + " : " + str(assigned) + " vers " + str(target) + ", note : " + str(actionSimple.calc_mark()))
 
 for twoActions in actions[1]:
     group0 = twoActions[0].assignedGroup
     group1 = twoActions[1].assignedGroup
     print("split " + str(group0.eff) + ", " + str(group1.eff))
-    print("     Action de type " + str(twoActions[0].mission_type) + " : " + str(group0) + " vers " + str(twoActions[0].target_group))
-    print("     Action de type " + str(twoActions[1].mission_type) + " : " + str(group1) + " vers " + str(twoActions[1].target_group))
+    print("     Action de type " + str(twoActions[0].mission_type) + " : " + str(group0) + " vers " + str(twoActions[0].target_group) + "note : " + str(twoActions[0].calc_mark()))
+    print("     Action de type " + str(twoActions[1].mission_type) + " : " + str(group1) + " vers " + str(twoActions[1].target_group) + "note : " + str(twoActions[1].calc_mark()))

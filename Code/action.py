@@ -21,7 +21,7 @@ class Action:
 
     def calc_mark(self):
         if self.mission_type == MissionType.attackHuman:
-            if self.assignedGroup.eff > self.secure_effective:
+            if self.assignedGroup.eff >= self.secure_effective:
                 self.possibleGain = self.target_group.eff
                 self.possibleLoss = 0 #todo
                 self.possibleEnemyLoss = 0  #todo

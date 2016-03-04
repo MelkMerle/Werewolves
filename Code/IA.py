@@ -55,23 +55,29 @@ class Intelligence ():
         groupsMe = state.getMembers(self.mySpecie)
         for groupMe in groupsMe:
             possibleActions = self.enumeratePossibleActions(state, groupMe)
-            rates = []
+            rateSimple = 0
+            rateSplit = 0
+            actionSimple = None
+            actionSplit = None
+
             for action in possibleActions[0]:
-                rates.append(Action.calc_mark(action))
-            for actionSplit in possibleActions[1]:
-                rates.append(actionSplit[0].calc_mark() + actionSplit[1].calc_mark())
+                rate = action.calc_mark()
+                if rate > rateSimple:
+                    actionSimple = action
+                    rateSimple = rate
 
-            maxRate = max(rates) # utilise un tri automatique
-            indexMaxRate = 0
-            for i in rates:
-                if (rates[i]==maxRate):
-                    indexMaxRate=i
+            for actions in possibleActions[1]:
+                rate = actions[0].calc_mark() + actions[1].calc_mark()
+                if rate > rateSplit:
+                    actionSplit = actions
+                    rateSplit = rate
 
-            if indexMaxRate>len(possibleActions[0]):
-                missionArray.append(possibleActions[1][i-len(possibleActions[0][0])])
-                missionArray.append(possibleActions[1][i-len(possibleActions[0][1])])
+            if rateSplit > rateSimple:
+                missionArray.append(actionSplit[0])
+                missionArray.append(actionSplit[1])
             else:
-                missionArray.append(possibleActions[0][i])
+                missionArray.append(actionSimple)
+
         return missionArray
 
         """sortedMissionArray=[]
