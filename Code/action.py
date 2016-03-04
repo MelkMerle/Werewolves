@@ -25,10 +25,10 @@ class Action:
             distance = utils.getDistance(self.assignedGroup,self.target_group)
             groupe_max = Group(0,0,0,self.assignedGroup.species.inverse()) #on initialise un groupe max pipo
             for group in state.groupes:
-                if group.species==self.assignedGroup.species.inverse() \
-                        & utils.getDistance(group,self.target_group) < distance \
-                        & group.eff >= self.target_group.eff \
-                        & group.eff>groupe_max.eff: #on cherche les groupes ennemis plus proches que nous de la cible, plus nombreux que la cible, et on garde le plus gros d'entre eux
+                if group.species == self.assignedGroup.species.inverse() \
+                        and utils.getDistance(group,self.target_group) < distance \
+                        and group.eff >= self.target_group.eff \
+                        and group.eff>groupe_max.eff: #on cherche les groupes ennemis plus proches que nous de la cible, plus nombreux que la cible, et on garde le plus gros d'entre eux
                     groupe_max=group
             enemyWinner = utils.simulateBattle(groupe_max,self.target_group)
             winnerFinal = utils.simulateBattle(self.assignedGroup,enemyWinner)
