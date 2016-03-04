@@ -53,12 +53,29 @@ class Intelligence ():
         missionArray=[]
         groupsHuman = state.getMembers(Species.human)
         groupsMe = state.getMembers(self.mySpecie)
+        for groupMe in groupsMe:
+            possibleActions = self.enumeratePossibleActions(state, groupMe)
+            rates = []
+            for action in possibleActions[0]:
+                rates.append(Action.calc_mark(action))
+            for actionSplit in possibleActions[1]:
+                rates.append(Action.calc_mark(actionSplit[0] + actionSplit[1]))
+            maxRate = max(rates)
+            indexMaxRate = 0
+            for i in rates:
+                if (rates[i]==maxRate):
+                    indexMaxRate=i
+            if (indexMaxRate>len(possibleActions[0])):
+                missionArray.append(possibleActions[1][i-len(possibleActions[0][0])])
+                missionArray.append(possibleActions[1][i-len(possibleActions[0][1])])
+            else:
+                missionArray.append(possibleActions[0][i])
 
-        sortedMissionArray=[]
+        """sortedMissionArray=[]
         for mission in missionArray:
             sortedMissionArray.append([mission,mission.calc_mark()])
         sortedMissionArray.sort(key=lambda x: int(x[1]))
-        return sortedMissionArray[-5:]
+        return sortedMissionArray[-5:]"""
 
     def generate(self,state):
 
