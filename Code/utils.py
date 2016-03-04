@@ -1,5 +1,6 @@
 # coding=utf-8                                                                                                                                                                   
 from group import Group
+from species import Species
 import math
 
 
@@ -20,7 +21,7 @@ def mergeGroups (group1,group2):
     return nouveau_groupe
 
 def simulateBattle(groupAtt,groupDef):
-    if groupDef.species == 'human' and groupAtt.eff>groupDef.eff:
+    if groupDef.species == Species.human and groupAtt.eff>groupDef.eff:
         groupeReturn=groupDef
         groupeReturn.species=groupAtt.species
         groupeReturn.eff+=groupAtt.eff

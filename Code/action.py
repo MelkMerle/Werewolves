@@ -2,6 +2,7 @@
 
 from group import Group
 from mission_type import MissionType
+from species import Species
 import utils
 
 class Action:
@@ -20,7 +21,7 @@ class Action:
         self.mark = 0
 
     def calc_mark(self, state): #a ameliorer pour la gestion des ennemis
-        if self.mission_type == 'attackHuman':
+        if self.mission_type == MissionType.attackHuman:
             distance = utils.getDistance(self.assignedGroup,self.target_group)
             groupe_max = Group(0,0,0,self.assignedGroup.species.inverse()) #on initialise un groupe max pipo
             for group in state.groupes:
@@ -34,15 +35,16 @@ class Action:
             if winnerFinal.species==self.assignedGroup.species:
                 self.possibleEnemyGain = -groupe_max.eff
                 self.possibleGain =winnerFinal.eff-self.assignedGroup.eff
-            elif winnerFinal.species == 'human':
+            elif winnerFinal.species == Species.human:
                 self.possibleEnemyGain = -groupe_max.eff
                 self.possibleGain = -self.assignedGroup.eff
             else:
                 self.possibleEnemyGain = winnerFinal.eff-groupe_max.eff
                 self.possibleGain = -self.assignedGroup.eff
+            return self.possibleGain
 
         elif self.mission_type == MissionType.attackEnemy: #todo
-            return 0
+            return 1
         elif self.mission_type == MissionType.run:  #todo
             self.possibleGain = 0 #todo
         mark = (self.possibleGain-self.possibleEnemyGain)
