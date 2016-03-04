@@ -34,6 +34,5 @@
 
 Test/V3.3/*.txt
 # Sim
-nunchuk_project/nunchuk_project.sim/*
-!grandpapa_simulation_behav.wdb
-!papa_simulation_behav.wdb
+Code/.idea/*
+Code/__pycache__
