@@ -57,7 +57,7 @@ class NetworkManager:
 
         if order == "UPD":
             # mettez à jour votre Plateau à partir des tuples contenus dans changes
-            print "j'ai reçu UPD"
+            print("j'ai reçu UPD")
             n = self.recv(1)[0]
             changes = []
             for i in range(n):

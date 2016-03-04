@@ -22,4 +22,3 @@ class Species(Enum):
             return MissionType.attackEnemy
         if target_species.value == Species.human.value:
             return MissionType.attackHuman
-
