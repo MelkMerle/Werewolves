@@ -21,8 +21,6 @@ class Intelligence ():
 
     def enumeratePossibleActions(self, state, groupMe):
         groupsHuman = state.getMembers(Species.human)
-        actionsSimple = []
-        actionsSplit = []
         actionsTotal = []
         lenGroupMe = len(groupMe)
         actionsSimplePerGroup = []
@@ -31,9 +29,8 @@ class Intelligence ():
         doublets = []
         # actions sans split
         for groupHuman in groupsHuman:
-            action = Action(groupMe, groupHuman, MissionType.attackHuman)
+            action = Action(MissionType.attackHuman, groupMe, groupHuman)
             actionsSimplePerGroup.append(action)
-        actionsSimple.append(actionsSimplePerGroup)
 
         # actions avec splits
         for i in range(0, nMax+1):
@@ -42,12 +39,11 @@ class Intelligence ():
             group1 = Group(groupMe.x, groupMe.y, doublet[0], self.mySpecie)
             group2 = Group(groupMe.x, groupMe.y, doublet[1], self.mySpecie)
             for groupHuman in groupsHuman:
-                action1 = Action(group1, groupHuman, MissionType.attackHuman)
-                action2 = Action(group2, groupHuman, MissionType.attackHuman)
+                action1 = Action(MissionType.attackHuman, groupHuman, group1)
+                action2 = Action(MissionType.attackHuman, groupHuman, group2)
                 actionsSplitPerGroup.append([action1, action2])
-        actionsSplit.append(actionsSplitPerGroup)
-        actionsTotal.append(actionsSimple)
-        actionsTotal.append(actionsSplit)
+        actionsTotal.append(actionsSimplePerGroup)
+        actionsTotal.append(actionsSplitPerGroup)
         return actionsTotal
 
     def enumeratePossibleMissions(self,state):
@@ -55,12 +51,29 @@ class Intelligence ():
         missionArray=[]
         groupsHuman = state.getMembers(Species.human)
         groupsMe = state.getMembers(self.mySpecie)
+        for groupMe in groupsMe:
+            possibleActions = self.enumeratePossibleActions(state, groupMe)
+            rates = []
+            for action in possibleActions[0]:
+                rates.append(Action.calc_mark(action))
+            for actionSplit in possibleActions[1]:
+                rates.append(Action.calc_mark(actionSplit[0] + actionSplit[1]))
+            maxRate = max(rates)
+            indexMaxRate = 0
+            for i in rates:
+                if (rates[i]==maxRate):
+                    indexMaxRate=i
+            if (indexMaxRate>len(possibleActions[0])):
+                missionArray.append(possibleActions[1][i-len(possibleActions[0][0])])
+                missionArray.append(possibleActions[1][i-len(possibleActions[0][1])])
+            else:
+                missionArray.append(possibleActions[0][i])
 
-        sortedMissionArray=[]
+        """sortedMissionArray=[]
         for mission in missionArray:
             sortedMissionArray.append([mission,mission.calc_mark()])
         sortedMissionArray.sort(key=lambda x: int(x[1]))
-        return sortedMissionArray[-5:]
+        return sortedMissionArray[-5:]"""
 
     def generate(self,state):
 
