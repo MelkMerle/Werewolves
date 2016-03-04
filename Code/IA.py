@@ -22,7 +22,7 @@ class Intelligence ():
         missionArray=self.generate(state)
         sortedMissionArray=[]
         for mission in missionArray:
-            sortedMissionArray.append([mission,mission.calc_mark()])
+            sortedMissionArray.append([mission,mission.calc_mark(state)])
         sortedMissionArray.sort(key=lambda x: int(x[1]))
         return sortedMissionArray[-5:]
 

@@ -2,7 +2,7 @@
 
 from group import Group
 from mission_type import MissionType
-
+import utils
 
 class Action:
 
@@ -19,18 +19,17 @@ class Action:
 
         self.mark = 0
 
-    def calc_mark(self):
-        if self.mission_type == MissionType.attackHuman:
-            if self.assignedGroup.eff > self.secure_effective:
-                self.possibleGain = self.target_group.eff
-                self.possibleLoss = 0 #todo
-                self.possibleEnemyLoss = 0  #todo
-                self.possibleEnemyGain = 0 #todo
+    def calc_mark(self, state):
+        if self.mission_type == 'attackHuman':
+            distance = utils.getDistance(self.assignedGroup,self.target_group)
+            self.possibleGain = utils.simulateBattle(self.assignedGroup,self.target_group).eff-self.assignedGroup.eff
+            self.possibleEnemyLoss = 0  #todo
+            self.possibleEnemyGain = 0 #todo
         elif self.mission_type == MissionType.attackEnemy: #todo
             return
         elif self.mission_type == MissionType.run:  #todo
             self.possibleGain = 0 #todo
-        mark= (self.possibleGain+self.possibleEnemyLoss-self.possibleEnemyGain-self.possibleLoss)
+        mark = (self.possibleGain+self.possibleEnemyLoss-self.possibleEnemyGain-self.possibleLoss)
         return mark
 
     def __str__(self):

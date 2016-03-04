@@ -8,10 +8,10 @@ class Mission:
     def __init__(self, actions=[]):  #Actions is an array of actions
         self.actions=actions
         self.changes
-    def calc_mark(self):
+    def calc_mark(self,state):
         mark=0
         for action in self.actions:
-            mark+=action.calc_mark()
+            mark+=action.calc_mark(state)
         return mark
 
     def calculateCoup(self, state): #todo
