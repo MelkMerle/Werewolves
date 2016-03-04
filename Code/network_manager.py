@@ -69,7 +69,7 @@ class NetworkManager:
                 self.updateGroups(changement)
 
             # calculez votre coup
-            coup = self.IA.Choose(self.Plateau,self.IA.mySpecie)
+            coup = self.IA.chooseMission(self.Plateau, self.IA.mySpecie)
             # calcule le coup de l'IA, qui est un tableau de
                               # Nx5 chiffres(x_dep,y_dep,nombre,x_arr,y_arr)_
             # préparez la trame MOV ou ATK
