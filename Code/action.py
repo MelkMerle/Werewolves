@@ -44,22 +44,31 @@ class Action:
         if self.mission_type ==MissionType.attackHuman:
             #find closest human group
             grouptoAttack=self.target_group
-            vector=getVector(self.assignedGroup,grouptoAttack)
+            vector=utils.getVector(self.assignedGroup,grouptoAttack)
                 #here if no split
             return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0], self.assignedGroup.y+vector[1]]
         
         if self.mission_type == MissionType.attackEnemy:
             #find closest ennemy group
             grouptoAttack=self.target_group
-            vector=getVector(self.assignedGroup,grouptoAttack)
+            vector=utils.getVector(self.assignedGroup,grouptoAttack)
                 #here if no split
             return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0],self.assignedGroup.y+vector[1]]
  
         if self.mission_type == MissionType.run:
             #find closest ennemy group
             grouptoRunfrom=self.target_group
-            vector=getVector(self.assignedGroup,grouptoRunfrom)
+            vector=utils.getVector(self.assignedGroup,grouptoRunfrom)
                 #here if no split
+            if state.width<(self.assignedGroup.x-vector[0]):
+                vector[0]+=1
+            elif (self.assignedGroup.x-vector[0]) <0:
+                vector[0]-=1 
+            if state.height<(self.assignedGroup.y-vector[1]):
+                vector[1]-=1 
+            elif (self.assignedGroup.y-vector[1]) <0:
+                vector[1]+=1
+
             return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x-vector[0], self.assignedGroup.y-vector[1]]
 
 
