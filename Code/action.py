@@ -19,17 +19,33 @@ class Action:
 
         self.mark = 0
 
-    def calc_mark(self, state):
+    def calc_mark(self, state): #a ameliorer pour la gestion des ennemis
         if self.mission_type == 'attackHuman':
             distance = utils.getDistance(self.assignedGroup,self.target_group)
-            self.possibleGain = utils.simulateBattle(self.assignedGroup,self.target_group).eff-self.assignedGroup.eff
-            self.possibleEnemyLoss = 0  #todo
-            self.possibleEnemyGain = 0 #todo
+            groupe_max = Group(0,0,0,self.assignedGroup.species.inverse()) #on initialise un groupe max pipo
+            for group in state.groupes:
+                if group.species==self.assignedGroup.species.inverse() \
+                        & utils.getDistance(group,self.target_group) < distance \
+                        & group.eff >= self.target_group.eff \
+                        & group.eff>groupe_max.eff: #on cherche les groupes ennemis plus proches que nous de la cible, plus nombreux que la cible, et on garde le plus gros d'entre eux
+                    groupe_max=group
+            enemyWinner = utils.simulateBattle(groupe_max,self.target_group)
+            winnerFinal = utils.simulateBattle(self.assignedGroup,enemyWinner)
+            if winnerFinal.species==self.assignedGroup.species:
+                self.possibleEnemyGain = -groupe_max.eff
+                self.possibleGain =winnerFinal.eff-self.assignedGroup.eff
+            elif winnerFinal.species == 'human':
+                self.possibleEnemyGain = -groupe_max.eff
+                self.possibleGain = -self.assignedGroup.eff
+            else:
+                self.possibleEnemyGain = winnerFinal.eff-groupe_max.eff
+                self.possibleGain = -self.assignedGroup.eff
+
         elif self.mission_type == MissionType.attackEnemy: #todo
-            return
+            return 0
         elif self.mission_type == MissionType.run:  #todo
             self.possibleGain = 0 #todo
-        mark = (self.possibleGain+self.possibleEnemyLoss-self.possibleEnemyGain-self.possibleLoss)
+        mark = (self.possibleGain-self.possibleEnemyGain)
         return mark
 
     def __str__(self):
