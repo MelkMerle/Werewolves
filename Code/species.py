@@ -9,8 +9,8 @@ class Species(Enum):
     vampire = 'vampire'
 
     def inverse(self):
-    	if self.value == 'vampire':
-    		return Species.werewolf
-    	if self.value == 'werewolf':
-    		return Species.vampire
-    	return Species.human
+        if self.value == 'vampire':
+            return Species.werewolf
+        if self.value == 'werewolf':
+            return Species.vampire
+        return Species.human
