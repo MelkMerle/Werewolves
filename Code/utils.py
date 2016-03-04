@@ -13,6 +13,7 @@ def getDistance(fromGroup, toGroup):
     norm = math.sqrt(distance[0] ** 2 + distance[1] ** 2)
     return norm
 
+
 def mergeGroups (group1,group2):
     nouveau_groupe = Group(int((group1.x+group2.x)/2),int((group1.y+group2.y)/2),group1.eff+group2.eff,group1.species)
     return nouveau_groupe
@@ -21,7 +22,7 @@ def simulateBattle(groupAtt,groupDef):
     if groupDef.species == 'human' and groupAtt.eff>groupDef.eff:
         groupeReturn=groupDef
         groupeReturn.species=groupeAtt.species
-        groupeReturn.eff+=groupeDef.e
+        groupeReturn.eff+=groupeAtt.eff
         return groupeReturn
     elif groupAtt.eff>(1.5*groupDef.eff):
         groupeReturn=groupDef
@@ -53,7 +54,7 @@ def simulateBattle(groupAtt,groupDef):
 
     else:
         eff2=(1-winningprob)*groupDef.eff
-        eff1=int(round(eff1))                                                                                                                                       
+        eff2=int(round(eff2))                                                                                                                                       
         groupeReturn=groupeDef
         groupeReturn.eff=eff2
         return groupeReturn
