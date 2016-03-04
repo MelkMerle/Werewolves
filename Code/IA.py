@@ -18,9 +18,9 @@ class Intelligence ():
     def timeleft(self):
         return (5*60)-(time.time() - self.startTime)
 
-
     def enumeratePossibleActions(self, state, groupMe):
         groupsHuman = state.getMembers(Species.human)
+        groups_ennemy = state.getMembers(self.mySpecie.inverse())
         actionsTotal = []
         lenGroupMe = groupMe.eff
         actionsSimplePerGroup = []
@@ -31,18 +31,24 @@ class Intelligence ():
         for groupHuman in groupsHuman:
             action = Action(MissionType.attackHuman, groupHuman, groupMe)
             actionsSimplePerGroup.append(action)
+        for group_ennemy in groups_ennemy:
+            action = Action(MissionType.attackEnemy, group_ennemy, groupMe)
+            actionsSimplePerGroup.append(action)
 
         # actions avec splits
         for i in range(1, nMax+1):
             doublets.append([i, lenGroupMe-i])
+        groups_targets = groupsHuman + groups_ennemy
         for doublet in doublets:
             group1 = Group(groupMe.x, groupMe.y, doublet[0], self.mySpecie)
             group2 = Group(groupMe.x, groupMe.y, doublet[1], self.mySpecie)
-            for groupHuman1 in groupsHuman:
-                for groupHuman2 in groupsHuman:
-                    if groupHuman1 != groupHuman2:
-                        action1 = Action(MissionType.attackHuman, groupHuman1, group1)
-                        action2 = Action(MissionType.attackHuman, groupHuman2, group2)
+            for target_group_1 in groups_targets:
+                mission_type_1 = self.mySpecie.determine_mission_type(target_group_1.species)
+                for target_group_2 in groups_targets:
+                    mission_type_2 = self.mySpecie.determine_mission_type(target_group_2.species)
+                    if target_group_1 != target_group_2:
+                        action1 = Action(mission_type_1, target_group_1, group1)
+                        action2 = Action(mission_type_2, target_group_2, group2)
                         actionsSplitPerGroup.append([action1, action2])
         actionsTotal.append(actionsSimplePerGroup)
         actionsTotal.append(actionsSplitPerGroup)
@@ -77,7 +83,6 @@ class Intelligence ():
                 missionArray.append(actionSplit[1])
             else:
                 missionArray.append(actionSimple)
-
         return missionArray
 
         """sortedMissionArray=[]

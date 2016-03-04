@@ -26,6 +26,8 @@ class Action:
                 self.possibleLoss = 0 #todo
                 self.possibleEnemyLoss = 0  #todo
                 self.possibleEnemyGain = 0 #todo
+            else:
+                return 0
         elif self.mission_type == MissionType.attackEnemy: #todo
             return
         elif self.mission_type == MissionType.merge: #todo
