@@ -1,5 +1,6 @@
 # coding=utf-8                                                                                                                                                                   
 from group import Group
+import math
 
 
 def getVector(fromGroup, toGroup):
@@ -21,33 +22,33 @@ def mergeGroups (group1,group2):
 def simulateBattle(groupAtt,groupDef):
     if groupDef.species == 'human' and groupAtt.eff>groupDef.eff:
         groupeReturn=groupDef
-        groupeReturn.species=groupeAtt.species
-        groupeReturn.eff+=groupeAtt.eff
+        groupeReturn.species=groupAtt.species
+        groupeReturn.eff+=groupAtt.eff
         return groupeReturn
     elif groupAtt.eff>(1.5*groupDef.eff):
         groupeReturn=groupDef
-        groupeReturn.species=groupeAtt.species
-        groupeReturn.eff= groupeAtt.eff
+        groupeReturn.species=groupAtt.species
+        groupeReturn.eff= groupAtt.eff
         return groupeReturn
 
    #start a random battle
     winningprob=0
-    if groupAtt.eff==groupeDef.eff:
+    if groupAtt.eff==groupDef.eff:
         winningprob=0.5
     if groupAtt.eff<groupDef.eff:
         winningprob=groupAtt.eff/(2*groupDef.eff)
-    if groupAtt.eff>eff2:
+    if groupAtt.eff>groupDef.eff:
         winningprob= groupAtt.eff/groupDef.eff-0.5
     
     if winningprob ==0.5:
-        winningprob+=random.random()/100 
+        winningprob+=math.random()/100
 
     if winningprob>0.5:
         eff1=winningprob*groupAtt.eff
-        if(grouDef.species=='human'):
+        if(groupDef.species=='human'):
             eff1+=winningprob*groupDef.eff
         eff1=int(round(eff1))
-        groupeReturn=groupeDef
+        groupeReturn=groupDef
         groupeReturn.species=groupAtt.species
         groupeReturn.eff=eff1
         return groupeReturn
@@ -55,6 +56,6 @@ def simulateBattle(groupAtt,groupDef):
     else:
         eff2=(1-winningprob)*groupDef.eff
         eff2=int(round(eff2))                                                                                                                                       
-        groupeReturn=groupeDef
+        groupeReturn=groupDef
         groupeReturn.eff=eff2
         return groupeReturn
