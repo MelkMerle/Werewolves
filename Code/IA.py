@@ -1,6 +1,9 @@
 
 from Plateau import PlateauDeJeu
 from species import Species
+from action import Action
+from group import Group
+from mission_type import MissionType
 import time
 
 
@@ -41,6 +44,7 @@ class Intelligence ():
                         action2 = Action(group2, groupHuman, MissionType.attackHuman)
                         actions.append(action1)
                         actions.append(action2)
+        return actions
 
     def enumeratePossibleMissions(self,state):
         #here we do the possibility elaging, basically, returning an array of mission
