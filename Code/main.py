@@ -24,6 +24,6 @@ manager.send('NME', len(groupname), groupname)
 while True:
     manager.update()
     if manager.game_over == 1:
-        print "Bye bye."
+        print("Bye bye.")
         break
 # faut-il faire quelque chose pour que le programme quitte ?

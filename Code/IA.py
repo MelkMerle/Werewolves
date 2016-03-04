@@ -59,17 +59,20 @@ class Intelligence ():
             for action in possibleActions[0]:
                 rates.append(Action.calc_mark(action))
             for actionSplit in possibleActions[1]:
-                rates.append(Action.calc_mark(actionSplit[0] + actionSplit[1]))
-            maxRate = max(rates)
+                rates.append(actionSplit[0].calc_mark() + actionSplit[1].calc_mark())
+
+            maxRate = max(rates) # utilise un tri automatique
             indexMaxRate = 0
             for i in rates:
                 if (rates[i]==maxRate):
                     indexMaxRate=i
-            if (indexMaxRate>len(possibleActions[0])):
+
+            if indexMaxRate>len(possibleActions[0]):
                 missionArray.append(possibleActions[1][i-len(possibleActions[0][0])])
                 missionArray.append(possibleActions[1][i-len(possibleActions[0][1])])
             else:
                 missionArray.append(possibleActions[0][i])
+        return missionArray
 
         """sortedMissionArray=[]
         for mission in missionArray:
