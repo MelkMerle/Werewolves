@@ -1,8 +1,8 @@
 # coding=utf-8                                                                                                                                                                   
 from group import Group
 from species import Species
+import random
 import math
-
 
 def getVector(fromGroup, toGroup):
     distance = [toGroup.x - fromGroup.x, toGroup.y - fromGroup.y]
@@ -42,7 +42,7 @@ def simulateBattle(groupAtt,groupDef):
         winningprob= groupAtt.eff/groupDef.eff-0.5
     
     if winningprob ==0.5:
-        winningprob+=math.random()/100
+        winningprob+=random.random()/100
 
     if winningprob>0.5:
         eff1=winningprob*groupAtt.eff
