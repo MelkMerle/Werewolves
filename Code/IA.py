@@ -21,33 +21,31 @@ class Intelligence ():
 
     def enumeratePossibleActions(self, state, groupMe):
         groupsHuman = state.getMembers(Species.human)
-        actionsSimple = []
-        actionsSplit = []
         actionsTotal = []
-        lenGroupMe = len(groupMe)
+        lenGroupMe = groupMe.eff
         actionsSimplePerGroup = []
         actionsSplitPerGroup = []
         nMax = int(lenGroupMe/2)
         doublets = []
         # actions sans split
         for groupHuman in groupsHuman:
-            action = Action(groupMe, groupHuman, MissionType.attackHuman)
+            action = Action(MissionType.attackHuman, groupHuman, groupMe)
             actionsSimplePerGroup.append(action)
-        actionsSimple.append(actionsSimplePerGroup)
 
         # actions avec splits
-        for i in range(0, nMax+1):
+        for i in range(1, nMax+1):
             doublets.append([i, lenGroupMe-i])
         for doublet in doublets:
             group1 = Group(groupMe.x, groupMe.y, doublet[0], self.mySpecie)
             group2 = Group(groupMe.x, groupMe.y, doublet[1], self.mySpecie)
-            for groupHuman in groupsHuman:
-                action1 = Action(group1, groupHuman, MissionType.attackHuman)
-                action2 = Action(group2, groupHuman, MissionType.attackHuman)
-                actionsSplitPerGroup.append([action1, action2])
-        actionsSplit.append(actionsSplitPerGroup)
-        actionsTotal.append(actionsSimple)
-        actionsTotal.append(actionsSplit)
+            for groupHuman1 in groupsHuman:
+                for groupHuman2 in groupsHuman:
+                    if groupHuman1 != groupHuman2:
+                        action1 = Action(MissionType.attackHuman, groupHuman1, group1)
+                        action2 = Action(MissionType.attackHuman, groupHuman2, group2)
+                        actionsSplitPerGroup.append([action1, action2])
+        actionsTotal.append(actionsSimplePerGroup)
+        actionsTotal.append(actionsSplitPerGroup)
         return actionsTotal
 
     def enumeratePossibleMissions(self,state):

@@ -13,11 +13,11 @@ class Mission:
             mark+=action.calc_mark()
         return mark
 
-    def calculateCoup(self)
-        coups[0,0]
-        for action in self.actions:
-            coups[1].append(action.calculateCoup())
-            coups[0]+=1
-        return coups
+    # def calculateCoup(self):
+    #     coups[0,0]
+    #     for action in self.actions:
+    #         coups[1].append(action.calculateCoup())
+    #         coups[0]+=1
+    #     return coups
 
 

@@ -33,6 +33,5 @@
 *.dSYM/
 
 Test/V3.3/*.txt
-# Sim
 Code/.idea/*
-Code/__pycache__
+Code/__pycache__/*

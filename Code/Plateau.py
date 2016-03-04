@@ -18,8 +18,11 @@ class PlateauDeJeu:
 
     def addGroup(self,x, y, effectif, espece):
         nouveau = Group(x, y, effectif, espece)
-        self.groupes.append(nouveau)
-        return nouveau
+        return self.addThisGroup(nouveau)
+
+    def addThisGroup(self, group):
+        self.groupes.append(group)
+        return group
 
     def getMembers(self, espece):
         members = []

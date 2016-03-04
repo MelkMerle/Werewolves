@@ -49,7 +49,7 @@ def calculateHeuristics(state, myspecie):
 Plateau = PlateauDeJeu(10,10)
 Plateau.addGroup(1,1,5,Species.human)
 Plateau.addGroup(10,10,5,Species.vampire)
-Plateau.addGroup(5,5,10testHeuristics.py,Species.werewolf)
+Plateau.addGroup(5,5,10,Species.werewolf)
 
 h = calculateHeuristics(Plateau, 'vampire')
 print('coucou')
