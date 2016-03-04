@@ -40,6 +40,32 @@ class Action:
         return "Group of {} {}, en ({},{})".format(self.eff, self.species.value, self.x, self.y)
 
 
-    def calculateCoup(self):
-         # todo
-        return 0
+    def calculateCoup(self, state):
+        #dependant on mission type
+        #test if below limit lines before sending!!
+
+        if self.mission_type == 'attackHuman':
+            #find closest human group
+            grouptoAttack=self.target_group
+            vector=getVector(self.assignedGroup,grouptoAttack)
+                #here if no split
+            return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0], aimy+vector[1])
+        
+        if self.mission_type == 'attackEnemy':
+            #find closest ennemy group
+            grouptoAttack=self.target_group
+            vector=getVector(self.assignedGroup,grouptoAttack)
+                #here if no split
+            return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0], aimy+vector[1])
+ 
+        if self.mission_type == 'run':
+            #find closest ennemy group
+            grouptoRunfrom=self.target_group
+            vector=getVector(self.assignedGroup,grouptoRunfrom)
+                #here if no split
+            return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x-vector[0], aimy-vector[1])
+
+
+
+
+    
