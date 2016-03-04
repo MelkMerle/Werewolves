@@ -16,6 +16,31 @@ class Intelligence ():
         return (5*60)-(time.time() - self.startTime)
 
 
+    def enumeratePossibleActions(self, state):
+        groupsHuman = state.getMembers(Species.human)
+        groupsMe = state.getMembers(self.mySpecie)
+        actions = []
+        for groupMe in groupsMe:
+                lenGroupMe = len(groupMe)
+                nMax = int(lenGroupMe/2)
+                doublets = []
+
+                # actions sans split
+                for groupHuman in groupsHuman:
+                    action = Action(groupMe, groupHuman, MissionType.attackHuman)
+                    actions.append(action)
+
+                # actions avec splits
+                for i in range(0, nMax+1):
+                    doublets.append([i, lenGroupMe-i])
+                for doublet in doublets:
+                    group1 = Group(groupMe.x, groupMe.y, doublet[0], self.mySpecie)
+                    group2 = Group(groupMe.x, groupMe.y, doublet[1], self.mySpecie)
+                    for groupHuman in groupsHuman:
+                        action1 = Action(group1, groupHuman, MissionType.attackHuman)
+                        action2 = Action(group2, groupHuman, MissionType.attackHuman)
+                        actions.append(action1)
+                        actions.append(action2)
 
     def enumeratePossibleMissions(self,state):
         #here we do the possibility elaging, basically, returning an array of mission
