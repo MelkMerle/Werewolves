@@ -48,7 +48,7 @@ class Intelligence ():
             heuristics = vpNumber - wwNumber
         return heuristics
 
-    def CalulateNextSate(mission, state):
+    def CalulateNextState(self,mission, state):
         #here we calculate the nextstate, considering a specific mission set
         nextState=mission.execute(state)
         return nextState
@@ -58,7 +58,7 @@ class Intelligence ():
     def chooseMission(self, state, specie):
         allmission=[]
         for mission in self.enumeratePossibleMissions(state):
-            missiontotest=[self.CalulateNextSate(mission, state),0]
+            missiontotest=[self.CalulateNextState(mission, state),0]
             missiontotest[1]=self.minmax(missiontotest[0],self.mySpecie.invert(),1)
             allmission.append(missiontotest)
         if(specie!=self.mySpecie):

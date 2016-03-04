@@ -14,7 +14,7 @@ class Mission:
             mark+=action.calc_mark()
         return mark
 
-    def calculateCoup(self, state) #todo
+    def calculateCoup(self, state): #todo
         coups = [0,0]
         for action in self.actions:
             coups[1].append(action.calculateCoup(state))
@@ -46,7 +46,7 @@ class Mission:
             if action.mission_type == MissionType.run :
                 groupe_en_action= action.assignedGroup
                 groupe_ennemi = action.target_group
-                groupe_en_action.x= utils.bordLePlusProche(groupe_en_action,groupe_ennemi)[0]
+                groupe_en_action.x= utils.bordLePlusProche(groupe_en_action,groupe_ennemi)[0] #todo comment simuler le plateau quand on a couru ?
                 groupe_en_action.y= utils.bordLePlusProche(groupe_en_action)[1]
                 calculatedState.groupes.remove(action.assignedGroup)
                 calculatedState.groupes.remove(action.target_group)
