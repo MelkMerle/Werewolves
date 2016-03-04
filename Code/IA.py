@@ -22,7 +22,7 @@ class Intelligence ():
         missionArray=self.generate(state)
         sortedMissionArray=[]
         for mission in missionArray:
-            sortedMissionArray.append([mission,mission.calc_mark()])
+            sortedMissionArray.append([mission,mission.calc_mark(state)])
         sortedMissionArray.sort(key=lambda x: int(x[1]))
         return sortedMissionArray[-5:]
 
@@ -48,23 +48,23 @@ class Intelligence ():
             heuristics = vpNumber - wwNumber
         return heuristics
 
-    def CalulateNextSate(mission, state):
+    def CalulateNextState(self,mission, state):
         #here we calculate the nextstate, considering a specific mission set
         nextState=mission.execute(state)
         return nextState
 
 
      #Principal function, returning the best possible mission set
-    def Choose(self, state, specie):
+    def chooseMission(self, state, specie):
         allmission=[]
         for mission in self.enumeratePossibleMissions(state):
-            missiontotest=[self.CalulateNextSate(mission, state),0]
+            missiontotest=[self.CalulateNextState(mission, state),0]
             missiontotest[1]=self.minmax(missiontotest[0],self.mySpecie.invert(),1)
             allmission.append(missiontotest)
         if(specie!=self.mySpecie):
-            return allmission.sort(key=lambda x: int(x[1]))[0][0]
+            return allmission.sort(key=lambda x: int(x[1]))[0][0].calculateCoup(state)
         else:
-            return allmission.sort(key=lambda x: int(x[1]))[len(allmission)][0]
+            return allmission.sort(key=lambda x: int(x[1]))[len(allmission)][0].calculateCoup(state)
 
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
