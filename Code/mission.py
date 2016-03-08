@@ -7,7 +7,7 @@ from mission_type import MissionType
 class Mission:
     def __init__(self, actions=[]):  #Actions is an array of actions
         self.actions=actions
-        self.changes
+        #self.changes inutile maintenant
     def calc_mark(self,state):
         mark=0
         for action in self.actions:
@@ -24,14 +24,15 @@ class Mission:
 
     def execute(self,state):
         calculatedState = state
-        for action in self.actions:
+        for action in self.actions: #on parcourt les actions possibles
             if action.mission_type == MissionType.attackHuman:
-                groupe_en_action= action.assignedGroup
+                groupe_en_action = action.assignedGroup
                 groupe_vise = action.target_group
                 winner = utils.simulateBattle(groupe_en_action,groupe_vise)
                 calculatedState.groupes.remove(action.assignedGroup)
                 calculatedState.groupes.remove(action.target_group)
                 calculatedState.groupes.append(winner)
+           # pour les missions de type attackhuman, on simule l'état du plateau quand on l'aura bouffé
             if action.mission_type == MissionType.attackEnemy:
                 groupe_en_action= action.assignedGroup
                 groupe_vise = action.target_group
@@ -39,11 +40,13 @@ class Mission:
                 calculatedState.groupes.remove(action.assignedGroup)
                 calculatedState.groupes.remove(action.target_group)
                 calculatedState.groupes.append(winner)
+
             if action.mission_type == MissionType.merge :
                 nouveau_groupe = utils.mergeGroups(action.assignedGroup,action.target_group)
                 calculatedState.groupes.remove(action.assignedGroup)
                 calculatedState.groupes.remove(action.target_group)
                 calculatedState.groupes.append(nouveau_groupe)
+
             if action.mission_type == MissionType.run :
                 groupe_en_action= action.assignedGroup
                 groupe_ennemi = action.target_group
