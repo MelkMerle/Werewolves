@@ -12,8 +12,10 @@ class NetworkManager:
         # Création de la socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Récupération en ligne de commande l'addresse ip et le port
-        self.ip = raw_input("Adresse IP du serveur : ")
-        self.port = int(raw_input("Port : "))
+        #self.ip = raw_input("Adresse IP du serveur : ")
+        #self.port = int(raw_input("Port : "))
+        self.ip = "192.168.0.105"
+        self.port = int(5555)
         # Connexion de la socket
         try:
             self.sock.connect((self.ip, self.port))
@@ -92,6 +94,7 @@ class NetworkManager:
         elif order == "HME":
             x = self.recv(1)[0]
             y = self.recv(1)[0]
+            print "J'ai reçu HME :", x,y
             self.Plateau.maMaison = [x, y]
 
         elif order == "MAP":

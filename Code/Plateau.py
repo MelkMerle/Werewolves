@@ -4,16 +4,16 @@ from group import Group
 
 class PlateauDeJeu:
 
-    def __init__(self,width,height):
+    def __init__(self):
         self.groupes = []
-        self.width=width
-        self.height=height
-    
+        self.width=0
+        self.height=0
+
     def getGroup(self, x, y):
         for groupe in self.groupes:
-            if (groupe.x==x & groupe.y==y):
+            if (groupe.x==x and groupe.y==y):
                 return groupe
-        print("Aucun groupe n'a été trouvé par la méthode getGroup")
+        print 'Aucun groupe trouve aux coordonnees (x,y) suivantes :', x, y
         return None
 
     def addGroup(self,x, y, effectif, espece):
