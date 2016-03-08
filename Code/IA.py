@@ -67,7 +67,7 @@ class Intelligence():
     def minmax(self, state, specie, recursiveValue):
         allmission=[]
         for mission in enumerate_possible_missions(state, self.mySpecie):
-            missiontotest = [self.CalulateNextSate(mission, state), 0]
+            missiontotest = [self.CalulateNextState(mission, state), 0]
             if recursiveValue > self.maxValue:
                 missiontotest[1] = self.calculateHeuristics(missiontotest[0], specie)
             else:
