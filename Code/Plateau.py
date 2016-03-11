@@ -31,13 +31,14 @@ class PlateauDeJeu:
                 members.append(group)
         return members
 
-    def removeGroupe(self, group):
+    def removeGroup(self, group):
         x=group.x
         y=group.y
         for presentGroupe in self.groupes:
-            if( x== presentGroupe.y and y == presenGroupe.y):
+            if( x== presentGroupe.y and y == presentGroupe.y):
                 self.groupes.remove(presentGroupe)
         print('no such group found')
+
     #quelle est l'idée de cette fonction ?
     # def MoveMembers(self,x, y, xsec,ysec, numtomove):
     #     members = self.getGroup(self,x,y)
