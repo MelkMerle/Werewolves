@@ -54,7 +54,7 @@ class Intelligence():
             assessedMission[1] = self.alphabeta(self.CalulateNextState(mission, state), self.mySpecie.inverse(), 1,-100000, +100000)
             possibleBranches.append(assessedMission)
         print(possibleBranches)
-        coupFinal = possibleBranches.sort(key=lambda x: (x[1]))[-1][0].calculateCoup(state)
+        coupFinal = sorted(possibleBranches, key=lambda x: (x[1]))[-1][0].calculateCoup(state)
         return coupFinal
 
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
