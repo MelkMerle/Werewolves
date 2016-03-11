@@ -36,7 +36,7 @@ def enumerate_possible_actions(state, group, specie):
             for target_group_2 in groups_targets:
                 mission_type_2 = specie.determine_mission_type(target_group_2.species)
                 # si les deux targets sont différentes :
-                if target_group_1.x != target_group_2.x and target_group_1.y != target_group_2.y:
+                if (target_group_1.x != target_group_2.x) or (target_group_1.y != target_group_2.y):
                     action1 = Action(mission_type_1, target_group_1, group1)
                     action2 = Action(mission_type_2, target_group_2, group2)
                     actions_split_per_group.append([action1, action2])

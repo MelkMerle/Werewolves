@@ -25,7 +25,7 @@ class Mission:
         return coups
 
     def execute(self,state):
-        print self.actions
+        print(self.actions)
         calculatedState = state
         for action in self.actions: #on parcourt les actions possibles
             if action.mission_type == MissionType.attackHuman:
