@@ -1,9 +1,5 @@
 
-from Plateau import PlateauDeJeu
 from species import Species
-from action import Action
-from group import Group
-from mission_type import MissionType
 from missions_generator import enumerate_possible_missions
 
 import time
@@ -65,7 +61,7 @@ class Intelligence():
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
     def alphabeta(self, state, specie, recursiveValue, alpha, beta):
         if recursiveValue > self.maxValue:
-            return  self.calculateHeuristics(state, specie)
+            return  self.calculateHeuristics(state)
         if specie== self.mySpecie:
             for mission in enumerate_possible_missions(state, self.mySpecie):
                 alpha=max(alpha,self.alphabeta(mission, specie.inverse(), recursiveValue+1,alpha, beta))
