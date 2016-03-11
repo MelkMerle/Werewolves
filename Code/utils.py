@@ -1,8 +1,8 @@
 # coding=utf-8                                                                                                                                                                   
 from group import Group
 from species import Species
-import random
 import math
+import random
 
 def getVector(fromGroup, toGroup):
     distance = [toGroup.x - fromGroup.x, toGroup.y - fromGroup.y]
@@ -21,16 +21,16 @@ def mergeGroups (group1,group2):
     return nouveau_groupe
 
 def simulateBattle(groupAtt,groupDef):
+
+    # attaque d'un groupe d'humain avec suffisamment de monde
     if groupDef.species == Species.human and groupAtt.eff>groupDef.eff:
-        groupeReturn=groupDef
-        groupeReturn.species=groupAtt.species
-        groupeReturn.eff+=groupAtt.eff
-        return groupeReturn
+        group_return = Group(groupDef.x, groupDef.y, groupDef.eff + groupDef.eff, groupAtt.species)
+        return group_return
+
+    # attaque d'un groupe d'ennemis avec sufisamment de monde
     elif groupAtt.eff>(1.5*groupDef.eff):
-        groupeReturn=groupDef
-        groupeReturn.species=groupAtt.species
-        groupeReturn.eff= groupAtt.eff
-        return groupeReturn
+        group_return = Group(groupDef.x, groupDef.y, groupDef.eff, groupAtt.species)
+        return group_return
 
    #start a random battle
     winningprob=0
@@ -49,14 +49,11 @@ def simulateBattle(groupAtt,groupDef):
         if(groupDef.species=='human'):
             eff1+=winningprob*groupDef.eff
         eff1=int(round(eff1))
-        groupeReturn=groupDef
-        groupeReturn.species=groupAtt.species
-        groupeReturn.eff=eff1
-        return groupeReturn
+        group_return = Group(groupDef.x, groupDef.y, eff1, groupAtt.species)
+        return group_return
 
     else:
         eff2=(1-winningprob)*groupDef.eff
-        eff2=int(round(eff2))                                                                                                                                       
-        groupeReturn=groupDef
-        groupeReturn.eff=eff2
-        return groupeReturn
+        eff2=int(round(eff2))
+        group_return = Group(groupDef.x, groupDef.y, eff2, groupDef.species)
+        return group_return

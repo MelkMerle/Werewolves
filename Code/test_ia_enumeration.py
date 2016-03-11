@@ -10,7 +10,7 @@ myGroup = Group(9,9,10,Species.werewolf)
 plateau.addGroup(1,1,5,Species.human)
 plateau.addGroup(2,2,5,Species.human)
 plateau.addGroup(3,4,12, Species.human)
-plateau.addGroup(9,9,5,Species.vampire)
+plateau.addGroup(8,9,5,Species.vampire)
 plateau.addThisGroup(myGroup)
 
 print("Enumeration actions ...\n")
@@ -26,5 +26,5 @@ for twoActions in actions[1]:
     group0 = twoActions[0].assignedGroup
     group1 = twoActions[1].assignedGroup
     print("split " + str(group0.eff) + ", " + str(group1.eff))
-    print("     Action de type " + str(twoActions[0].mission_type) + " : " + str(group0) + " vers " + str(twoActions[0].target_group) + "note : " + str(twoActions[0].calc_mark(plateau)))
-    print("     Action de type " + str(twoActions[1].mission_type) + " : " + str(group1) + " vers " + str(twoActions[1].target_group) + "note : " + str(twoActions[1].calc_mark(plateau)))
+    print("   " + str(twoActions[0]) + " : " + str(twoActions[0].calc_mark(plateau)))
+    print("   " + str(twoActions[1]) + " : " + str(twoActions[1].calc_mark(plateau)))
