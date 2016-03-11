@@ -57,7 +57,7 @@ class Action:
         elif self.action_type == ActionType.run:  #todo
             self.possibleGain = 0 #todo
         else :
-            print("type de mission non reconnu par calc_mark", self.mission_type)
+            print("type d'action non reconnu par calc_mark", self.action_type)
         mark = (self.possibleGain-self.possibleEnemyGain)
         return mark
 
@@ -67,24 +67,24 @@ class Action:
 
 
     def calculateCoup(self, state):
-        #dependant on mission type
+        #dependant on action_type
         #test if below limit lines before sending!!
 
-        if self.mission_type ==MissionType.attackHuman:
+        if self.action_type ==ActionType.attackHuman:
             #find closest human group
             grouptoAttack=self.target_group
             vector=utils.getVector(self.assignedGroup,grouptoAttack)
                 #here if no split
             return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0], self.assignedGroup.y+vector[1]]
         
-        if self.mission_type == MissionType.attackEnemy:
+        if self.action_type == ActionType.attackEnemy:
             #find closest ennemy group
             grouptoAttack=self.target_group
             vector=utils.getVector(self.assignedGroup,grouptoAttack)
                 #here if no split
             return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0],self.assignedGroup.y+vector[1]]
  
-        if self.mission_type == MissionType.run:
+        if self.action_type == ActionType.run:
             #find closest ennemy group
             grouptoRunfrom=self.target_group
             vector=utils.getVector(self.assignedGroup,grouptoRunfrom)
