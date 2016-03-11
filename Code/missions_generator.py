@@ -1,4 +1,5 @@
 from actions_generator import enumerate_possible_actions
+from mission import Mission
 
 
 def enumerate_possible_missions(state, my_species):
@@ -28,7 +29,8 @@ def enumerate_possible_missions(state, my_species):
             mission_array.append(action_split[1])
         else:
             mission_array.append(action_simple)
-    return mission_array
+    newMission = Mission(mission_array);
+    return newMission;
 
     """sortedMissionArray=[]
     for mission in mission_array:
