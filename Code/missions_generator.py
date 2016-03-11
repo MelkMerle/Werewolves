@@ -4,6 +4,7 @@ from mission import Mission
 
 def enumerate_possible_missions(state, my_species):
     mission_array=[]
+    finalArray=[]
     my_groups = state.getMembers(my_species)
     for groupMe in my_groups:
         possible_actions = enumerate_possible_actions(state, groupMe, my_species)
@@ -30,7 +31,8 @@ def enumerate_possible_missions(state, my_species):
         else:
             mission_array.append(action_simple)
     newMission = Mission(mission_array);
-    return newMission;
+    finalArray.append(newMission);
+    return finalArray;
 
     """sortedMissionArray=[]
     for mission in mission_array:
