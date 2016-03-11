@@ -4,10 +4,10 @@ from group import Group
 
 class PlateauDeJeu:
 
-    def __init__(self):
+    def __init__(self, width=0, height=0):
         self.groupes = []
-        self.width=0
-        self.height=0
+        self.width=width
+        self.height=height
 
     def getGroup(self, x, y):
         for groupe in self.groupes:
