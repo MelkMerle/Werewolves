@@ -19,7 +19,7 @@ print(missionArray)
 
 for mission in missionArray:
     for action in mission.actions:
-        mission_type = action.mission_type
+        action_type = action.action_type
         assigned = action.assignedGroup
         target = action.target_group
-        print("Action de type " + str(mission_type) + " : " + str(assigned) + " vers " + str(target))
+        print("Action de type " + str(action_type) + " : " + str(assigned) + " vers " + str(target))

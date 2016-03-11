@@ -1,14 +1,14 @@
 # coding=utf-8
 
 from group import Group
-from mission_type import MissionType
+from action_type import ActionType
 from species import Species
 import utils
 
 class Action:
 
-    def __init__(self, mission_type=MissionType.attackHuman, target_group=Group(), assigned_group=Group()):
-        self.mission_type = mission_type
+    def __init__(self, action_type=ActionType.attackHuman, target_group=Group(), assigned_group=Group()):
+        self.action_type = action_type
         self.target_group = target_group
         self.assignedGroup = assigned_group
 
@@ -24,7 +24,7 @@ class Action:
         if self.assignedGroup.eff==0:
             print("Warning : calc_mark tente d'evaluer les actions d'un groupe vide")
             return 0
-        if self.mission_type == MissionType.attackHuman:
+        if self.action_type == ActionType.attackHuman:
             distance = utils.getDistance(self.assignedGroup,self.target_group)
             groupe_max = Group(0,0,0,self.assignedGroup.species.inverse()) #on initialise un groupe max de base, a 0
             for group in state.groupes:
@@ -51,9 +51,9 @@ class Action:
                 self.possibleGain = -self.assignedGroup.eff
 
 
-        elif self.mission_type == MissionType.attackEnemy: #todo
+        elif self.action_type == ActionType.attackEnemy: #todo
             return 1
-        elif self.mission_type == MissionType.run:  #todo
+        elif self.action_type == ActionType.run:  #todo
             self.possibleGain = 0 #todo
         else :
             print("type de mission non reconnu par calc_mark", self.mission_type)
@@ -61,7 +61,7 @@ class Action:
         return mark
 
     def __str__(self):
-        return "{} from {} to {}".format(self.mission_type, self.assignedGroup, self.target_group)
+        return "{} from {} to {}".format(self.action_type, self.assignedGroup, self.target_group)
 
 
 

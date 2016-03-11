@@ -3,7 +3,7 @@
 from enum import Enum
 
 
-class MissionType(Enum):
+class ActionType(Enum):
     attackEnemy = 'attackEnemy'
     attackHuman = 'attackHuman'
     merge = 'merge'

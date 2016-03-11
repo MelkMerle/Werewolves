@@ -1,7 +1,7 @@
 # coding=utf-8                                                                                                                                                                   
 from action import Action
 from species import Species
-from mission_type import MissionType
+from action_type import ActionType
 from group import Group
 
 
@@ -16,11 +16,11 @@ def enumerate_possible_actions(state, group, specie):
     groups_targets = []
     # actions sans split
     for group_human in groups_human:
-        action = Action(MissionType.attackHuman, group_human, group)
+        action = Action(ActionType.attackHuman, group_human, group)
         actions_simple_per_group.append(action)
         groups_targets.append(group_human)
     for group_enemy in groups_enemy:
-        action = Action(MissionType.attackEnemy, group_enemy, group)
+        action = Action(ActionType.attackEnemy, group_enemy, group)
         actions_simple_per_group.append(action)
         groups_targets.append(group_enemy)
 
@@ -32,13 +32,13 @@ def enumerate_possible_actions(state, group, specie):
         group1 = Group(group.x, group.y, doublet[0], specie)
         group2 = Group(group.x, group.y, doublet[1], specie)
         for target_group_1 in groups_targets:
-            mission_type_1 = specie.determine_mission_type(target_group_1.species)
+            action_type_1 = specie.determine_action_type(target_group_1.species)
             for target_group_2 in groups_targets:
-                mission_type_2 = specie.determine_mission_type(target_group_2.species)
+                action_type_2 = specie.determine_action_type(target_group_2.species)
                 # si les deux targets sont différentes :
                 if (target_group_1.x != target_group_2.x) or (target_group_1.y != target_group_2.y):
-                    action1 = Action(mission_type_1, target_group_1, group1)
-                    action2 = Action(mission_type_2, target_group_2, group2)
+                    action1 = Action(action_type_1, target_group_1, group1)
+                    action2 = Action(action_type_2, target_group_2, group2)
                     actions_split_per_group.append([action1, action2])
     actions_total.append(actions_simple_per_group)
     actions_total.append(actions_split_per_group)

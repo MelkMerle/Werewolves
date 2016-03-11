@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from enum import Enum
-from mission_type import MissionType
+from action_type import ActionType
 
 class Species(Enum):
     human = 'human'
@@ -15,12 +15,12 @@ class Species(Enum):
             return Species.vampire
         return Species.human
 
-    def determine_mission_type(self, target_species):
+    def determine_action_type(self, target_species):
         if target_species == self:
-            return MissionType.merge
+            return ActionType.merge
         if target_species == self.inverse():
-            return MissionType.attackEnemy
+            return ActionType.attackEnemy
         if target_species == Species.human:
-            return MissionType.attackHuman
+            return ActionType.attackHuman
         else :
             print("determine mission type encountered problem car l'espece visee etait", target_species)

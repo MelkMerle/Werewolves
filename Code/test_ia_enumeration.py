@@ -18,10 +18,10 @@ print("Enumeration actions ...\n")
 actions = enumerate_possible_actions(plateau, myGroup, Species.werewolf)
 
 for actionSimple in actions[0]:
-    mission_type = actionSimple.mission_type
+    action_type = actionSimple.action_type
     assigned = actionSimple.assignedGroup
     target = actionSimple.target_group
-    print("Action de type " + str(mission_type) + " : " + str(assigned) + " vers " + str(target) + ", note : " + str(actionSimple.calc_mark(plateau)))
+    print("Action de type " + str(action_type) + " : " + str(assigned) + " vers " + str(target) + ", note : " + str(actionSimple.calc_mark(plateau)))
 
 for twoActions in actions[1]:
     group0 = twoActions[0].assignedGroup
