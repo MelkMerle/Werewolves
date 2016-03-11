@@ -14,4 +14,4 @@ class Group:
     # todo
 
     def __str__(self):
-        return "{}{} en ({},{})".format(self.eff, self.species.value, self.x, self.y)
+        return "groupe de {}{} en ({},{})".format(self.eff, self.species.value, self.x, self.y)

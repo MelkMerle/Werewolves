@@ -36,11 +36,12 @@ class PlateauDeJeu:
         y=group.y
         found = 0
         for presentGroupe in self.groupes:
-            if( x== presentGroupe.y and y == presentGroupe.y):
+            if( x== presentGroupe.x and y == presentGroupe.y):
                 self.groupes.remove(presentGroupe)
                 found=1
-        if found ==0:
-            print('tried to remove unknown group')
+                print "remove group success at ", x, y
+        if found == 0:
+            print('tried to remove unknown group at ', x, y)
 
     #quelle est l'idée de cette fonction ?
     # def MoveMembers(self,x, y, xsec,ysec, numtomove):
