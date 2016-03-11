@@ -16,11 +16,11 @@ class Species(Enum):
         return Species.human
 
     def determine_mission_type(self, target_species):
-        if target_species.value == self.value:
+        if target_species == self:
             return MissionType.merge
-        if target_species.value == self.inverse():
+        if target_species == self.inverse():
             return MissionType.attackEnemy
-        if target_species.value == Species.human:
+        if target_species == Species.human:
             return MissionType.attackHuman
         else :
-            print "determine mission type encountered problem"
+            print "determine mission type encountered problem car l'espece visee etait", target_species

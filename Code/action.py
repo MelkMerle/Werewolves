@@ -56,7 +56,7 @@ class Action:
         elif self.mission_type == MissionType.run:  #todo
             self.possibleGain = 0 #todo
         else :
-            print "type de mission non reconnu par calc_mark"
+            print "type de mission non reconnu par calc_mark", self.mission_type
         mark = (self.possibleGain-self.possibleEnemyGain)
         return mark
 
