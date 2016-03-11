@@ -51,7 +51,8 @@ class Action:
         return mark
 
     def __str__(self):
-        return "Group of {} {}, en ({},{})".format(self.eff, self.species.value, self.x, self.y)
+        return "{} from {} to {}".format(self.mission_type, self.assignedGroup, self.target_group)
+
 
 
     def calculateCoup(self, state):
