@@ -23,7 +23,6 @@ class Intelligence():
 
     def calculateHeuristics(self,state):
         # here we do so mathematics voodoo
-        heuristics=0
         wwGroups = state.getMembers(Species.werewolf)
         vpGroups = state.getMembers(Species.vampire)
         wwNumber= 0
@@ -54,7 +53,8 @@ class Intelligence():
             assessedMission = [mission, 0]
             assessedMission[1] = self.alphabeta(self.CalulateNextState(mission, state), self.mySpecie.inverse(), 1,-100000, +100000)
             possibleBranches.append(assessedMission)
-        coupFinal = possibleBranches.sort(key=lambda x: int(x[1]))[len(possibleBranches)][0].calculateCoup(state)
+        print possibleBranches
+        coupFinal = possibleBranches.sort(key=lambda x: (x[1]))[-1][0].calculateCoup(state)
         return coupFinal
 
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
