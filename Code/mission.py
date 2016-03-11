@@ -2,6 +2,7 @@
 from action import Action
 from group import Group
 import utils
+import copy
 from action_type import ActionType
 
 class Mission:
@@ -26,7 +27,7 @@ class Mission:
 
     def execute(self,state):
         print(self.actions)
-        calculatedState = state
+        calculatedState = copy.deepcopy(state)
         for action in self.actions: #on parcourt les actions possibles
             # pour les missions de type attackhuman, on simule l'état du plateau quand on l'aura bouffé
             if action.action_type == ActionType.attackHuman:
