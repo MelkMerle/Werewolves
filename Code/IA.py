@@ -49,6 +49,7 @@ class Intelligence():
     def chooseMission(self, state):
         possibleBranches = []
         missionlist = enumerate_possible_missions(state, self.mySpecie)
+        print "alpha 1 ", missionlist
         for mission in missionlist:
             assessedMission = [mission, 0]
             assessedMission[1] = self.alphabeta(self.CalulateNextState(mission, state), self.mySpecie.inverse(), 1,-100000, +100000)
