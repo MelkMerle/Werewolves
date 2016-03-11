@@ -5,9 +5,9 @@ from mission_type import MissionType
 from group import Group
 
 
-def enumerate_possible_actions(state, group, my_species):
+def enumerate_possible_actions(state, group, specie):
     groups_human = state.getMembers(Species.human)
-    groups_enemy = state.getMembers(my_species.inverse())
+    groups_enemy = state.getMembers(specie.inverse())
     actions_total = []
     len_group_me = group.eff
     actions_simple_per_group = []
@@ -26,12 +26,12 @@ def enumerate_possible_actions(state, group, my_species):
         doublets.append([i, len_group_me-i])
     groups_targets = groups_human + groups_enemy
     for doublet in doublets:
-        group1 = Group(group.x, group.y, doublet[0], my_species)
-        group2 = Group(group.x, group.y, doublet[1], my_species)
+        group1 = Group(group.x, group.y, doublet[0], specie)
+        group2 = Group(group.x, group.y, doublet[1], specie)
         for target_group_1 in groups_targets:
-            mission_type_1 = my_species.determine_mission_type(target_group_1.species)
+            mission_type_1 = specie.determine_mission_type(target_group_1.species)
             for target_group_2 in groups_targets:
-                mission_type_2 = my_species.determine_mission_type(target_group_2.species)
+                mission_type_2 = specie.determine_mission_type(target_group_2.species)
                 if target_group_1 != target_group_2:
                     action1 = Action(mission_type_1, target_group_1, group1)
                     action2 = Action(mission_type_2, target_group_2, group2)
