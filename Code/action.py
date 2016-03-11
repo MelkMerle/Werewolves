@@ -7,7 +7,7 @@ import utils
 
 class Action:
 
-    def __init__(self, mission_type, target_group, assigned_group):
+    def __init__(self, mission_type=MissionType.attackHuman, target_group=Group(), assigned_group=Group()):
         self.mission_type = mission_type
         self.target_group = target_group
         self.assignedGroup = assigned_group
@@ -21,6 +21,9 @@ class Action:
         self.mark = 0
 
     def calc_mark(self, state): #a ameliorer pour la gestion des ennemis
+        if self.assignedGroup.eff==0:
+            print "Warning : calc_mark tente d'evaluer les actions d'un groupe vide"
+            return 0
         if self.mission_type == MissionType.attackHuman:
             distance = utils.getDistance(self.assignedGroup,self.target_group)
             groupe_max = Group(0,0,0,self.assignedGroup.species.inverse()) #on initialise un groupe max de base, a 0

@@ -5,7 +5,7 @@ import utils
 from mission_type import MissionType
 
 class Mission:
-    def __init__(self, actions=[]):  #Actions is an array of actions
+    def __init__(self, actions=[Action()]):  # Actions is an array of actions
         self.actions=actions
         #self.changes inutile maintenant
     def calc_mark(self,state):
