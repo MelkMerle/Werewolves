@@ -15,11 +15,13 @@ class Mission:
         return mark
 
 
-    def calculateCoup(self, state): #todo
-        coups = [0,0]
+    def calculateCoup(self, state):
+        coupsActions =[]
+        coupsNombre = 0
         for action in self.actions:
-            coups[1].append(action.calculateCoup(state))
-            coups[0]+=1
+            coupsActions.append(action.calculateCoup(state))
+            coupsNombre += 1
+        coups = [coupsNombre,coupsActions]
         return coups
 
     def execute(self,state):
