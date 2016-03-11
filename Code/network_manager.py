@@ -14,7 +14,7 @@ class NetworkManager:
         # Récupération en ligne de commande l'addresse ip et le port
         #self.ip = raw_input("Adresse IP du serveur : ")
         #self.port = int(raw_input("Port : "))
-        self.ip = "192.168.0.105"
+        self.ip = "192.168.100.16"
         self.port = int(5555)
         # Connexion de la socket
         try:
@@ -71,7 +71,7 @@ class NetworkManager:
                 self.updateGroups(changement)
 
             # calculez votre coup
-            coup = self.IA.chooseMission(self.Plateau, self.IA.mySpecie)
+            coup = self.IA.chooseMission(self.Plateau)
             # calcule le coup de l'IA, qui est un tableau de
                               # Nx5 chiffres(x_dep,y_dep,nombre,x_arr,y_arr)_
             # préparez la trame MOV ou ATK

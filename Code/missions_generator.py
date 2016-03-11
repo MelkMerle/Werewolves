@@ -2,12 +2,12 @@ from actions_generator import enumerate_possible_actions
 from mission import Mission
 
 
-def enumerate_possible_missions(state, my_species):
+def enumerate_possible_missions(state, specie):
     mission_array=[]
     finalArray=[]
-    my_groups = state.getMembers(my_species)
+    my_groups = state.getMembers(specie)
     for groupMe in my_groups:
-        possible_actions = enumerate_possible_actions(state, groupMe, my_species)
+        possible_actions = enumerate_possible_actions(state, groupMe, specie)
         rate_simple = 0
         rate_split = 0
         action_simple = None
