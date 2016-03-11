@@ -151,7 +151,7 @@ class NetworkManager:
             elif num_wolves > 0:
                 effectif = num_wolves
                 espece = Species.werewolf
-            elif num_humans == 0 & num_vamp == 0 & num_wolves == 0:
+            elif num_humans == 0 and num_vamp == 0 and num_wolves == 0:
                 effectif = 0
             else:
                 print("espèce non attendue reçue en commande UPD")
@@ -159,7 +159,7 @@ class NetworkManager:
             # parcours des groupes et mise à jour du bon
             notfound = 1
             for group in self.Plateau.groupes:
-                if group.x == x & group.y == y:
+                if group.x == x and group.y == y:
                     notfound = 0
                     if effectif == 0:
                         self.Plateau.groupes.remove(group)
