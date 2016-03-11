@@ -59,7 +59,7 @@ class Intelligence():
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
     def alphabeta(self, state, specie, recursiveValue, alpha, beta):
-        if recursiveValue > self.maxValue:
+        if (recursiveValue > self.maxValue)or(state.getMembers(specie)==[] or state.getMembers(specie.inverse()==[]))  :
             return  self.calculateHeuristics(state)
         if specie== self.mySpecie:
             missionList = enumerate_possible_missions(state, specie)
