@@ -14,7 +14,7 @@ class NetworkManager:
         # Récupération en ligne de commande l'addresse ip et le port
         #self.ip = raw_input("Adresse IP du serveur : ")
         #self.port = int(raw_input("Port : "))
-        self.ip = "192.168.100.16"
+        self.ip = "192.168.100.33"
         self.port = int(5555)
         # Connexion de la socket
         try:
@@ -35,17 +35,17 @@ class NetworkManager:
                 if(isinstance(message, int)):
                     data = struct.pack('=B', message)
                 elif (isinstance(message, str)):
-                    data = bytes(message)
+                    data = bytes(message, 'utf-8')
                 elif (isinstance(message, list)):
                     for mess in message:
                         self.send(mess)
                     return
                 else:
-                    print ("couldn't pack message: ", message)
+                    print("couldn't pack message: ", message)
                 print('data = ',data);
                 self.sock.send(data)
             except Exception as error:
-                 print("Couldn't send message: ", message, error)
+                print("Couldn't send message: ", message, error)
 
     def recv(self, length):
         return struct.unpack('=B',self.sock.recv(length))
@@ -94,7 +94,7 @@ class NetworkManager:
         elif order == "HME":
             x = self.recv(1)[0]
             y = self.recv(1)[0]
-            print "J'ai reçu HME :", x,y
+            print("J'ai reçu HME :", x,y)
             self.Plateau.maMaison = [x, y]
 
         elif order == "MAP":
