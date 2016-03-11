@@ -54,7 +54,7 @@ class Intelligence():
         allmission = []
         for mission in enumerate_possible_missions(state, self.mySpecie):
             missiontotest = [self.CalulateNextState(mission, state), 0]
-            missiontotest[1] = self.minmax(missiontotest[0], self.mySpecie.invert(), 1)
+            missiontotest[1] = self.alphabeta(missiontotest[0], self.mySpecie.inverse(), 1,-100000, +100000)
             allmission.append(missiontotest)
         if specie != self.mySpecie:
             return allmission.sort(key=lambda x: int(x[1]))[0][0].calculateCoup(state)
@@ -63,20 +63,23 @@ class Intelligence():
 
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
-
-    def minmax(self, state, specie, recursiveValue):
-        allmission=[]
-        for mission in enumerate_possible_missions(state, self.mySpecie):
-            missiontotest = [self.CalulateNextState(mission, state), 0]
-            if recursiveValue > self.maxValue:
-                missiontotest[1] = self.calculateHeuristics(missiontotest[0], specie)
-            else:
-                missiontotest[1] = self.minmax(missiontotest[0], specie.invert(), recursiveValue+1)
-            allmission.append(missiontotest)
-        if specie != self.mySpecie:
-            return allmission.sort(key=lambda x: int(x[1]))[0][1]
+    def alphabeta(self, state, specie, recursiveValue, alpha, beta):
+        if recursiveValue > self.maxValue:
+            return  self.calculateHeuristics(state, specie)
+        if specie== self.mySpecie:
+            for mission in enumerate_possible_missions(state, self.mySpecie):
+                alpha=max(alpha,self.alphabeta(mission, specie.inverse(), recursiValue+1,alpha, beta)) 
+                if alpha > beta:
+                    return beta
+            return alpha
         else:
-            return allmission.sort(key=lambda x: int(x[1]))[len(allmission)][1]
+            for mission in enumerate_possible_missions(state, self.mySpecie):
+                beta=min(beta,self.alphabeta(mission, specie.inverse(), recursiValue+1,alpha, beta)) 
+                if alpha > beta :
+                    return alpha
+            return beta
+
+        
 
 
 
