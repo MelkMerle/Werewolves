@@ -47,6 +47,7 @@ class Intelligence():
      #Principal function, returning the best possible mission set
     def chooseMission(self, state):
         possibleBranches = []
+        missionlist = []
         missionlist = enumerate_possible_missions(state, self.mySpecie)
         print("alpha 1 ", missionlist)
         for mission in missionlist:

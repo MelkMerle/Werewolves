@@ -67,9 +67,6 @@ class NetworkManager:
             changes = []
             for i in range(n):
                 changement=self.recv(5)  # chaque changement a la forme [X, Y, nombre_H, nombre_V, nombre_L]
-                print changement
-                changes.append(changement)
-            for changement in changes:
                 self.updateGroups(changement)
 
             # calculez votre coup
@@ -89,7 +86,6 @@ class NetworkManager:
         elif order == "HUM":
            n = self.recv(1)[0]
            for i in range(n):
-                #je ne comprends pas bien comment fonctionne sock.recv, et pourquoi il faut un [0] partout, du coup j'ai fait ça, plutot que self.recv(2) sans boucle sur j... à discuter
                 for j in range(2):
                     self.recv(1)[0]
 
@@ -137,18 +133,24 @@ class NetworkManager:
             print("commande non attendue recue", order)
 
     def updateGroups(self, change):
-            x = change[0], y = change[1], num_humans = change[2], num_vamp = change[3], num_wolves = change[4]
-
+            print change
+            x = change[0]
+            y = change[1]
+            num_humans = change[2]
+            num_vamp = change[3]
+            num_wolves = change[4]
+            effectif = 0
+            espece = None
             # détermination de l'espèce concernée par le changement
             if num_humans > 0:
                 effectif = num_humans
                 espece = Species.human
             elif num_vamp > 0:
-                effectif = num_humans
-                espece = Species.human
+                effectif = num_vamp
+                espece = Species.vampire
             elif num_wolves > 0:
-                effectif = num_humans
-                espece = Species.human
+                effectif = num_wolves
+                espece = Species.werewolf
             elif num_humans == 0 & num_vamp == 0 & num_wolves == 0:
                 effectif = 0
             else:
