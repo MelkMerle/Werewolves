@@ -30,9 +30,9 @@ def enumerate_possible_missions(state, specie):
             mission_array.append(action_split[1])
         else:
             mission_array.append(action_simple)
-    newMission = Mission(mission_array);
-    finalArray.append(newMission);
-    return finalArray;
+    newMission = Mission(mission_array)
+    finalArray.append(newMission)
+    return finalArray
 
     """sortedMissionArray=[]
     for mission in mission_array:
