@@ -1,5 +1,4 @@
 # coding=utf-8
-import struct
 from network_manager import NetworkManager
 
 #à mettre en attributs d'une classe Map
