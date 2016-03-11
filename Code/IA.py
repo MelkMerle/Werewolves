@@ -63,7 +63,7 @@ class Intelligence():
             return  self.calculateHeuristics(state)
         if specie== self.mySpecie:
             missionList = enumerate_possible_missions(state, specie)
-            print "alpha liste", missionList
+            print("alpha liste", missionList)
             for mission in missionList:
                 alpha=max(alpha,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
                 if alpha > beta:
@@ -71,7 +71,7 @@ class Intelligence():
             return alpha
         else:
             missionList = enumerate_possible_missions(state, specie)
-            print "beta liste ", missionList
+            print("beta liste ", missionList)
             for mission in missionList:
                 beta=min(beta,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
                 if alpha > beta :

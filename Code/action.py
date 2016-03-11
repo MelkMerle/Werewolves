@@ -22,7 +22,7 @@ class Action:
 
     def calc_mark(self, state): #a ameliorer pour la gestion des ennemis
         if self.assignedGroup.eff==0:
-            print "Warning : calc_mark tente d'evaluer les actions d'un groupe vide"
+            print("Warning : calc_mark tente d'evaluer les actions d'un groupe vide")
             return 0
         if self.mission_type == MissionType.attackHuman:
             distance = utils.getDistance(self.assignedGroup,self.target_group)
@@ -56,7 +56,7 @@ class Action:
         elif self.mission_type == MissionType.run:  #todo
             self.possibleGain = 0 #todo
         else :
-            print "type de mission non reconnu par calc_mark", self.mission_type
+            print("type de mission non reconnu par calc_mark", self.mission_type)
         mark = (self.possibleGain-self.possibleEnemyGain)
         return mark
 
