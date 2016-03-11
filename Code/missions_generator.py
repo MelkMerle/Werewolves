@@ -2,6 +2,28 @@ from actions_generator import enumerate_possible_actions
 from mission import Mission
 import itertools
 
+def propose_some_missions(state, my_species, n):
+
+    for groupMe in state.getMembers(my_species):
+        possibles_actions = enumerate_possible_actions(state, groupMe, my_species)
+
+        simple_actions_and_rates = [[], []]
+        split_actions_and_rates = [[], []]
+
+        for simple_action in possibles_actions[0]:
+            simple_actions_and_rates[0].append(simple_action)
+            simple_actions_and_rates[1].append(simple_action.calc_mark(state))
+
+        for split_action in possibles_actions[1]:
+            split_actions_and_rates[0].append(simple_action)
+            split_actions_and_rates[1].append(simple_action.calc_mark(state))
+
+
+
+        # on garde les n premières
+        possibles_actions[0].sort
+
+
 def enumerate_possible_missions(state, my_species):
     mission_array=[]
     finalArray=[]
@@ -30,6 +52,7 @@ def enumerate_possible_missions(state, my_species):
             elif rate > rate_action_split[1]:
                 action_split[1] = actions
                 rate_action_split[1] = rate
+
         split1=action_split[0]
         split2=action_split[1]
         merged_actions=action_simple + [1] + [2]
