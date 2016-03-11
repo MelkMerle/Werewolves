@@ -11,6 +11,7 @@ class Action:
         self.action_type = action_type
         self.target_group = target_group
         self.assignedGroup = assigned_group
+        self.parent_group = None
 
         self.secure_effective = target_group.eff
         self.possibleGain = 0

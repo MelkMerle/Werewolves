@@ -39,6 +39,8 @@ def enumerate_possible_actions(state, group, specie):
                 if (target_group_1.x != target_group_2.x) or (target_group_1.y != target_group_2.y):
                     action1 = Action(action_type_1, target_group_1, group1)
                     action2 = Action(action_type_2, target_group_2, group2)
+                    action1.parent_group = group
+                    action2.parent_group = group
                     actions_split_per_group.append([action1, action2])
     actions_total.append(actions_simple_per_group)
     actions_total.append(actions_split_per_group)
