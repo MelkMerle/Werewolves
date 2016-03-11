@@ -23,35 +23,42 @@ class Action:
     def calc_mark(self, state): #a ameliorer pour la gestion des ennemis
         if self.mission_type == MissionType.attackHuman:
             distance = utils.getDistance(self.assignedGroup,self.target_group)
-            groupe_max = Group(0,0,0,self.assignedGroup.species.inverse()) #on initialise un groupe max pipo
+            groupe_max = Group(0,0,0,self.assignedGroup.species.inverse()) #on initialise un groupe max de base, a 0
             for group in state.groupes:
                 if group.species == self.assignedGroup.species.inverse() \
                         and utils.getDistance(group,self.target_group) < distance \
                         and group.eff >= self.target_group.eff \
                         and group.eff>groupe_max.eff: #on cherche les groupes ennemis plus proches que nous de la cible, plus nombreux que la cible, et on garde le plus gros d'entre eux
                     groupe_max=group
-            enemyWinner = utils.simulateBattle(groupe_max,self.target_group)
-            winnerFinal = utils.simulateBattle(self.assignedGroup,enemyWinner)
-            if winnerFinal.species==self.assignedGroup.species:
+
+            enemyWinner = utils.simulateBattle(groupe_max,self.target_group) # on simule une bataille entre ce groupe_max (cad le groupe d'enemis plus proche que nous, ou, à défaut, un groupe fictif vide, qui perdra forcément la bataille)
+            winnerFinal = utils.simulateBattle(self.assignedGroup,enemyWinner) # et on simule une bataille entre nous et le gagnant de la première bataille
+            #et ensuite on traite les differents cas
+
+            if winnerFinal.species==self.assignedGroup.species: #soit on gagne avec certitude la derniere bataille
                 self.possibleEnemyGain = -groupe_max.eff
                 self.possibleGain =winnerFinal.eff-self.assignedGroup.eff
-            elif winnerFinal.species == Species.human:
+
+            elif winnerFinal.species == Species.human: # soit les humains remportent et nos deux groupes se sont faits bouffer
                 self.possibleEnemyGain = -groupe_max.eff
                 self.possibleGain = -self.assignedGroup.eff
-            else:
+
+            else:                                       # soit les enemis gagnent et on perd
                 self.possibleEnemyGain = winnerFinal.eff-groupe_max.eff
                 self.possibleGain = -self.assignedGroup.eff
-            return self.possibleGain
+
 
         elif self.mission_type == MissionType.attackEnemy: #todo
             return 1
         elif self.mission_type == MissionType.run:  #todo
             self.possibleGain = 0 #todo
+        else :
+            print "type de mission non reconnu par calc_mark"
         mark = (self.possibleGain-self.possibleEnemyGain)
         return mark
 
     def __str__(self):
-        return "Group of {} {}, en ({},{})".format(self.eff, self.species.value, self.x, self.y)
+        return "Action of a group of {} {}, at ({},{})".format(self.assignedGroup.eff, self.assignedGroup.species.value, self.assignedGroup.x, self.assignedGroup.y)
 
 
     def calculateCoup(self, state):
