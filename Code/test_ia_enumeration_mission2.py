@@ -2,30 +2,39 @@ from species import Species
 from Plateau import PlateauDeJeu
 from group import Group
 from missions_generator import enumerate_possible_missions
+import itertools
 
-plateau = PlateauDeJeu(10,10)
+
+
+
+plateau = PlateauDeJeu()
+plateau.width=10
+plateau.height=10
 
 myGroup = Group(9, 9, 10, Species.werewolf)
 plateau.addGroup(1, 1, 8, Species.human)
 plateau.addGroup(2, 2, 2, Species.human)
 plateau.addGroup(3, 4, 12, Species.human)
 plateau.addGroup(9, 9, 5, Species.vampire)
+plateau.addGroup(8, 9, 5, Species.werewolf)
+plateau.addGroup(7, 9, 5, Species.werewolf)
+plateau.addGroup(6, 9, 5, Species.werewolf)
+plateau.addGroup(5, 9, 5, Species.werewolf)
 plateau.addThisGroup(myGroup)
 
 missionArray = enumerate_possible_missions(plateau, Species.werewolf)
 
 print(missionArray)
 
-for action in missionArray:
-    mission_type = action.mission_type
-    assigned = action.assignedGroup
-    target = action.target_group
-    print("Action de type " + str(mission_type) + " : " + str(assigned) + " vers " + str(target))
+for mission in missionArray:
+    for action in mission.actions:
+        print(action)
+        mission_type = action.mission_type
+        assigned = action.assignedGroup
+        target = action.target_group
+        print("Action de type " + str(mission_type) + " : " + str(assigned) + " vers " + str(target))
 
 
-
-
-missionArray=[[1,2],[3,4],[5,6],[7,8]]
 
 
 
@@ -60,7 +69,7 @@ L=product('ABCD','123')"""
 
 
 
-def cartesien(list1,list2):
+"""def cartesien(list1,list2):
     l3=[[a, b] for a in list1 for b in list2]
     cart2=[]
     for i in l3:
@@ -77,6 +86,6 @@ while len(missionArray)>1:
     missionArray=missionArray[1:]
 newMix=cartesien(newMix,missionArray[0])
 print(newMix)
-
+"""
 
 

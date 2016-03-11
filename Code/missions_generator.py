@@ -1,5 +1,6 @@
 from actions_generator import enumerate_possible_actions
 from mission import Mission
+import itertools
 
 
 def enumerate_possible_missions(state, my_species):
@@ -30,14 +31,23 @@ def enumerate_possible_missions(state, my_species):
             elif rate > rate_action_split[1]:
                 action_split[1] = actions
                 rate_action_split[1] = rate
-
-        merged_actions=action_simple + action_split
+        split1=action_split[0]
+        split2=action_split[1]
+        merged_actions=action_simple + [1] + [2]
         merged_rates=rate_action_simple + rate_action_split
-        merged_actions.sort(key=dict(zip(merged_actions, merged_rates)).get)
+        merged_actions.sort(key=dict(zip(merged_actions, merged_rates)).get, reverse=True)
+        index1=merged_actions.index(1)
+        index2=merged_actions.index(2)
+        merged_actions[index1]=split1[0]
+        merged_actions.insert(index1+1, split1[1])
+        merged_actions[index2]=split2[0]
+        merged_actions.insert(index2+1, split2[1])
         mission_array.append(merged_actions[-2:])
+    newMix=list(itertools.product(*mission_array))
+    for mission in newMix:
+        newMission = Mission(mission);
+        finalArray.append(newMission);
 
-    newMission = Mission(mission_array);
-    finalArray.append(newMission);
     return finalArray;
 
     """sortedMissionArray=[]
@@ -46,12 +56,17 @@ def enumerate_possible_missions(state, my_species):
     sortedMissionArray.sort(key=lambda x: int(x[1]))
     return sortedMissionArray[-5:]"""
 
-def product(*args, **kwds):
-    # product('ABCD', 'xy') --> Ax Ay Bx By Cx Cy Dx Dy
-    # product(range(2), repeat=3) --> 000 001 010 011 100 101 110 111
-    pools = map(tuple, args) * kwds.get('repeat', 1)
-    result = [[]]
-    for pool in pools:
-        result = [x+[y] for x in result for y in pool]
-    for prod in result:
-        yield tuple(prod)
+def cartesien(list1,list2):
+    l3=[[a, b] for a in list1 for b in list2]
+    cart2=[]
+    for i in l3:
+        long = i[0] + [i[1]]
+        cart2.append(long)
+    return(cart2)
+
+"""    newMix=[[a, b] for a in mission_array[0] for b in mission_array[1]]
+    mission_array=mission_array[2:]
+    while len(mission_array)>1:
+        newMix=cartesien(newMix,mission_array[0])
+        mission_array=mission_array[1:]
+    newMix=cartesien(newMix,mission_array[0])"""

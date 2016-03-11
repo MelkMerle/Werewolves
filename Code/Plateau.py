@@ -13,7 +13,7 @@ class PlateauDeJeu:
         for groupe in self.groupes:
             if (groupe.x==x and groupe.y==y):
                 return groupe
-        print 'Aucun groupe trouve aux coordonnees (x,y) suivantes :', x, y
+        print('Aucun groupe trouve aux coordonnees (x,y) suivantes :', x, y)
         return None
 
     def addGroup(self,x, y, effectif, espece):
