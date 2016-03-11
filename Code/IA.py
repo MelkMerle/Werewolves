@@ -48,7 +48,8 @@ class Intelligence():
      #Principal function, returning the best possible mission set
     def chooseMission(self, state):
         possibleBranches = []
-        for mission in enumerate_possible_missions(state, self.mySpecie):
+        missionlist = enumerate_possible_missions(state, self.mySpecie)
+        for mission in missionlist:
             assessedMission = [mission, 0]
             assessedMission[1] = self.alphabeta(self.CalulateNextState(mission, state), self.mySpecie.inverse(), 1,-100000, +100000)
             possibleBranches.append(assessedMission)
@@ -61,13 +62,15 @@ class Intelligence():
         if recursiveValue > self.maxValue:
             return  self.calculateHeuristics(state)
         if specie== self.mySpecie:
-            for mission in enumerate_possible_missions(state, specie):
+            missionList = enumerate_possible_missions(state, specie)
+            for mission in missionList:
                 alpha=max(alpha,self.alphabeta(mission, specie.inverse(), recursiveValue+1,alpha, beta))
                 if alpha > beta:
                     return beta
             return alpha
         else:
-            for mission in enumerate_possible_missions(state, specie):
+            missionList = enumerate_possible_missions(state, specie)
+            for mission in missionList:
                 beta=min(beta,self.alphabeta(mission, specie.inverse(), recursiveValue+1,alpha, beta))
                 if alpha > beta :
                     return alpha

@@ -34,6 +34,7 @@ class Mission:
                 calculatedState.groupes.remove(action.assignedGroup)
                 calculatedState.groupes.remove(action.target_group)
                 calculatedState.groupes.append(winner)
+
            # pour les missions de type attackhuman, on simule l'état du plateau quand on l'aura bouffé
             if action.mission_type == MissionType.attackEnemy:
                 groupe_en_action= action.assignedGroup

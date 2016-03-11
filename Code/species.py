@@ -22,5 +22,5 @@ class Species(Enum):
             return MissionType.attackEnemy
         if target_species == Species.human:
             return MissionType.attackHuman
-        else:
-            print("determine mission type encountered problem")
+        else :
+            print "determine mission type encountered problem car l'espece visee etait", target_species
