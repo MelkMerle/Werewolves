@@ -48,7 +48,10 @@ class NetworkManager:
                 print("Couldn't send message: ", message, error)
 
     def recv(self, length):
-        return struct.unpack('=B',self.sock.recv(length))
+        returnTable=[]
+        for i in range(length):
+            returnTable.append(struct.unpack('=B', self.sock.recv(1))[0])
+        return returnTable
 
 
     def update(self):
@@ -63,9 +66,8 @@ class NetworkManager:
             n = self.recv(1)[0]
             changes = []
             for i in range(n):
-                changement=[]
-                for j in range(5): # devrait changer avec la forme self.recv(5)[0]
-                    changement.append(self.recv(1)[0]) # chaque change a la forme [X, Y, nombre_H, nombre_V, nombre_L]
+                changement=self.recv(5)  # chaque changement a la forme [X, Y, nombre_H, nombre_V, nombre_L]
+                print changement
                 changes.append(changement)
             for changement in changes:
                 self.updateGroups(changement)
@@ -101,9 +103,7 @@ class NetworkManager:
             n = self.recv(1)[0]
             changes = []
             for i in range(n):
-                changement=[]
-                for j in range(5): # devrait changer en prenant la forme changement = self.recv(5)[0]
-                    changement.append(self.recv(1)[0]) # chaque change a la forme [X, Y, nombre_H, nombre_V, nombre_L]
+                changement=self.recv(5)
                 changes.append(changement)
             for changement in changes:
                 x = changement[0]
@@ -136,7 +136,7 @@ class NetworkManager:
         else:
             print("commande non attendue recue", order)
 
-    def updateGroups(self, *change):
+    def updateGroups(self, change):
             x = change[0], y = change[1], num_humans = change[2], num_vamp = change[3], num_wolves = change[4]
 
             # détermination de l'espèce concernée par le changement
