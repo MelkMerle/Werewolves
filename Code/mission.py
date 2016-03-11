@@ -28,29 +28,39 @@ class Mission:
         print(self.actions)
         calculatedState = state
         for action in self.actions: #on parcourt les actions possibles
+            # pour les missions de type attackhuman, on simule l'état du plateau quand on l'aura bouffé
             if action.action_type == ActionType.attackHuman:
                 groupe_en_action = action.assignedGroup
                 groupe_vise = action.target_group
                 winner = utils.simulateBattle(groupe_en_action,groupe_vise)
-                calculatedState.groupes.remove(action.assignedGroup)
+                #on vérifie juste si il ya un split, car si il y en a il faut effacer le groupe parent et non le "sous-groupe" qui effectue l'action
+                if action.parent_group != None:
+                    calculatedState.groupes.remove(action.parent_group)
+                else :
+                    calculatedState.groupes.remove(action.assignedGroup)
                 calculatedState.groupes.remove(action.target_group)
                 calculatedState.groupes.append(winner)
-
-           # pour les missions de type attackhuman, on simule l'état du plateau quand on l'aura bouffé
+            # pour les actions de type attack enemy, pareil.
+            # todo à améliorer
             if action.action_type == ActionType.attackEnemy:
                 groupe_en_action= action.assignedGroup
                 groupe_vise = action.target_group
-                winner = utils.simulateBattle(groupe_en_action,groupe_vise) #todo position differente ?
+                winner = utils.simulateBattle(groupe_en_action,groupe_vise)
+                #on vérifie juste qu'il n'y a pas de split, si il y en a il faut effacer le groupe parent et pas le "sous-groupe" qui effectue l'action
+                if action.parent_group != None:
+                    calculatedState.groupes.remove(action.parent_group)
+                else :
+                    calculatedState.groupes.remove(action.assignedGroup)
                 calculatedState.groupes.remove(action.assignedGroup)
                 calculatedState.groupes.remove(action.target_group)
                 calculatedState.groupes.append(winner)
-
+            # pour les merge, on change le palteau comme il faut
             if action.action_type == ActionType.merge :
                 nouveau_groupe = utils.mergeGroups(action.assignedGroup,action.target_group)
                 calculatedState.groupes.remove(action.assignedGroup)
                 calculatedState.groupes.remove(action.target_group)
                 calculatedState.groupes.append(nouveau_groupe)
-
+            # run pas encore implementee
             if action.action_type == ActionType.run :
                 groupe_en_action= action.assignedGroup
                 groupe_ennemi = action.target_group
