@@ -39,7 +39,7 @@ class PlateauDeJeu:
             if( x== presentGroupe.x and y == presentGroupe.y):
                 self.groupes.remove(presentGroupe)
                 found=1
-                print "remove group success at ", x, y
+                print("remove group success at ", x, y)
         if found == 0:
             print('tried to remove unknown group at ', x, y)
 
