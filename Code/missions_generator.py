@@ -42,12 +42,17 @@ def enumerate_possible_missions(state, my_species):
         merged_actions.insert(index1+1, split1[1])
         merged_actions[index2]=split2[0]
         merged_actions.insert(index2+1, split2[1])
-        mission_array.append(merged_actions[-2:])
+        if merged_actions[0]==None:
+            break
+        elif merged_actions[1]==None:
+            mission_array.append((merged_actions[-1:]))
+        else:
+            mission_array.append(merged_actions[-2:])
+
     newMix=list(itertools.product(*mission_array))
     for mission in newMix:
         newMission = Mission(mission);
         finalArray.append(newMission);
-
     return finalArray;
 
     """sortedMissionArray=[]
