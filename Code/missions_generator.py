@@ -15,7 +15,7 @@ def enumerate_possible_missions(state, my_species):
 
     #on génère le produit cartésien : i.e. toutes les combinaisons possibles de : une mission assignée par groupe
     possible_strategies=list(itertools.product(*sub_missions_array))
-    print "possible missions", possible_strategies
+    # print "possible missions", possible_strategies
 
     # on enlève les missions avec redondances, c'est à dire celles où deux groupes alliés prennent pour cible un seul groupe (humain ou enemi)
     final_mission_set = remove_misssions_with_redundancies(possible_strategies)
@@ -32,7 +32,7 @@ def enumerate_possible_missions(state, my_species):
 def generate_group_missions (groupes, state, species):
     nb_human_groups=len(state.getMembers(Species.human))
     sub_missions_array=[]
-    print "nb humans", nb_human_groups
+    # print "nb humans", nb_human_groups
     #on genere une liste de missions possibles par groupe (split et non split)
     for groupMe in groupes:
         possible_actions = enumerate_possible_actions(state, groupMe, species)
@@ -57,14 +57,14 @@ def generate_group_missions (groupes, state, species):
 
         merged_rates = possible_simple_rates + possible_split_rates
 
-        print group_missions, merged_rates
+        # print group_missions, merged_rates
 
         group_missions.sort(key=dict(zip(group_missions, merged_rates)).get, reverse=True)
 
         #on rajoute les missions possibles de ce groupe (déjà pré-tronquée) à la liste de sous-missions globales
         sub_missions_array.append(group_missions[:(nb_human_groups*2)]) #todo elaguage pas en fonction du nombre d'humains (genere bugs quand il n'y en a plus), peut etre en fonction de la note, ou au moins en fonction du nb_humans+nb_enemy.
     # debug :
-    print "submission array", sub_missions_array
+    # print "submission array", sub_missions_array
     return sub_missions_array
 
 def remove_misssions_with_redundancies(strategies):
