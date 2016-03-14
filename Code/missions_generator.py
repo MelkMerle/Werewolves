@@ -5,10 +5,8 @@ from species import Species
 
 def enumerate_possible_missions(state, my_species):
     actions_array=[]
-    finalArray=[]
     my_groups = state.getMembers(my_species)
     nb_human_groups=len(state.getMembers(Species.human))
-    nb_groups=len(my_groups)
     facteur_brch_max=4
     for groupMe in my_groups:
         possible_actions = enumerate_possible_actions(state, groupMe, my_species)
@@ -66,8 +64,7 @@ def enumerate_possible_missions(state, my_species):
             newMission = Mission(mission);
             saved_missions.append(newMission)
             rate_missions.append(newMission.calc_mark(state))
-            print(newMission.calc_mark(state))
     saved_missions.sort(key=dict(zip(saved_missions, rate_missions)).get, reverse=True)
     saved_missions=saved_missions[-facteur_brch_max:]
-    return saved_missions;
+    return saved_missions
 
