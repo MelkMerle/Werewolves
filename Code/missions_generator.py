@@ -50,9 +50,11 @@ def enumerate_possible_missions(state, my_species):
     for mission in newMix:
         for element in mission:
             if type(element) is list:
+                print "coucou" # on ne rentre pas dans cette boucle
                 index = mission.index(element)
                 element = element[0]
                 mission.insert(index,element[1])
+
         #On vérifie qu'il n'y a pas de doublons dans les action.targetgroup
 
         target_list=[]
@@ -66,6 +68,7 @@ def enumerate_possible_missions(state, my_species):
             newMission = Mission(mission)
             saved_missions.append(newMission)
             rate_missions.append(newMission.calc_mark(state))
+    print saved_missions,rate_missions
     saved_missions.sort(key=dict(zip(saved_missions, rate_missions)).get, reverse=True)
     saved_missions=saved_missions[:facteur_brch_max]
     return saved_missions
