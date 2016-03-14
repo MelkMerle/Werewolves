@@ -18,6 +18,7 @@ plateau.addThisGroup(myGroup)
 missionArray = enumerate_possible_missions(plateau, Species.werewolf)
 
 print(missionArray)
+print(len(missionArray))
 
 for mission in missionArray:
     for action in mission.actions:
