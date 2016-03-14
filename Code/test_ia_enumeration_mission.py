@@ -38,7 +38,9 @@ plateau.addThisGroup(myGroup)
 missionArray = enumerate_possible_missions(plateau, Species.werewolf)
 
 for mission in missionArray:
-    print("this is a mission")
+    print("\nthis is a mission")
+    print(mission)
+    # coup = mission.calculateCoup(plateau)
     for action in mission.actions:
         action_type = action.action_type
         assigned = action.assignedGroup

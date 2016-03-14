@@ -17,17 +17,28 @@ class Mission:
 
 
     def calculateCoup(self, state):
-        coupsActions =[]
+        coupsActions = []
         coupsNombre = 0
+        startCases = []
+        destCases = []
         for action in self.actions: #todo eviter de se marcher dessus (case de depart = case d'arrivee)
-            coupsActions.append(action.calculateCoup(state))
+            print(action)
+            coup = action.calculateCoup(state)
+            print(coup)
+            coords_init = [coup[0], coup[1]]
+            coords_dest = [coup[3], coup[4]]
+            print(startCases)
+            startCases.append(coords_init)
+            destCases.append(coords_dest)
+
+            coupsActions.append(coup)
             coupsNombre += 1
-        coups = [coupsNombre,coupsActions]
+        coups = [coupsNombre, coupsActions]
         return coups
 
     def execute(self,state):
         for action in self.actions :
-            print action
+            print(action)
         calculatedState = copy.deepcopy(state)
         for action in self.actions: #on parcourt les actions possibles
 
