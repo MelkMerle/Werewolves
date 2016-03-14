@@ -22,6 +22,7 @@ print(missionArray)
 print(len(missionArray))
 
 for mission in missionArray:
+    print("this is a mission")
     for action in mission.actions:
         action_type = action.action_type
         assigned = action.assignedGroup
