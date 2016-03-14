@@ -6,6 +6,7 @@ from group import Group
 
 
 def enumerate_possible_actions(state, group, specie):
+    #todo quand il n'y a plus d'humains, générer au moins une action de type run (ou merge), pour ne pas faire planter l'IA
     groups_human = state.getMembers(Species.human)
     groups_enemy = state.getMembers(specie.inverse())
     actions_total = []
@@ -25,7 +26,7 @@ def enumerate_possible_actions(state, group, specie):
         groups_targets.append(group_enemy)
 
     # actions avec splits
-    for i in range(1, int(len_group_me/2)+1):
+    for i in range(1, int(len_group_me/2)+1): #todo réduire le nombre de splits possibles pour alléger le temps de calcul ? max 2 à mon avis
         doublets.append([i, len_group_me-i])
 
     for doublet in doublets:
