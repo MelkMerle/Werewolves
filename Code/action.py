@@ -53,7 +53,7 @@ class Action:
 
 
         elif self.action_type == ActionType.attackEnemy: #todo
-            return 1
+            self.possibleGain = 0
         elif self.action_type == ActionType.run:  #todo
             self.possibleGain = 0 #todo
         else :
