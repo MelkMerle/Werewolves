@@ -23,23 +23,23 @@ def mergeGroups (group1,group2):
 def simulateBattle(groupAtt,groupDef):
 
     # attaque d'un groupe d'humain avec suffisamment de monde
-    if groupDef.species == Species.human and groupAtt.eff>groupDef.eff:
-        group_return = Group(groupDef.x, groupDef.y, groupDef.eff + groupDef.eff, groupAtt.species)
+    if groupDef.species == Species.human and groupAtt.eff >= groupDef.eff:
+        group_return = Group(groupDef.x, groupDef.y, groupDef.eff + groupAtt.eff, groupAtt.species)
         return group_return
 
     # attaque d'un groupe d'ennemis avec sufisamment de monde
-    elif groupAtt.eff>(1.5*groupDef.eff):
-        group_return = Group(groupDef.x, groupDef.y, groupDef.eff, groupAtt.species)
+    elif groupAtt.eff >= (1.5*groupDef.eff):
+        group_return = Group(groupDef.x, groupDef.y, groupDef.eff+groupAtt.eff, groupAtt.species)
         return group_return
 
    #start a random battle
     winningprob=0
-    if groupAtt.eff==groupDef.eff:
-        winningprob=0.5
-    if groupAtt.eff<groupDef.eff:
-        winningprob=groupAtt.eff/(2*groupDef.eff)
-    if groupAtt.eff>groupDef.eff:
-        winningprob= groupAtt.eff/groupDef.eff-0.5
+    if groupAtt.eff == groupDef.eff:
+        winningprob = 0.5
+    if groupAtt.eff < groupDef.eff:
+        winningprob = groupAtt.eff/(2*groupDef.eff)
+    if groupAtt.eff > groupDef.eff:
+        winningprob = groupAtt.eff/groupDef.eff-0.5
     
     if winningprob ==0.5:
         winningprob+=random.random()/100

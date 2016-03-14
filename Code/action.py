@@ -37,6 +37,7 @@ class Action:
 
             enemyWinner = utils.simulateBattle(groupe_max,self.target_group) # on simule une bataille entre ce groupe_max (cad le groupe d'enemis plus proche que nous, ou, à défaut, un groupe fictif vide, qui perdra forcément la bataille)
             winnerFinal = utils.simulateBattle(self.assignedGroup,enemyWinner) # et on simule une bataille entre nous et le gagnant de la première bataille
+            print "winner final : ", winnerFinal
             #et ensuite on traite les differents cas
 
             if winnerFinal.species==self.assignedGroup.species: #soit on gagne avec certitude la derniere bataille
@@ -53,7 +54,16 @@ class Action:
 
 
         elif self.action_type == ActionType.attackEnemy: #todo
-            self.possibleGain = 0
+            winner = utils.simulateBattle(self.assignedGroup,self.target_group)
+            print "winner : ", winner
+            we_won = (winner.species==self.assignedGroup.species)
+            if we_won:
+                winFactor= 1
+            else :
+                winFactor = -1
+            self.possibleGain = winFactor*(winner.eff-self.assignedGroup.eff)
+            self.possibleEnemyGain = -winFactor*(winner.eff-self.target_group.eff)
+
         elif self.action_type == ActionType.run:  #todo
             self.possibleGain = 0 #todo
         else :
