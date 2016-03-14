@@ -31,14 +31,14 @@ def enumerate_possible_missions(state, my_species):
         merged_rates = possible_simple_rates + possible_split_rates
         merged_actions.sort(key=dict(zip(merged_actions, merged_rates)).get, reverse=True)
         if len(merged_actions)>(nb_human_groups*2):
-            merged_actions=merged_actions[-(nb_human_groups*2):]
+            merged_actions=merged_actions[:(nb_human_groups*2)]
         for element in merged_actions:
             if element in split_list_index:
                 newIndex=merged_actions.index(element)
                 merged_actions[newIndex] = possible_split_actions[element][0]
                 merged_actions.insert(newIndex, possible_split_actions[element][1])
         if len(merged_actions)>(nb_human_groups*2):
-            actions_array.append(merged_actions[-(nb_human_groups*2):])
+            actions_array.append(merged_actions[:(nb_human_groups*2)])
         else:
             actions_array.append(merged_actions)
 
@@ -67,6 +67,6 @@ def enumerate_possible_missions(state, my_species):
             saved_missions.append(newMission)
             rate_missions.append(newMission.calc_mark(state))
     saved_missions.sort(key=dict(zip(saved_missions, rate_missions)).get, reverse=True)
-    saved_missions=saved_missions[-facteur_brch_max:]
+    saved_missions=saved_missions[:facteur_brch_max]
     return saved_missions
 

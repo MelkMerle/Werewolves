@@ -13,6 +13,7 @@ plateau.addGroup(12,2,2, Species.werewolf)
 plateau.addGroup(12,2,3, Species.werewolf)
 
 plateau.addGroup(4,3,4,Species.vampire)
+plateau.addGroup(2,1,5,Species.vampire)
 plateau.addThisGroup(myGroup)
 
 missionArray = enumerate_possible_missions(plateau, Species.werewolf)
