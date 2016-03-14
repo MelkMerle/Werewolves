@@ -62,7 +62,7 @@ def generate_group_missions (groupes, state, species):
         group_missions.sort(key=dict(zip(group_missions, merged_rates)).get, reverse=True)
 
         #on rajoute les missions possibles de ce groupe (déjà pré-tronquée) à la liste de sous-missions globales
-        sub_missions_array.append(group_missions[:(nb_human_groups*2)]) #todo elaguage pas en fonction du nombre d'humains (genere bugs), peut etre en fonction de la note ?
+        sub_missions_array.append(group_missions[:(nb_human_groups*2)]) #todo elaguage pas en fonction du nombre d'humains (genere bugs quand il n'y en a plus), peut etre en fonction de la note ?
     # debug :
     print "submission array", sub_missions_array
     return sub_missions_array
