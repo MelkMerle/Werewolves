@@ -3,23 +3,18 @@ from Plateau import PlateauDeJeu
 from group import Group
 from missions_generator import enumerate_possible_missions
 
-plateau = PlateauDeJeu(10, 5)
+plateau = PlateauDeJeu(5, 5)
 
-myGroup = Group(4, 1, 4, Species.werewolf)
-plateau.addGroup(2,2,4,Species.human)
-plateau.addGroup(9,0,2,Species.human)
-plateau.addGroup(9,2,1, Species.human)
-plateau.addGroup(9,4,2, Species.human)
-plateau.addGroup(4,3,4,Species.vampire)
-plateau.addThisGroup(myGroup)
 
-missionArray = enumerate_possible_missions(plateau, Species.werewolf)
+plateau.addGroup(2,2,4,Species.vampire)
+plateau.addGroup(1,2,4,Species.vampire)
+plateau.addGroup(4,2,3,Species.human)
+plateau.addGroup(3,2,3,Species.human)
+plateau.addGroup(1,4,10,Species.werewolf)
+
+
+missionArray = enumerate_possible_missions(plateau, Species.vampire)
 
 for mission in missionArray:
-    print(mission)
+    print("\n\nNOUVELLE MISSION, note : ", mission.calc_mark(plateau))
     coup = mission.calculateCoup(plateau)
-    for action in mission.actions:
-        action_type = action.action_type
-        assigned = action.assignedGroup
-        target = action.target_group
-        print("Action de type " + str(action_type) + " : " + str(assigned) + " vers " + str(target)+" note : " + str(mission.calc_mark(plateau)))

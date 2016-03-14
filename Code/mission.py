@@ -15,21 +15,22 @@ class Mission:
             mark+=action.calc_mark(state)
         return mark
 
-
+    # todo : pourquoi renvoyer le tableau des coups et la taille de ce tableau ? c'est redondant (ou alors j'ai pas tout compris) - Antoine
     def calculateCoup(self, state):
         coupsActions = []
         coupsNombre = 0
         startCases = []
         destCases = []
         for action in self.actions: #todo eviter de se marcher dessus (case de depart = case d'arrivee)
-            print(action)
             coup = action.calculateCoup(state)
-            print(coup)
             coords_init = [coup[0], coup[1]]
             coords_dest = [coup[3], coup[4]]
-            print(startCases)
             startCases.append(coords_init)
-            destCases.append(coords_dest)
+
+            if coords_dest in startCases:
+                print("Chevauchement en ", coords_dest)
+            else:
+                destCases.append(coords_dest)
 
             coupsActions.append(coup)
             coupsNombre += 1
