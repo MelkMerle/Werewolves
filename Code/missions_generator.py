@@ -9,7 +9,7 @@ def enumerate_possible_missions(state, my_species):
     actions_array=[]
     my_groups = state.getMembers(my_species)
     nb_human_groups=len(state.getMembers(Species.human))
-    facteur_brch_max=6
+    facteur_brch_max = 5
     for groupMe in my_groups:
         possible_actions = enumerate_possible_actions(state, groupMe, my_species)
         possible_simple_actions = possible_actions[0]
@@ -30,8 +30,6 @@ def enumerate_possible_missions(state, my_species):
         merged_actions = possible_simple_actions + split_list_index
         merged_rates = possible_simple_rates + possible_split_rates
         merged_actions.sort(key=dict(zip(merged_actions, merged_rates)).get, reverse=True)
-        if len(merged_actions)>(nb_human_groups*2):
-            merged_actions=merged_actions[:(nb_human_groups*2)]
 
         # Cette partie n'a pas sa place ici, tant qu'on n'a pas fait le product on garde les split actions ensemble
         # for element in merged_actions:
@@ -42,10 +40,9 @@ def enumerate_possible_missions(state, my_species):
 
         # Troncature
         # Pourquoi pas mettre le nombre maximum en paramètre
-        if len(merged_actions)>(nb_human_groups*2):
-            actions_array.append(merged_actions[:(nb_human_groups*2)])
-        else:
-            actions_array.append(merged_actions)
+        actions_array.append(merged_actions[:(nb_human_groups*2)])
+    print actions_array
+
 
 
     #on génère le produit cartésien
@@ -83,8 +80,8 @@ def enumerate_possible_missions(state, my_species):
             newMission = Mission(mission)
             saved_missions.append(newMission)
             rate_missions.append(newMission.calc_mark(state))
-        # else what ? todo
-
+        # else what ? todo implementer merge !
+    print saved_missions,rate_missions
     saved_missions.sort(key=dict(zip(saved_missions, rate_missions)).get, reverse=True)
     saved_missions=saved_missions[:facteur_brch_max]
     return saved_missions
