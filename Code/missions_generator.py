@@ -1,61 +1,67 @@
 from actions_generator import enumerate_possible_actions
 from mission import Mission
 import itertools
+from species import Species
 
 def enumerate_possible_missions(state, my_species):
     mission_array=[]
     finalArray=[]
     my_groups = state.getMembers(my_species)
+    nb_human_groups=len(state.getMembers(Species.human))
+    nb_groups=len(my_groups)
     for groupMe in my_groups:
         possible_actions = enumerate_possible_actions(state, groupMe, my_species)
-        action_simple = [None, None]
-        action_split = [None, None]
-        rate_action_simple = [-1000, -1000]
-        rate_action_split = [-1000, -1000]
+        possible_simple_actions = possible_actions[0]
+        possible_simple_rates = []
+        possible_split_actions = possible_actions[1]
+        possible_split_rates = []
+        split_list_index = []
 
-        for action in possible_actions[0]:
+        for action in possible_simple_actions:
             #on gère les actions "simples": un groupe attaque un groupe d'humains
-            rate = action.calc_mark(state)
-            if (rate > rate_action_simple[0]):
-                action_simple [0]= action
-                rate_action_simple[0] = rate
-            elif (rate > rate_action_simple[1]):
-                action_simple [1]= action
-                rate_action_simple[1] = rate
+            possible_simple_rates.append(action.calc_mark(state))
 
-        for actions in possible_actions[1]:
+        for actions in possible_split_actions:
             #on gère les missions splittés
-            rate = actions[0].calc_mark(state) + actions[1].calc_mark(state)
-            if rate > rate_action_split[0]:
-                action_split[0] = actions
-                rate_action_split[0] = rate
-            elif rate > rate_action_split[1]:
-                action_split[1] = actions
-                rate_action_split[1] = rate
-        #contournement de l'impossibilité de trier une liste de liste. estion de l'exception des actions splittées
-        split1=action_split[0]
-        split2=action_split[1]
-        merged_actions=action_simple + [1] + [2]
-        merged_rates=rate_action_simple + rate_action_split
-        #classement des actions pour un groupe
+            possible_split_rates.append(actions[0].calc_mark(state) + actions[1].calc_mark(state))
+        for i in range(len(possible_split_actions)):
+            split_list_index.append(i)
+        merged_actions = possible_simple_actions + split_list_index
+        merged_rates = possible_simple_rates + possible_split_rates
         merged_actions.sort(key=dict(zip(merged_actions, merged_rates)).get, reverse=True)
-        index1=merged_actions.index(1)
-        merged_actions[index1]=split1[0]
-        merged_actions.insert(index1+1, split1[1])
-        index2=merged_actions.index(2)
-        merged_actions[index2]=split2[0]
-        merged_actions.insert(index2+1, split2[1])
-        if merged_actions[0]==None:
-            break
-        elif merged_actions[1]==None:
-            mission_array.append((merged_actions[-1:]))
+        if len(merged_actions)>(nb_human_groups*2):
+            merged_actions=merged_actions[-(nb_human_groups*2):]
+        for element in merged_actions:
+            if element in split_list_index:
+                newIndex=merged_actions.index(element)
+                merged_actions[newIndex] = possible_split_actions[element]
+        if len(merged_actions)>(nb_human_groups*2):
+            mission_array.append(merged_actions[-(nb_human_groups*2):])
         else:
-            mission_array.append(merged_actions[-2:])
-            #on renvoie le top 2 des meilleures actions de chaque groupe
+            mission_array.append(merged_actions)
+    print(mission_array[0])
+
 
     #on sort toutes le combinaisons possibles
-    newMix=list(itertools.product(*mission_array))
+    newMix=list(itertools.product(*mission_array[0]))
+    print(newMix)
     for mission in newMix:
-        newMission = Mission(mission);
-        finalArray.append(newMission);
+        print(mission)
+        for element in mission:
+            if type(element) is list:
+                index = mission.index(element)
+                element = element[0]
+                mission.insert(index,element[1])
+        #On vérifie qu'il n'y a pas de doublons dans les action.targetgroup
+        target_list=[]
+        duplicate_count=0
+        for action in mission:
+            if action.target_group not in target_list:
+                target_list.append(action.target_group)
+            else:
+                duplicate_count+=1
+        if duplicate_count==0:
+            newMission = Mission(mission);
+            finalArray.append(newMission);
     return finalArray;
+
