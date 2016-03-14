@@ -26,7 +26,8 @@ class Mission:
         return coups
 
     def execute(self,state):
-        print(self.actions)
+        for action in self.actions :
+            print action
         calculatedState = copy.deepcopy(state)
         for action in self.actions: #on parcourt les actions possibles
 
