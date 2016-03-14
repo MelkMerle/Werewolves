@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from actions_generator import enumerate_possible_actions
 from mission import Mission
 import itertools
@@ -61,7 +63,7 @@ def enumerate_possible_missions(state, my_species):
             else:
                 duplicate_count+=1
         if duplicate_count==0:
-            newMission = Mission(mission);
+            newMission = Mission(mission)
             saved_missions.append(newMission)
             rate_missions.append(newMission.calc_mark(state))
     saved_missions.sort(key=dict(zip(saved_missions, rate_missions)).get, reverse=True)
