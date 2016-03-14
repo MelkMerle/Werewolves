@@ -10,6 +10,7 @@ def enumerate_possible_missions(state, my_species):
     my_groups = state.getMembers(my_species)
     nb_human_groups=len(state.getMembers(Species.human))
     facteur_brch_max=6
+
     for groupMe in my_groups:
         possible_actions = enumerate_possible_actions(state, groupMe, my_species)
         possible_simple_actions = possible_actions[0]
