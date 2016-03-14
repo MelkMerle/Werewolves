@@ -61,7 +61,10 @@ def enumerate_possible_missions(state, my_species):
         # On remplace par les index des split actions par les split actions en questions
         index = -1
         for element in mission:
+<<<<<<< HEAD
 
+=======
+>>>>>>> dca071f2a2e9c6584a190a796c7c17fbcc702e9a
             index += 1
             if type(element) is int:
                 index_in_split_list = element
@@ -84,7 +87,10 @@ def enumerate_possible_missions(state, my_species):
             newMission = Mission(mission)
             saved_missions.append(newMission)
             rate_missions.append(newMission.calc_mark(state))
+<<<<<<< HEAD
 
+=======
+>>>>>>> dca071f2a2e9c6584a190a796c7c17fbcc702e9a
         # else what ? todo
 
     saved_missions.sort(key=dict(zip(saved_missions, rate_missions)).get, reverse=True)
