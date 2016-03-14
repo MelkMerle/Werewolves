@@ -19,7 +19,7 @@ class Mission:
     def calculateCoup(self, state):
         coupsActions =[]
         coupsNombre = 0
-        for action in self.actions:
+        for action in self.actions: #todo eviter de se marcher dessus (case de depart = case d'arrivee)
             coupsActions.append(action.calculateCoup(state))
             coupsNombre += 1
         coups = [coupsNombre,coupsActions]
