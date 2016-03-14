@@ -47,12 +47,11 @@ class Intelligence():
      #Principal function, returning the best possible mission set
     def chooseMission(self, state):
         possibleBranches = []
-        missionlist = []
         missionlist = enumerate_possible_missions(state, self.mySpecie)
         print("alpha 1 ", missionlist)
         for mission in missionlist:
             assessedMission = [mission, 0]
-            assessedMission[1] = self.alphabeta(self.CalulateNextState(mission, state), self.mySpecie.inverse(), 1,-100000, +100000)
+            assessedMission[1] = self.alphabeta(self.CalulateNextState(mission, state), self.mySpecie.inverse(), 1,-100000, +100000) #appel recursif du alphabeta
             possibleBranches.append(assessedMission)
         print(possibleBranches)
         coupFinal = sorted(possibleBranches, key=lambda x: (x[1]))[-1][0].calculateCoup(state)

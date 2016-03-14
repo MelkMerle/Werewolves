@@ -37,7 +37,6 @@ class Action:
 
             enemyWinner = utils.simulateBattle(groupe_max,self.target_group) # on simule une bataille entre ce groupe_max (cad le groupe d'enemis plus proche que nous, ou, à défaut, un groupe fictif vide, qui perdra forcément la bataille)
             winnerFinal = utils.simulateBattle(self.assignedGroup,enemyWinner) # et on simule une bataille entre nous et le gagnant de la première bataille
-            print "winner final : ", winnerFinal
             #et ensuite on traite les differents cas
 
             if winnerFinal.species==self.assignedGroup.species: #soit on gagne avec certitude la derniere bataille
@@ -55,7 +54,6 @@ class Action:
 
         elif self.action_type == ActionType.attackEnemy: #todo
             winner = utils.simulateBattle(self.assignedGroup,self.target_group)
-            print "winner : ", winner
             we_won = (winner.species==self.assignedGroup.species)
             if we_won:
                 winFactor= 1
@@ -81,14 +79,14 @@ class Action:
         #test if below limit lines before sending!!
 
         if self.action_type ==ActionType.attackHuman:
-            #find closest human group
+            #find human group
             grouptoAttack=self.target_group
             vector=utils.getVector(self.assignedGroup,grouptoAttack)
                 #here if no split
             return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0], self.assignedGroup.y+vector[1]]
         
         if self.action_type == ActionType.attackEnemy:
-            #find closest ennemy group
+            #find  ennemy group
             grouptoAttack=self.target_group
             vector=utils.getVector(self.assignedGroup,grouptoAttack)
                 #here if no split
