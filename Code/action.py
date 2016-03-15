@@ -67,17 +67,23 @@ class Action:
 
             we_won = (winnerFinal.species==self.assignedGroup.species)
             if we_won:
-                winFactor= 1
+                self.possibleGain = winnerFinal.eff-self.assignedGroup.eff
+                self.possibleEnemyGain = -self.target_group.eff
             else :
-                winFactor = -1
-            self.possibleGain = winFactor*(winnerFinal.eff-self.assignedGroup.eff)
-            self.possibleEnemyGain = -winFactor*(winnerFinal.eff-self.target_group.eff)
+                self.possibleGain = -self.assignedGroup.eff
+                self.possibleEnemyGain = (winnerFinal.eff-self.target_group.eff)
 
         elif self.action_type == ActionType.run:  #todo
             self.possibleGain = 0 #todo
         else :
             print("type d'action non reconnu par calc_mark", self.action_type)
-        mark = (self.possibleGain-self.possibleEnemyGain)
+        intuitive_mark = (self.possibleGain-self.possibleEnemyGain)
+        mark = 0
+        if intuitive_mark>=0:
+            mark = intuitive_mark/(utils.getDistance(self.assignedGroup,self.target_group))
+        else :
+            mark = intuitive_mark
+
         return mark
 
     def __str__(self):

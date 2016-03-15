@@ -39,6 +39,7 @@ class Mission:
     def execute(self,state):
         # for action in self.actions :
         #     print(action)
+
         calculatedState = copy.deepcopy(state)
         for action in self.actions: #on parcourt les actions possibles
             #print "action executee par alphabeta :", action
