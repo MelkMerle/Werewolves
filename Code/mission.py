@@ -30,6 +30,8 @@ class Mission:
             if coords_dest in startCases:
                 print("Chevauchement en ", coords_dest)
             else:
+                print(destCases)
+                print(coords_dest)
                 destCases.append(coords_dest)
 
             coupsActions.append(coup)
@@ -89,3 +91,9 @@ class Mission:
                 calculatedState.groupes.append(groupe_ennemi)
 
         return calculatedState
+
+    def __str__(self):
+        v ="Mission : "
+        for action in self.actions:
+            v += "\n - " + str(action)
+        return v

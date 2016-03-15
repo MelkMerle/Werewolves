@@ -13,7 +13,7 @@ class PlateauDeJeu:
         for groupe in self.groupes:
             if (groupe.x==x and groupe.y==y):
                 return groupe
-        print('Aucun groupe trouve aux coordonnees (x,y) suivantes :', x, y)
+        # print('Aucun groupe trouve aux coordonnees (x,y) suivantes :', x, y)
         return None
 
     def addGroup(self,x, y, effectif, espece):
@@ -48,7 +48,23 @@ class PlateauDeJeu:
     #     members = self.getGroup(self,x,y)
     #     if(members != none):
 
-
+    def print(self):
+        horiz = ""
+        for i in range(0, self.width*3+1):
+            horiz+='-'
+        for j in range(0,self.height):
+            print(horiz)
+            v = ""
+            for k in range(0,self.width):
+                v+='|'
+                group = self.getGroup(k,j)
+                if group!=None:
+                    v+=str(group.eff)[0]
+                    v+=group.species.value[0]
+                else:
+                    v+='  '
+            v+='|'
+            print(v)
 
 
 
