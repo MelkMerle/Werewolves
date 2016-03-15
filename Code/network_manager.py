@@ -133,7 +133,7 @@ class NetworkManager:
             print("commande non attendue recue", order)
 
     def updateGroups(self, change):
-            print change
+            print (change)
             x = change[0]
             y = change[1]
             num_humans = change[2]
