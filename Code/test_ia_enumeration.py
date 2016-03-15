@@ -6,6 +6,7 @@ from actions_generator import enumerate_possible_actions
 
 plateau = PlateauDeJeu(10, 5)
 
+
 myGroup = Group(4,4,1,Species.werewolf)
 plateau.addGroup(2,2,4,Species.human)
 plateau.addGroup(9,0,2,Species.human)

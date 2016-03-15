@@ -30,6 +30,7 @@ class Mission:
             if destination_position in start_positions:
                 print("Chevauchement sur la case ", destination_position)
 
+
             coupsActions.append(coup)
             coupsNombre += 1
         coups = [coupsNombre, coupsActions]
