@@ -73,13 +73,14 @@ class Intelligence():
                     return beta
             return newalpha
         else:
+            newbeta = copy.deepcopy(beta)
             missionList = enumerate_possible_missions(state, specie)
             #print("beta liste ", missionList)
             for mission in missionList:
-                beta=min(beta,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
+                newbeta=min(beta,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
                 if alpha > beta :
                     return alpha
-            return beta
+            return newbeta
 
         
 
