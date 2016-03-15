@@ -14,7 +14,7 @@ class NetworkManager:
         # Récupération en ligne de commande l'addresse ip et le port
         #self.ip = raw_input("Adresse IP du serveur : ")
         #self.port = int(raw_input("Port : "))
-        self.ip = "192.168.0.106"
+        self.ip = "138.195.107.190"
         self.port = int(5555)
         # Connexion de la socket
         try:
@@ -35,7 +35,7 @@ class NetworkManager:
                 if(isinstance(message, int)):
                     data = struct.pack('=B', message)
                 elif (isinstance(message, str)):
-                    data = bytes(message)
+                    data = bytes(message, 'utf-8')
                 elif (isinstance(message, list)):
                     for mess in message:
                         self.send(mess)
@@ -45,7 +45,12 @@ class NetworkManager:
                 print('data = ',data);
                 self.sock.send(data)
             except Exception as error:
-                print("Couldn't send message: ", message, error)
+                try:
+                    if (isinstance(message, str)):
+                        data = bytes(message, 'utf-8')
+                except Exception as error2:
+                    print("Couldn't send message: ", message, error2)
+
 
     def recv(self, length):
         returnTable=[]
@@ -133,7 +138,7 @@ class NetworkManager:
             print("commande non attendue recue", order)
 
     def updateGroups(self, change):
-            print change
+            print(change)
             x = change[0]
             y = change[1]
             num_humans = change[2]

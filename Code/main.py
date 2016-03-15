@@ -15,7 +15,7 @@ manager = NetworkManager()
 
 
 #Envoi du nom
-groupname = "Les Loups Bleus"
+groupname = "Les vampires rouges"
 manager.send('NME', len(groupname), groupname)
 
 
