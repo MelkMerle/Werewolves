@@ -19,20 +19,16 @@ class Mission:
     def calculateCoup(self, state):
         coupsActions = []
         coupsNombre = 0
-        startCases = []
-        destCases = []
+        start_positions = []
+        for action in self.actions:
+            start_positions.append([action.assignedGroup.x, action.assignedGroup.y])
         for action in self.actions: #todo eviter de se marcher dessus (case de depart = case d'arrivee)
             coup = action.calculateCoup(state)
-            coords_init = [coup[0], coup[1]]
-            coords_dest = [coup[3], coup[4]]
-            startCases.append(coords_init)
+            destination_position = [coup[3], coup[4]]
 
-            if coords_dest in startCases:
-                print("Chevauchement en ", coords_dest)
-            else:
-                print(destCases)
-                print(coords_dest)
-                destCases.append(coords_dest)
+            # Détection de chevauchement
+            if destination_position in start_positions:
+                print("Chevauchement sur la case ", destination_position)
 
             coupsActions.append(coup)
             coupsNombre += 1
