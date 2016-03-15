@@ -46,7 +46,7 @@ class Mission:
 
             # pour les missions de type attackhuman, on simule l'état du plateau quand on l'aura bouffé
             if action.action_type == ActionType.attackHuman:
-                winner = utils.simulateBattle(action.assignedGroup,action.target_group)
+                winner = utils.simulateAttackAction(action,calculatedState)
 
                 #on vérifie juste si il ya un split, car si il y en a il faut effacer le groupe parent et non le "sous-groupe" qui effectue l'action
                 if action.parent_group != None:
@@ -60,7 +60,7 @@ class Mission:
             # pour les actions de type attack enemy, pareil.
             # todo à améliorer, car si on arrive pas a bouffer l'ennemi, c'est pas une bonne mission (par exemple distance trop grande), il ne faut pas simuler une map comme si on l'avait bouffé mais plutot une map ou il est en triain de run from us
             if action.action_type == ActionType.attackEnemy:
-                winner = utils.simulateBattle(action.assignedGroup,action.target_group)
+                winner = utils.simulateAttackAction(action,calculatedState)
 
                 #on vérifie juste qu'il n'y a pas de split, si il y en a il faut effacer le groupe parent et pas le "sous-groupe" qui effectue l'action
                 if action.parent_group != None:
@@ -80,7 +80,7 @@ class Mission:
 
             # run pas encore implementee
             if action.action_type == ActionType.run :
-                groupe_en_action= action.assignedGroup
+                groupe_en_action= copy.deepcopy(action.assignedGroup)
                 groupe_ennemi = action.target_group
                 groupe_en_action.x= utils.bordLePlusProche(groupe_en_action,groupe_ennemi)[0] #todo comment simuler le plateau quand on a couru ?
                 groupe_en_action.y= utils.bordLePlusProche(groupe_en_action)[1]
