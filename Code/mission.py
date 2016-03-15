@@ -41,6 +41,7 @@ class Mission:
         #     print(action)
         calculatedState = copy.deepcopy(state)
         for action in self.actions: #on parcourt les actions possibles
+            #print "action executee par alphabeta :", action
 
             # pour les missions de type attackhuman, on simule l'état du plateau quand on l'aura bouffé
             if action.action_type == ActionType.attackHuman:
@@ -56,7 +57,7 @@ class Mission:
                 calculatedState.groupes.append(winner)
 
             # pour les actions de type attack enemy, pareil.
-            # todo à améliorer
+            # todo à améliorer, car si on arrive pas a bouffer l'ennemi, c'est pas une bonne mission (par exemple distance trop grande), il ne faut pas simuler une map comme si on l'avait bouffé mais plutot une map ou il est en triain de run from us
             if action.action_type == ActionType.attackEnemy:
                 groupe_en_action= action.assignedGroup
                 groupe_vise = action.target_group

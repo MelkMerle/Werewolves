@@ -52,7 +52,7 @@ class Action:
                 self.possibleGain = -self.assignedGroup.eff
 
 
-        elif self.action_type == ActionType.attackEnemy: #todo
+        elif self.action_type == ActionType.attackEnemy: #todo ne pas donner une aussi bonne note parce que les ennemis risquent de bouffer des humains plus proches d'eux pour devenir plus gros
             winner = utils.simulateBattle(self.assignedGroup,self.target_group)
             we_won = (winner.species==self.assignedGroup.species)
             if we_won:
