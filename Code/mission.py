@@ -30,6 +30,8 @@ class Mission:
             if coords_dest in startCases:
                 print("Chevauchement en ", coords_dest)
             else:
+                print(destCases)
+                print(coords_dest)
                 destCases.append(coords_dest)
 
             coupsActions.append(coup)
