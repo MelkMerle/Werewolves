@@ -41,7 +41,8 @@ class PlateauDeJeu:
                 found=1
                 # print("remove group success at ", x, y)
         if found == 0:
-            print('tried to remove unknown group at ', x, y)
+            return 0
+            # print('tried to remove unknown group at ', x, y)
 
     #quelle est l'idée de cette fonction ?
     # def MoveMembers(self,x, y, xsec,ysec, numtomove):

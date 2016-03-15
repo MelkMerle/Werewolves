@@ -7,7 +7,7 @@ import itertools
 from species import Species
 
 def enumerate_possible_missions(state, my_species):
-    facteur_brch_max = 6
+    facteur_brch_max = 4
     my_groups = state.getMembers(my_species)
 
     # on génère la liste de toutes les missions possibles pour chaque groupe de my_groups
