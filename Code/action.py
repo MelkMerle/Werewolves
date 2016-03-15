@@ -25,6 +25,7 @@ class Action:
         if self.assignedGroup.eff==0:
             print("Warning : calc_mark tente d'evaluer les actions d'un groupe vide")
             return 0
+        winnerFinal= utils.simulateAttackAction(self,state)
         if self.action_type == ActionType.attackHuman:
             distance = utils.getDistance(self.assignedGroup,self.target_group)
             groupe_max = Group(0,0,0,self.assignedGroup.species.inverse()) #on initialise un groupe max de base, a 0
@@ -52,13 +53,13 @@ class Action:
                 self.possibleGain = -self.assignedGroup.eff
 
 
-        elif self.action_type == ActionType.attackEnemy: #todo ne pas donner une aussi bonne note parce que les ennemis risquent de bouffer des humains plus proches d'eux pour devenir plus gros
+        elif self.action_type == ActionType.attackEnemy:
             distance = utils.getDistance(self.assignedGroup,self.target_group)
             groupe_max = Group(0,0,0,Species.human) #on initialise un groupe max de base, a 0
             for group in state.groupes:
                 if group.species == Species.human \
                         and utils.getDistance(group,self.target_group) < distance \
-                        and group.eff < self.target_group.eff \
+                        and group.eff <= self.target_group.eff \
                         and group.eff>groupe_max.eff: #on cherche les groupes d'humains plus proches que nous de la cible ennemie, moins nombreuse que la cible, et on garde le plus gros d'entre eux
                     groupe_max=group
 

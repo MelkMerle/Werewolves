@@ -11,7 +11,7 @@ class Intelligence():
     def __init__(self):
                                 #selon l'interface desiree par l'IA
         self.startTime = time.time()
-        self.maxValue =10
+        self.maxValue = 7
         self.mySpecie = Species.human
 
     def timeleft(self):
@@ -49,7 +49,7 @@ class Intelligence():
     def chooseMission(self, state):
         possibleBranches = []
         missionlist = enumerate_possible_missions(state, self.mySpecie)
-        print("alpha 1 ", missionlist)
+        #print("alpha 1 ", missionlist)
         for mission in missionlist:
             assessedMission = [mission, 0]
             assessedMission[1] = self.alphabeta(self.CalulateNextState(mission, state), self.mySpecie.inverse(), 1,-100000, +100000) #appel recursif du alphabeta
@@ -65,7 +65,7 @@ class Intelligence():
             return  self.calculateHeuristics(state)
         if specie == self.mySpecie:
             missionList = enumerate_possible_missions(state, specie)
-            print("alpha liste", missionList)
+            #print("alpha liste", missionList)
             for mission in missionList:
                 alpha = max(alpha, self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
                 if alpha > beta:
@@ -73,7 +73,7 @@ class Intelligence():
             return alpha
         else:
             missionList = enumerate_possible_missions(state, specie)
-            print("beta liste ", missionList)
+            #print("beta liste ", missionList)
             for mission in missionList:
                 beta=min(beta,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
                 if alpha > beta :

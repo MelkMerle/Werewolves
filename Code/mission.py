@@ -46,28 +46,28 @@ class Mission:
 
             # pour les missions de type attackhuman, on simule l'état du plateau quand on l'aura bouffé
             if action.action_type == ActionType.attackHuman:
-                groupe_en_action = action.assignedGroup
-                groupe_vise = action.target_group
-                winner = utils.simulateBattle(groupe_en_action,groupe_vise)
+                winner = utils.simulateBattle(action.assignedGroup,action.target_group)
+
                 #on vérifie juste si il ya un split, car si il y en a il faut effacer le groupe parent et non le "sous-groupe" qui effectue l'action
                 if action.parent_group != None:
                     calculatedState.removeGroup(action.parent_group)
                 else :
                     calculatedState.removeGroup(action.assignedGroup)
+
                 calculatedState.removeGroup(action.target_group)
                 calculatedState.groupes.append(winner)
 
             # pour les actions de type attack enemy, pareil.
             # todo à améliorer, car si on arrive pas a bouffer l'ennemi, c'est pas une bonne mission (par exemple distance trop grande), il ne faut pas simuler une map comme si on l'avait bouffé mais plutot une map ou il est en triain de run from us
             if action.action_type == ActionType.attackEnemy:
-                groupe_en_action= action.assignedGroup
-                groupe_vise = action.target_group
-                winner = utils.simulateBattle(groupe_en_action,groupe_vise)
+                winner = utils.simulateBattle(action.assignedGroup,action.target_group)
+
                 #on vérifie juste qu'il n'y a pas de split, si il y en a il faut effacer le groupe parent et pas le "sous-groupe" qui effectue l'action
                 if action.parent_group != None:
                     calculatedState.removeGroup(action.parent_group)
                 else :
                     calculatedState.removeGroup(action.assignedGroup)
+
                 calculatedState.removeGroup(action.target_group)
                 calculatedState.groupes.append(winner)
 

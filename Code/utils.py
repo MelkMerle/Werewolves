@@ -1,4 +1,5 @@
 # coding=utf-8                                                                                                                                                                   
+from action_type import ActionType
 from group import Group
 from species import Species
 import math
@@ -57,3 +58,33 @@ def simulateBattle(groupAtt,groupDef):
         eff2=int(round(eff2))
         group_return = Group(groupDef.x, groupDef.y, eff2, groupDef.species)
         return group_return
+
+def simulateAttackAction (action, state):
+    if action.action_type == ActionType.attackHuman:
+            distance = getDistance(action.assignedGroup,action.target_group)
+            groupe_max = Group(0,0,0,action.assignedGroup.species.inverse()) #on initialise un groupe max de base, a 0
+            for group in state.groupes:
+                if group.species == action.assignedGroup.species.inverse() \
+                        and getDistance(group,action.target_group) < distance \
+                        and group.eff >= action.target_group.eff \
+                        and group.eff>groupe_max.eff: #on cherche les groupes ennemis plus proches que nous de la cible, plus nombreux que la cible, et on garde le plus gros d'entre eux
+                    groupe_max=group
+
+            enemy_winner = simulateBattle(groupe_max,action.target_group) # on simule une bataille entre ce groupe_max (cad le groupe d'enemis plus proche que nous, ou, à défaut, un groupe fictif vide, qui perdra forcément la bataille)
+            return simulateBattle(action.assignedGroup,enemy_winner) # et on simule une bataille entre nous et le gagnant de la première bataille
+
+    elif action.action_type == ActionType.attackEnemy:
+            distance = getDistance(action.assignedGroup,action.target_group)
+            groupe_max = Group(0,0,0,Species.human) #on initialise un groupe max de base, a 0
+            for group in state.groupes:
+                if group.species == Species.human \
+                        and getDistance(group,action.target_group) < distance \
+                        and group.eff <= action.target_group.eff \
+                        and group.eff>groupe_max.eff: #on cherche les groupes d'humains plus proches que nous de la cible ennemie, moins nombreuse que la cible, et on garde le plus gros d'entre eux
+                    groupe_max=group
+
+            enemy_winner = simulateBattle(groupe_max,action.target_group) # on simule une bataille entre ce groupe_max (cad le groupe d'humains plus proche que nous, ou, à défaut, un groupe fictif vide, qui perdra forcément la bataille)
+            return simulateBattle(action.assignedGroup,enemy_winner) # et on simule une bataille entre nous et le gagnant de la première bataille
+    else :
+        print ("Warning ! simulateAttackAction s'execute sur une action de type autre qu'attackHuman ou attackEnemy")
+        return Group()

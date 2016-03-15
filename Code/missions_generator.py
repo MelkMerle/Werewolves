@@ -15,7 +15,7 @@ def enumerate_possible_missions(state, my_species):
 
     #on génère le produit cartésien : i.e. toutes les combinaisons possibles de : une mission assignée par groupe
     possible_strategies=list(itertools.product(*sub_missions_array))
-    # print "possible missions", possible_strategies
+    #print "possible missions", possible_strategies
 
     # on enlève les missions avec redondances, c'est à dire celles où deux groupes alliés prennent pour cible un seul groupe (humain ou enemi)
     final_mission_set = remove_redundant_actions(possible_strategies)
@@ -63,7 +63,7 @@ def generate_group_missions (groupes, state, species):
         group_missions.sort(key=dict(zip(group_missions, merged_rates)).get, reverse=True)
 
         #on rajoute les missions possibles de ce groupe (déjà pré-tronquée) à la liste de sous-missions globales
-        sub_missions_array.append(group_missions[:(nb_human_groups+nb_enemy_groups)*2]) #todo elaguage pas en fonction du nombre d'humains (genere bugs quand il n'y en a plus), peut etre en fonction de la note, ou au moins en fonction du nb_humans+nb_enemy.
+        sub_missions_array.append(group_missions[:(nb_human_groups+nb_enemy_groups)])
     # debug :
     # print "submission array", sub_missions_array
     return sub_missions_array

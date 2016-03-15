@@ -14,7 +14,7 @@ class NetworkManager:
         # Récupération en ligne de commande l'addresse ip et le port
         #self.ip = raw_input("Adresse IP du serveur : ")
         #self.port = int(raw_input("Port : "))
-        self.ip = "138.195.106.85"
+        self.ip = "192.168.0.104"
         self.port = int(5555)
         # Connexion de la socket
         try:
