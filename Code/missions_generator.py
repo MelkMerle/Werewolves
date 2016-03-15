@@ -7,7 +7,7 @@ import itertools
 from species import Species
 
 def enumerate_possible_missions(state, my_species):
-    facteur_brch_max = 10
+    facteur_brch_max = 4
     my_groups = state.getMembers(my_species)
 
     # on génère la liste de toutes les missions possibles pour chaque groupe de my_groups
@@ -63,7 +63,7 @@ def generate_group_missions (groupes, state, species):
         group_missions.sort(key=dict(zip(group_missions, merged_rates)).get, reverse=True)
 
         #on rajoute les missions possibles de ce groupe (déjà pré-tronquée) à la liste de sous-missions globales
-        sub_missions_array.append(group_missions[:(nb_human_groups+nb_enemy_groups)*10]) #todo elaguage pas en fonction du nombre d'humains (genere bugs quand il n'y en a plus), peut etre en fonction de la note, ou au moins en fonction du nb_humans+nb_enemy.
+        sub_missions_array.append(group_missions[:(nb_human_groups+nb_enemy_groups)*2]) #todo elaguage pas en fonction du nombre d'humains (genere bugs quand il n'y en a plus), peut etre en fonction de la note, ou au moins en fonction du nb_humans+nb_enemy.
     # debug :
     # print "submission array", sub_missions_array
     return sub_missions_array

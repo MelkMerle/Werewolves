@@ -12,10 +12,10 @@ class NetworkManager:
         # Création de la socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Récupération en ligne de commande l'addresse ip et le port
-        self.ip = raw_input("Adresse IP du serveur : ")
-        self.port = int(raw_input("Port : "))
-        #self.ip = "138.195.106.85"
-        #self.port = int(5555)
+        #self.ip = raw_input("Adresse IP du serveur : ")
+        #self.port = int(raw_input("Port : "))
+        self.ip = "138.195.106.85"
+        self.port = int(5555)
         # Connexion de la socket
         try:
             self.sock.connect((self.ip, self.port))

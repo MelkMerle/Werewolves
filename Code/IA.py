@@ -1,4 +1,5 @@
 
+import copy
 from species import Species
 from missions_generator import enumerate_possible_missions
 
@@ -60,16 +61,17 @@ class Intelligence():
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
     def alphabeta(self, state, specie, recursiveValue, alpha, beta):
-        if (recursiveValue > self.maxValue) or (state.getMembers(specie)==[]) or (state.getMembers(specie.inverse())==[]) or (state.getMembers(Species.human)==[]) : #todo rajouter state.getMembers(Species.human)==[] . pour eviter d'avoir un array vide dans les missions possibles
+        if (recursiveValue > self.maxValue) or (state.getMembers(specie)==[]) or (state.getMembers(specie.inverse())==[]) :
             return  self.calculateHeuristics(state)
-        if specie== self.mySpecie:
+        if specie == self.mySpecie:
+            newalpha = copy.deepcopy(alpha)
             missionList = enumerate_possible_missions(state, specie)
             #print("alpha liste", missionList)
             for mission in missionList:
-                alpha=max(alpha,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
+                newalpha = max(alpha, self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
                 if alpha > beta:
                     return beta
-            return alpha
+            return newalpha
         else:
             missionList = enumerate_possible_missions(state, specie)
             #print("beta liste ", missionList)
