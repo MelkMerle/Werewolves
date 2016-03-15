@@ -49,7 +49,7 @@ class Intelligence():
     def chooseMission(self, state):
         possibleBranches = []
         missionlist = enumerate_possible_missions(state, self.mySpecie)
-        #print("alpha 1 ", missionlist)
+        print("alpha 1 ", missionlist)
         for mission in missionlist:
             assessedMission = [mission, 0]
             assessedMission[1] = self.alphabeta(self.CalulateNextState(mission, state), self.mySpecie.inverse(), 1,-100000, +100000) #appel recursif du alphabeta
@@ -66,19 +66,19 @@ class Intelligence():
         if specie == self.mySpecie:
             newalpha = copy.deepcopy(alpha)
             missionList = enumerate_possible_missions(state, specie)
-            #print("alpha liste", missionList)
+            print("alpha liste", missionList)
             for mission in missionList:
-                newalpha = max(alpha, self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
-                if alpha > beta:
+                newalpha = max(newalpha, self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,newalpha, beta))
+                if newalpha > beta:
                     return beta
             return newalpha
         else:
             newbeta = copy.deepcopy(beta)
             missionList = enumerate_possible_missions(state, specie)
-            #print("beta liste ", missionList)
+            print("beta liste ", missionList)
             for mission in missionList:
-                newbeta=min(beta,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
-                if alpha > beta :
+                newbeta=min(newbeta,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, newbeta))
+                if alpha > newbeta :
                     return alpha
             return newbeta
 
