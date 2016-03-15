@@ -42,7 +42,7 @@ def simulateBattle(groupAtt,groupDef):
         winningprob = groupAtt.eff/groupDef.eff-0.5
     
     if winningprob ==0.5:
-        winningprob+=random.random()/100
+        winningprob-=random.random()/100
 
     if winningprob>0.5:
         eff1=winningprob*groupAtt.eff
