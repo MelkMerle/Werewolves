@@ -53,14 +53,25 @@ class Action:
 
 
         elif self.action_type == ActionType.attackEnemy: #todo ne pas donner une aussi bonne note parce que les ennemis risquent de bouffer des humains plus proches d'eux pour devenir plus gros
-            winner = utils.simulateBattle(self.assignedGroup,self.target_group)
-            we_won = (winner.species==self.assignedGroup.species)
+            distance = utils.getDistance(self.assignedGroup,self.target_group)
+            groupe_max = Group(0,0,0,Species.human) #on initialise un groupe max de base, a 0
+            for group in state.groupes:
+                if group.species == Species.human \
+                        and utils.getDistance(group,self.target_group) < distance \
+                        and group.eff < self.target_group.eff \
+                        and group.eff>groupe_max.eff: #on cherche les groupes d'humains plus proches que nous de la cible ennemie, moins nombreuse que la cible, et on garde le plus gros d'entre eux
+                    groupe_max=group
+
+            enemyWinner = utils.simulateBattle(groupe_max,self.target_group) # on simule une bataille entre ce groupe_max (cad le groupe d'humains plus proche que nous, ou, à défaut, un groupe fictif vide, qui perdra forcément la bataille)
+            winnerFinal = utils.simulateBattle(self.assignedGroup,enemyWinner) # et on simule une bataille entre nous et le gagnant de la première bataille
+
+            we_won = (winnerFinal.species==self.assignedGroup.species)
             if we_won:
                 winFactor= 1
             else :
                 winFactor = -1
-            self.possibleGain = winFactor*(winner.eff-self.assignedGroup.eff)
-            self.possibleEnemyGain = -winFactor*(winner.eff-self.target_group.eff)
+            self.possibleGain = winFactor*(winnerFinal.eff-self.assignedGroup.eff)
+            self.possibleEnemyGain = -winFactor*(winnerFinal.eff-self.target_group.eff)
 
         elif self.action_type == ActionType.run:  #todo
             self.possibleGain = 0 #todo
