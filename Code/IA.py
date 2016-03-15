@@ -64,23 +64,21 @@ class Intelligence():
         if (recursiveValue > self.maxValue) or (state.getMembers(specie)==[]) or (state.getMembers(specie.inverse())==[]) :
             return  self.calculateHeuristics(state)
         if specie == self.mySpecie:
-            newalpha = copy.deepcopy(alpha)
             missionList = enumerate_possible_missions(state, specie)
             print("alpha liste", missionList)
             for mission in missionList:
-                newalpha = max(newalpha, self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,newalpha, beta))
-                if newalpha > beta:
+                alpha = max(alpha, self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
+                if alpha > beta:
                     return beta
-            return newalpha
+            return alpha
         else:
-            newbeta = copy.deepcopy(beta)
             missionList = enumerate_possible_missions(state, specie)
             print("beta liste ", missionList)
             for mission in missionList:
-                newbeta=min(newbeta,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, newbeta))
-                if alpha > newbeta :
+                beta=min(beta,self.alphabeta(mission.execute(state), specie.inverse(), recursiveValue+1,alpha, beta))
+                if alpha > beta :
                     return alpha
-            return newbeta
+            return beta
 
         
 
