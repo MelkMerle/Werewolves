@@ -18,7 +18,7 @@ def enumerate_possible_missions(state, my_species):
     # print "possible missions", possible_strategies
 
     # on enlève les missions avec redondances, c'est à dire celles où deux groupes alliés prennent pour cible un seul groupe (humain ou enemi)
-    final_mission_set = remove_misssions_with_redundancies(possible_strategies)
+    final_mission_set = remove_redundant_actions(possible_strategies)
 
     # enfin, on trie les stratégies selon leur note, et on fait un dernier élaguage, pour réduire le facteur de branchement
     rate_missions =[]
@@ -68,7 +68,7 @@ def generate_group_missions (groupes, state, species):
     # print "submission array", sub_missions_array
     return sub_missions_array
 
-def remove_misssions_with_redundancies(strategies):
+def remove_redundant_actions(strategies):
     final_possible_strategies=[]
     #chaque stratégie est un tuple de missions, c'est à dire une assignation spécifique d'une mission par groupe
     for mission_tuple in strategies:
@@ -85,10 +85,9 @@ def remove_misssions_with_redundancies(strategies):
         for action in actionList:
             if action.target_group not in target_list:
                 target_list.append(action.target_group)
-            else:
-                duplicate_count+=1
-        if duplicate_count==0:
-            newMission = Mission(actionList)
-            final_possible_strategies.append(newMission)
-        # else what ? todo implementer merge !
+            else: #todo plutot que de l'effacer brutalement, implementer merge
+                actionList.remove(action)
+        newMission = Mission(actionList)
+        final_possible_strategies.append(newMission)
+
     return final_possible_strategies

@@ -26,7 +26,7 @@ class NetworkManager:
 
         self.Plateau = PlateauDeJeu() # initialisation de la map, avec 0 ligne, 0 colonnes, 0 maisons, 0 humains, 0 vampires, 0 LG
         # le plateau de jeu en lui meme est un tableau nxm, avec à chaque case carte[x][y] = [<lettre de l'espèce>, nombre de l'espèce]
-        self.IA = Intelligence() # initialisation de l'heuristique à développer (bien mettre tout à 0 pour la réinitialisation)
+        self.IA = Intelligence() # initialisation de l'IA
 
     def send(self, *messages):
         """Send a given set of messages to the server."""
