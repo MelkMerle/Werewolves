@@ -1,4 +1,4 @@
-# coding=utf-8
+﻿# coding=utf-8
 from network_manager import NetworkManager
 import sys
 
@@ -9,7 +9,6 @@ import sys
 
 #only for testing purposes
 cmd = sys.argv[1:]
-print(cmd)
 assert len(cmd) ==2 #verifier qu'on a bien seulement 2 arguments
 ip, port = cmd
 
