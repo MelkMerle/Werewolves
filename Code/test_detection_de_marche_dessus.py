@@ -5,11 +5,11 @@ from missions_generator import enumerate_possible_missions
 
 plateau = PlateauDeJeu(5, 5)
 
-plateau.addGroup(0,2,4,Species.vampire)
-plateau.addGroup(1,2,4,Species.vampire)
-plateau.addGroup(4,2,3,Species.human)
-plateau.addGroup(3,2,3,Species.human)
-plateau.addGroup(1,4,10,Species.werewolf)
+plateau.addGroup(4,3,6,Species.vampire)
+plateau.addGroup(4,4,4,Species.vampire)
+plateau.addGroup(4,0,3,Species.human)
+plateau.addGroup(3,0,3,Species.human)
+plateau.addGroup(0,4,10,Species.werewolf)
 
 plateau.print()
 
@@ -19,3 +19,4 @@ for mission in missionArray:
     print("\n\nNOUVELLE MISSION, note : ", mission.calc_mark(plateau))
     print(mission)
     coup = mission.calculateCoup(plateau)
+    print(coup)
