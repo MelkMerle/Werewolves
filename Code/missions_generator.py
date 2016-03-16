@@ -18,7 +18,7 @@ def enumerate_possible_missions(state, my_species):
     #print "possible missions", possible_strategies
 
     # on enlève les missions avec redondances, c'est à dire celles où deux groupes alliés prennent pour cible un seul groupe (humain ou enemi)
-    final_mission_set = remove_redundant_actions(possible_strategies)
+    final_mission_set = remove_missions_with_redundancies(possible_strategies)
 
     # enfin, on trie les stratégies selon leur note, et on fait un dernier élaguage, pour réduire le facteur de branchement
     rate_missions =[]
@@ -70,16 +70,15 @@ def generate_group_missions (groupes, state, species):
     # print "submission array", sub_missions_array
     return sub_missions_array
 
-def remove_redundant_actions(strategies):
+def remove_missions_with_redundancies(strategies):
     final_possible_strategies=[]
     #chaque stratégie est un tuple de missions, c'est à dire une assignation spécifique d'une mission par groupe
-    for mission_tuple in strategies:
+    while len(strategies)>1: #on parcourt la liste des stratégies, et on elève celles qui ont des doublons
+    #for mission_tuple in strategies:
+        mission_tuple = strategies[-1]
+        strategies.pop()
         #on reconverti cette assignation de missions sous forme d'une liste d'actions
-        missionlist = list(mission_tuple)
-        actionList = []
-        for mission in missionlist:
-            for action in mission.actions:
-                actionList.append(action)
+        actionList= convertStratToActions(mission_tuple)
         # Et on vérifie qu'il n'y a pas de doublons dans les groupes visés par ces actions
         # auquel cas on fait quoi ??
         target_list=[]
@@ -88,8 +87,18 @@ def remove_redundant_actions(strategies):
             if action.target_group not in target_list:
                 target_list.append(action.target_group)
             else: #todo plutot que de l'effacer brutalement, implementer merge
-                actionList.remove(action)
-        newMission = Mission(actionList)
-        final_possible_strategies.append(newMission)
+                duplicate_count+=1
+        if duplicate_count==0:
+            newMission = Mission(actionList)
+            final_possible_strategies.append(newMission)
+    final_possible_strategies.append(Mission(convertStratToActions(strategies[0]))) #mais, quoi qu'il arrive, on rajoute toujours au moins une stratégie
 
     return final_possible_strategies
+
+def convertStratToActions(strategy):
+    missionlist = list(strategy)
+    actionList = []
+    for mission in missionlist:
+        for action in mission.actions:
+            actionList.append(action)
+    return actionList
