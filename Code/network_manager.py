@@ -7,15 +7,15 @@ from species import Species
 
 class NetworkManager:
 
-    def __init__(self):
+    def __init__(self, ip, port):
         self.game_over = 0
         # Création de la socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Récupération en ligne de commande l'addresse ip et le port
         #self.ip = raw_input("Adresse IP du serveur : ")
         #self.port = int(raw_input("Port : "))
-        self.ip = "192.168.0.104"
-        self.port = int(5555)
+        self.ip = ip
+        self.port = port
         # Connexion de la socket
         try:
             self.sock.connect((self.ip, self.port))
