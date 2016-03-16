@@ -22,7 +22,7 @@ class Mission:
         startCases = []
         destCases = []
         for action in self.actions: #todo eviter de se marcher dessus (case de depart = case d'arrivee)
-            print(action)
+            print(action), action.calc_mark(state)
             coup = action.calculateCoup(state)
             print(coup)
             coords_init = [coup[0], coup[1]]

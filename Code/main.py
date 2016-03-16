@@ -19,7 +19,7 @@ manager = NetworkManager(ip, int(port))
 
 
 #Envoi du nom
-groupname = "Les vampires rouges"
+groupname = "Les loouups bleus"
 manager.send('NME', len(groupname), groupname)
 
 
