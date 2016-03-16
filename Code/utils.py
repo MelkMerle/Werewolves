@@ -16,6 +16,8 @@ def getDistance(fromGroup, toGroup):
     norm = math.sqrt(distance[0] ** 2 + distance[1] ** 2)
     return norm
 
+def distance(pos1, pos2):
+    return math.sqrt((pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2)
 
 def mergeGroups (group1,group2):
     nouveau_groupe = Group(int((group1.x+group2.x)/2),int((group1.y+group2.y)/2),group1.eff+group2.eff,group1.species)

@@ -37,6 +37,8 @@ def generate_group_missions (groupes, state, species):
     #on genere une liste de missions possibles par groupe (split et non split)
     for groupMe in groupes:
         possible_actions = enumerate_possible_actions(state, groupMe, species)
+
+
         possible_simple_actions = possible_actions[0]
         possible_simple_rates = []
         possible_split_actions = possible_actions[1]

@@ -6,14 +6,14 @@ from actions_generator import enumerate_possible_actions
 
 plateau = PlateauDeJeu(10, 5)
 
-myGroup = Group(4, 1, 4, Species.werewolf)
+myGroup = Group(4,4,1,Species.werewolf)
 plateau.addGroup(2,2,4,Species.human)
 plateau.addGroup(9,0,2,Species.human)
 plateau.addGroup(9,2,1, Species.human)
 plateau.addGroup(9,4,2, Species.human)
-plateau.addGroup(4,3,4,Species.vampire)
+plateau.addGroup(1,3,4,Species.vampire)
 plateau.addThisGroup(myGroup)
-
+plateau.print()
 print("Enumeration actions ...\n")
 actions = enumerate_possible_actions(plateau, myGroup, Species.werewolf)
 

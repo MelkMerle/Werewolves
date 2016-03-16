@@ -15,26 +15,63 @@ class Mission:
             mark+=action.calc_mark(state)
         return mark
 
-
+    # todo : pourquoi renvoyer le tableau des coups et la taille de ce tableau ? c'est redondant (ou alors j'ai pas tout compris) - Antoine
     def calculateCoup(self, state):
         coupsActions = []
         coupsNombre = 0
-        startCases = []
-        destCases = []
+        start_positions = []
+        for action in self.actions:
+            start_positions.append([action.assignedGroup.x, action.assignedGroup.y])
         for action in self.actions: #todo eviter de se marcher dessus (case de depart = case d'arrivee)
-            print(action)
             coup = action.calculateCoup(state)
-            print(coup)
-            coords_init = [coup[0], coup[1]]
-            coords_dest = [coup[3], coup[4]]
-            print(startCases)
-            startCases.append(coords_init)
-            destCases.append(coords_dest)
+            destination_position = [coup[3], coup[4]]
 
-            coupsActions.append(coup)
-            coupsNombre += 1
+            # Détection de chevauchement
+            if destination_position in start_positions:
+                coup = self.evite(coup, action, start_positions, state)
+                print('Chevauchement en ', destination_position, ', remplacé par ', [coup[3], coup[4]])
+            if coup != None:
+                coupsActions.append(coup)
+                coupsNombre += 1
+
         coups = [coupsNombre, coupsActions]
         return coups
+
+    def evite(self, coup, action, start_positions, state):
+        init = [coup[0], coup[1]]
+        dest = [coup[3], coup[4]]
+        cible = [action.target_group.x, action.target_group.y]
+        possibles = []
+
+        # On regarde les positions possibles
+        for i in range(0, 3):
+            for j in range(0, 3):
+                position = [init[0]-1+i, init[1]-1+j]
+                if position not in start_positions:
+                    if position[0]<state.width and position[1]<state.height and position[0]>=0 and position[1]>=0:
+                        possibles.append(position)
+
+        # Si aucune position possible, le groupe reste sur place
+        if len(possibles) == 0:
+            return None
+
+        # Sinon on recherche la meilleure position à prendre, en fonction de la cible
+        else:
+            # On prend la position qui minimise la distance
+            # Possiblement améliorable
+            pos = None
+            distance = 1000
+            for position in possibles:
+                d = utils.distance(position, cible)
+                if d < distance:
+                    pos = position
+                    distance = d
+            coup[3] = pos[0]
+            coup[4] = pos[1]
+            return coup
+
+
+
 
     def execute(self,state):
         # for action in self.actions :
@@ -90,3 +127,9 @@ class Mission:
                 calculatedState.groupes.append(groupe_ennemi)
 
         return calculatedState
+
+    def __str__(self):
+        v ="Mission : "
+        for action in self.actions:
+            v += "\n - " + str(action)
+        return v
