@@ -11,7 +11,7 @@ plateau.addGroup(4,0,3,Species.human)
 plateau.addGroup(3,0,3,Species.human)
 plateau.addGroup(0,4,10,Species.werewolf)
 
-plateau.print()
+plateau.print_plateau()
 
 missionArray = enumerate_possible_missions(plateau, Species.vampire)
 

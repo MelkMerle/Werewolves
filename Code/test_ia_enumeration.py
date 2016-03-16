@@ -13,7 +13,7 @@ plateau.addGroup(9,2,1, Species.human)
 plateau.addGroup(9,4,2, Species.human)
 plateau.addGroup(1,3,4,Species.vampire)
 plateau.addThisGroup(myGroup)
-plateau.print()
+plateau.print_plateau()
 print("Enumeration actions ...\n")
 actions = enumerate_possible_actions(plateau, myGroup, Species.werewolf)
 

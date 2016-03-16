@@ -1,4 +1,4 @@
-# coding=utf-8
+﻿# coding=utf-8
 from group import Group
 
 
@@ -49,7 +49,7 @@ class PlateauDeJeu:
     #     members = self.getGroup(self,x,y)
     #     if(members != none):
 
-    def print(self):
+    def print_plateau(self):
         horiz = ""
         for i in range(0, self.width*3+1):
             horiz+='-'
