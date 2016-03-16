@@ -9,8 +9,10 @@ import sys
 
 #only for testing purposes
 cmd = sys.argv[:1]
-assert len(cmd) ==2 #verifier qu'on a bien seulement 2 arguments
-ip, port = cmd
+#assert len(cmd) ==2 #verifier qu'on a bien seulement 2 arguments
+#ip, port = cmd
+ip = "172.20.10.4"
+port = 5555
 
 # Lancement du network manager
 manager = NetworkManager(ip, int(port))
