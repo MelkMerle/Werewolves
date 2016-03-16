@@ -28,9 +28,8 @@ class Mission:
 
             # Détection de chevauchement
             if destination_position in start_positions:
-                print("Chevauchement sur la case ", destination_position)
                 coup = self.evite(coup, action, start_positions, state)
-
+                print('Chevauchement en ', destination_position, ', remplacé par ', [coup[3], coup[4]])
             if coup != None:
                 coupsActions.append(coup)
                 coupsNombre += 1
@@ -51,7 +50,6 @@ class Mission:
                 if position not in start_positions:
                     if position[0]<state.width and position[1]<state.height and position[0]>=0 and position[1]>=0:
                         possibles.append(position)
-        print(possibles)
 
         # Si aucune position possible, le groupe reste sur place
         if len(possibles) == 0:
@@ -62,7 +60,7 @@ class Mission:
             # On prend la position qui minimise la distance
             # Possiblement améliorable
             pos = None
-            distance = 1000;
+            distance = 1000
             for position in possibles:
                 d = utils.distance(position, cible)
                 if d < distance:
