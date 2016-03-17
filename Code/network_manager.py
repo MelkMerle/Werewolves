@@ -35,7 +35,7 @@ class NetworkManager:
                 if(isinstance(message, int)):
                     data = struct.pack('=B', message)
                 elif (isinstance(message, str)):
-                    data = bytes(message, 'utf-8')
+                    data = bytes(message)
                 elif (isinstance(message, list)):
                     for mess in message:
                         self.send(mess)
