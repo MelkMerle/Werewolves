@@ -6,12 +6,12 @@ from mission import Mission
 import itertools
 from species import Species
 
-def enumerate_possible_missions(state, my_species, branchement):
+def enumerate_possible_missions(state, my_species, branchement, split_rate):
     facteur_brch_max = branchement
     my_groups = state.getMembers(my_species)
 
     # on génère la liste de toutes les missions possibles pour chaque groupe de my_groups
-    sub_missions_array = generate_group_missions(my_groups, state, my_species)
+    sub_missions_array = generate_group_missions(my_groups, state, my_species,split_rate)
 
     #on génère le produit cartésien : i.e. toutes les combinaisons possibles de : une mission assignée par groupe
     possible_strategies=list(itertools.product(*sub_missions_array))
@@ -29,14 +29,15 @@ def enumerate_possible_missions(state, my_species, branchement):
     final_mission_set = final_mission_set[:facteur_brch_max]
     return final_mission_set
 
-def generate_group_missions (groupes, state, species):
+def generate_group_missions (groupes, state, species, max_split_rate):
     nb_human_groups=len(state.getMembers(Species.human))
     nb_enemy_groups=len(state.getMembers(species.inverse()))
+    nb_my_groups = len(groupes)
     sub_missions_array=[]
     # print "nb humans", nb_human_groups
     #on genere une liste de missions possibles par groupe (split et non split)
     for groupMe in groupes:
-        possible_actions = enumerate_possible_actions(state, groupMe, species)
+        possible_actions = enumerate_possible_actions(state, groupMe, species,nb_my_groups, max_split_rate)
 
 
         possible_simple_actions = possible_actions[0]
@@ -69,10 +70,10 @@ def generate_group_missions (groupes, state, species):
         #on rajoute les missions possibles de ce groupe (déjà pré-tronquée) à la liste de sous-missions globales
         sub_missions_array.append(group_missions[:(nb_human_groups+nb_enemy_groups)])
 
-    for mission in sub_missions_array:
-        print "-----------------------"
-        for subpiss in mission:
-            print subpiss
+    # for mission in sub_missions_array:
+    #     print "-----------------------"
+    #     for subpiss in mission:
+    #         print subpiss
 
     return sub_missions_array
 

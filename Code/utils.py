@@ -6,9 +6,8 @@ import math
 import random
 
 def getVector(fromGroup, toGroup):
-    distance = [fromGroup.x-toGroup.x,toGroup.y-fromGroup.y]
-    norm = math.sqrt(distance[0] ** 2 + distance[1] ** 2)
-    vector= [int(round(distance[0] / norm)),int(round(distance[1] / norm))]
+    distance = [toGroup.x-fromGroup.x,toGroup.y-fromGroup.y]
+    vector= [int(distance[0]>0),int(distance[1] >0)]
     return vector
 
 def getDistance(fromGroup, toGroup):

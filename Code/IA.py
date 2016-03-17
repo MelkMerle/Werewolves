@@ -8,13 +8,14 @@ import time
 
 class Intelligence():
 
-    def __init__(self, maxTime=4, recursiveDepth=5, branchFactor=3):
+    def __init__(self, maxTime=0.8, recursiveDepth=4, branchFactor=3, max_split_rate=3):
                                 #selon l'interface desiree par l'IA
         self.startTime = time.time()
         self.maxTime=maxTime
         self.mySpecie = Species.human
         self.maxRecursiveValue=recursiveDepth
         self.branchFactor = branchFactor
+        self.max_split_rate = max_split_rate
     def timeleft(self):
         return (5*60)-(time.time() - self.startTime)
 
@@ -50,7 +51,7 @@ class Intelligence():
     def chooseMission(self, state):
         self.startTime = time.time()
         possibleBranches = []
-        missionlist = enumerate_possible_missions(state, self.mySpecie, self.branchFactor)
+        missionlist = enumerate_possible_missions(state, self.mySpecie, self.branchFactor, self.max_split_rate)
         #print("alpha 1 ", missionlist)
         for mission in missionlist:
             assessedMission = [mission, 0]
@@ -63,12 +64,12 @@ class Intelligence():
     #Here state is the groups in the possible state, it totally define the game (!!not the real groups though)
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
     def alphabeta(self, state, recursiveValue, specie,  alpha, beta):
-        if  (self.maxRecursiveValue <recursiveValue) or (state.getMembers(specie)==[]) or (state.getMembers(specie.inverse())==[]) or ((time.time()-self.startTime)>self.maxTime) :
-            print((time.time()-self.startTime))
-            print(recursiveValue)
+        if (self.maxRecursiveValue <= recursiveValue) or (state.getMembers(specie)==[]) or (state.getMembers(specie.inverse())==[]) or ((time.time()-self.startTime)>self.maxTime) :
+            #print((time.time()-self.startTime))
+            #print(recursiveValue)
             return  self.calculateHeuristics(state)
         if specie == self.mySpecie:
-            missionList = enumerate_possible_missions(state, specie, self.branchFactor)
+            missionList = enumerate_possible_missions(state, specie, self.branchFactor,self.max_split_rate)
             #print("alpha liste", missionList)
             for mission in missionList:
                 alpha = max(alpha, self.alphabeta(mission.execute(state),recursiveValue+1 , specie.inverse(),alpha, beta))
@@ -76,7 +77,7 @@ class Intelligence():
                     return beta
             return alpha
         else:
-            missionList = enumerate_possible_missions(state, specie, self.branchFactor)
+            missionList = enumerate_possible_missions(state, specie, self.branchFactor,self.max_split_rate)
             #print("beta liste ", missionList)
             for mission in missionList:
                 beta=min(beta,self.alphabeta(mission.execute(state),recursiveValue+1, specie.inverse(),alpha, beta))
