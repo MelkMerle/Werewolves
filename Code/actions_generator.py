@@ -38,7 +38,7 @@ def enumerate_possible_actions(state, group, specie, number_my_groups, max_split
         groups_targets.append(group_enemy)
 
     # actions avec splits
-    if number_my_groups< max_split_rate: #on évite de trop se splitter
+    if number_my_groups <= max_split_rate: #on évite de trop se splitter
         for i in range(1, int(len_group_me/2)+1): #todo réduire le nombre de splits possibles pour alléger le temps de calcul ? max 2 à mon avis
             doublets.append([i, len_group_me-i])
 
