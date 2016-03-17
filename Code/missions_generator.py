@@ -7,7 +7,7 @@ import itertools
 from species import Species
 
 def enumerate_possible_missions(state, my_species):
-    facteur_brch_max = 4
+    facteur_brch_max = 3
     my_groups = state.getMembers(my_species)
 
     # on génère la liste de toutes les missions possibles pour chaque groupe de my_groups
@@ -23,7 +23,7 @@ def enumerate_possible_missions(state, my_species):
     # enfin, on trie les stratégies selon leur note, et on fait un dernier élaguage, pour réduire le facteur de branchement
     rate_missions =[]
     for mission in final_mission_set:
-        rate_missions.append(mission.calc_mark(state))
+        rate_missions.append(mission.calc_mark())
     # print final_mission_set,rate_missions
     final_mission_set.sort(key=dict(zip(final_mission_set, rate_missions)).get, reverse=True)
     final_mission_set = final_mission_set[:facteur_brch_max]
@@ -47,10 +47,13 @@ def generate_group_missions (groupes, state, species):
 
         for action in possible_simple_actions:
             #on calcule les notes des actions "simples": un groupe attaque un groupe d'humains
-            possible_simple_rates.append(action.calc_mark(state))
+            action.calc_mark(state)
+            possible_simple_rates.append(action.mark)
         for actions in possible_split_actions:
             #on calcule les notes des missions splittées
-            possible_split_rates.append(actions[0].calc_mark(state) + actions[1].calc_mark(state))
+            actions[0].calc_mark(state)
+            actions[1].calc_mark(state)
+            possible_split_rates.append(actions[0].mark + actions[1].mark)
 
         #ensuite, on cree notre liste de missions possibles pour ce groupe
         for action in possible_simple_actions:

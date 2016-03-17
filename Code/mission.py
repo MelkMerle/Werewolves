@@ -9,10 +9,10 @@ class Mission:
     def __init__(self, actions=[Action()]):  # Actions is an array of actions
         self.actions=actions
         #self.changes inutile maintenant
-    def calc_mark(self,state):
+    def calc_mark(self):
         mark=0
         for action in self.actions:
-            mark+=action.calc_mark(state)
+            mark+=action.mark
         return mark
 
     # todo : pourquoi renvoyer le tableau des coups et la taille de ce tableau ? c'est redondant (ou alors j'ai pas tout compris) - Antoine

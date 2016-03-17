@@ -81,11 +81,10 @@ class Action:
         intuitive_mark = (self.possibleGain-self.possibleEnemyGain)
         mark = 0
         if intuitive_mark>=0:
-            mark = intuitive_mark/(utils.getDistance(self.assignedGroup,self.target_group))
+            self.mark = intuitive_mark/(utils.getDistance(self.assignedGroup,self.target_group))
         else :
-            mark = intuitive_mark
+            self.mark = intuitive_mark
 
-        return mark
 
     def __str__(self):
         return "{} from {} to {}".format(self.action_type, self.assignedGroup, self.target_group)
