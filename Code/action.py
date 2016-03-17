@@ -1,4 +1,4 @@
-# coding=utf-8
+﻿# coding=utf-8
 
 from group import Group
 from action_type import ActionType
@@ -92,7 +92,7 @@ class Action:
     def calculateCoup(self, state):
         #dependant on action_type
         #test if below limit lines before sending!!
-        print "Action : ", self
+        print("Action : ", self)
         if self.action_type ==ActionType.attackHuman:
             #find human group
             grouptoAttack=self.target_group
