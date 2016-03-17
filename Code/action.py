@@ -41,14 +41,14 @@ class Action:
 
             if winnerFinal.species==self.assignedGroup.species: #soit on gagne avec certitude la derniere bataille
                 self.possibleEnemyGain = -groupe_max.eff
-                self.possibleGain = 1.2*(winnerFinal.eff)-self.assignedGroup.eff
+                self.possibleGain = (winnerFinal.eff)-self.assignedGroup.eff
 
             elif winnerFinal.species == Species.human: # soit les humains remportent et nos deux groupes se sont faits bouffer
                 self.possibleEnemyGain = -groupe_max.eff
                 self.possibleGain = -self.assignedGroup.eff
 
             else:                                       # soit les enemis gagnent et on perd
-                self.possibleEnemyGain = 2*(winnerFinal.eff)-groupe_max.eff
+                self.possibleEnemyGain = (winnerFinal.eff)-groupe_max.eff
                 self.possibleGain = -self.assignedGroup.eff
 
 
@@ -66,7 +66,7 @@ class Action:
             winnerFinal = utils.simulateBattle(self.assignedGroup,enemyWinner) # et on simule une bataille entre nous et le gagnant de la première bataille
 
             if winnerFinal.species==self.assignedGroup.species:
-                self.possibleGain = 2*(winnerFinal.eff)-self.assignedGroup.eff
+                self.possibleGain = (winnerFinal.eff)-self.assignedGroup.eff
                 self.possibleEnemyGain = -self.target_group.eff
             else :
                 self.possibleGain = -self.assignedGroup.eff
