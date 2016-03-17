@@ -3,6 +3,8 @@ from action import Action
 from species import Species
 from action_type import ActionType
 from group import Group
+import utils
+import math
 
 
 def enumerate_possible_actions(state, group, specie):
@@ -15,6 +17,13 @@ def enumerate_possible_actions(state, group, specie):
     actions_split_per_group = []
     doublets = []
     groups_targets = []
+    #on elague les groupes d'humains
+    humanDistances = []
+    for humangroup in groups_human:
+        humanDistances.append(utils.getDistance(group, humangroup))
+    groups_human.sort(key=dict(zip(groups_human, humanDistances)).get, reverse=False)
+    groups_human=groups_human[:len_group_me]
+
     # actions sans split
     for group_human in groups_human:
         action = Action(ActionType.attackHuman, group_human, group)

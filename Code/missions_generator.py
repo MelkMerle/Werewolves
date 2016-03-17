@@ -63,14 +63,17 @@ def generate_group_missions (groupes, state, species):
 
         merged_rates = possible_simple_rates + possible_split_rates
 
-        # print group_missions, merged_rates
 
         group_missions.sort(key=dict(zip(group_missions, merged_rates)).get, reverse=True)
 
         #on rajoute les missions possibles de ce groupe (déjà pré-tronquée) à la liste de sous-missions globales
         sub_missions_array.append(group_missions[:(nb_human_groups+nb_enemy_groups)])
-    # debug :
-    # print "submission array", sub_missions_array
+
+    for mission in sub_missions_array:
+        print "-----------------------"
+        for subpiss in mission:
+            print subpiss
+
     return sub_missions_array
 
 def remove_missions_with_redundancies(strategies):

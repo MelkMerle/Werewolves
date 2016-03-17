@@ -6,15 +6,14 @@ import math
 import random
 
 def getVector(fromGroup, toGroup):
-    distance = [toGroup.x - fromGroup.x, toGroup.y - fromGroup.y]
+    distance = [fromGroup.x-toGroup.x,toGroup.y-fromGroup.y]
     norm = math.sqrt(distance[0] ** 2 + distance[1] ** 2)
     vector= [int(round(distance[0] / norm)),int(round(distance[1] / norm))]
     return vector
 
 def getDistance(fromGroup, toGroup):
-    distance = [toGroup.x - fromGroup.x, toGroup.y - fromGroup.y]
-    norm = math.sqrt(distance[0] ** 2 + distance[1] ** 2)
-    return norm
+    distance = max(abs(toGroup.x - fromGroup.x), abs(toGroup.y - fromGroup.y) ) #distance de thcebytchev
+    return distance
 
 def distance(pos1, pos2):
     return math.sqrt((pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2)

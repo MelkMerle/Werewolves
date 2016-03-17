@@ -79,20 +79,20 @@ class Action:
             print("type d'action non reconnu par calc_mark", self.action_type)
         intuitive_mark = (self.possibleGain-self.possibleEnemyGain)
         if intuitive_mark>=0:
-            self.mark = intuitive_mark/(utils.getDistance(self.assignedGroup,self.target_group))
+            self.mark = intuitive_mark/float(utils.getDistance(self.assignedGroup,self.target_group))
         else :
             self.mark = intuitive_mark
 
 
     def __str__(self):
-        return "{} from {} to {}".format(self.action_type, self.assignedGroup, self.target_group)
+        return "{} from {} to {}, note {}".format(self.action_type, self.assignedGroup, self.target_group, self.mark)
 
 
 
     def calculateCoup(self, state):
         #dependant on action_type
         #test if below limit lines before sending!!
-
+        print "Action : ", self
         if self.action_type ==ActionType.attackHuman:
             #find human group
             grouptoAttack=self.target_group

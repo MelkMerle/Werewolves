@@ -8,12 +8,15 @@ plateau = PlateauDeJeu(13, 5)
 myGroup = Group(4, 1, 4, Species.werewolf)
 plateau.addGroup(2,2,4,Species.human)
 plateau.addGroup(9,0,2,Species.human)
-plateau.addGroup(9,2,1, Species.human)
-plateau.addGroup(12,2,2, Species.werewolf)
+plateau.addGroup(9,2,2, Species.human)
+plateau.addGroup(9,1,2,Species.human)
+plateau.addGroup(9,3,2,Species.human)
+plateau.addGroup(9,4,2,Species.human)
+
+plateau.addGroup(12,1,3, Species.vampire)
 plateau.addGroup(12,3,3, Species.werewolf)
 
 plateau.addGroup(4,3,4,Species.vampire)
-plateau.addGroup(2,1,5,Species.vampire)
 plateau.addThisGroup(myGroup)
 
 # plateau = PlateauDeJeu(5, 6)
@@ -38,7 +41,7 @@ plateau.addThisGroup(myGroup)
 # plateau.addThisGroup(myGroup)
 
 plateau.print_plateau()
-missionArray = enumerate_possible_missions(plateau, Species.werewolf)
+missionArray = enumerate_possible_missions(plateau, Species.werewolf, 4)
 
 for mission in missionArray:
     print("\nthis is a mission de note : " + str(mission.calc_mark()))
