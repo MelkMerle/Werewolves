@@ -20,7 +20,9 @@ class Mission:
         coupsActions = []
         coupsNombre = 0
         start_positions = []
+        print("\nCALCULATE COUP : ")
         for action in self.actions:
+            print(action)
             start_positions.append([action.assignedGroup.x, action.assignedGroup.y])
         for action in self.actions: #todo eviter de se marcher dessus (case de depart = case d'arrivee)
             coup = action.calculateCoup(state)
@@ -28,6 +30,7 @@ class Mission:
 
             # Détection de chevauchement
             if destination_position in start_positions:
+                print(coup)
                 coup = self.evite(coup, action, start_positions, state)
                 print('Chevauchement en ', destination_position, ', remplacé par ', [coup[3], coup[4]])
             if coup != None:

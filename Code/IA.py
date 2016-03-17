@@ -57,7 +57,7 @@ class Intelligence():
             assessedMission = [mission, 0]
             assessedMission[1] = self.alphabeta(self.CalulateNextState(mission, state),1, self.mySpecie.inverse(),-100000, +100000) #appel recursif du alphabeta
             possibleBranches.append(assessedMission)
-        print(possibleBranches)
+        # print(possibleBranches)
         coupFinal = sorted(possibleBranches, key=lambda x: (x[1]))[-1][0].calculateCoup(state)
         return coupFinal
 
@@ -65,8 +65,8 @@ class Intelligence():
     #specie=1 for vampire if its me, 0 for werewolves (just to use ! , I am that lazy)
     def alphabeta(self, state, recursiveValue, specie,  alpha, beta):
         if (self.maxRecursiveValue <= recursiveValue) or (state.getMembers(specie)==[]) or (state.getMembers(specie.inverse())==[]) or ((time.time()-self.startTime)>self.maxTime) :
-            print((time.time()-self.startTime))
-            print(recursiveValue)
+            # print((time.time()-self.startTime))
+            # print(recursiveValue)
             return  self.calculateHeuristics(state)
         if specie == self.mySpecie:
             missionList = enumerate_possible_missions(state, specie, self.branchFactor,self.max_split_rate)

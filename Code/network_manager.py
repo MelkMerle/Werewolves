@@ -42,7 +42,6 @@ class NetworkManager:
                     return
                 else:
                     print("couldn't pack message: ", message)
-                print('data = ',data);
                 self.sock.send(data)
             except Exception as error:
                 print("Couldn't send message: ", message, error)
@@ -133,7 +132,6 @@ class NetworkManager:
             print("commande non attendue recue", order)
 
     def updateGroups(self, change):
-            print (change)
             x = change[0]
             y = change[1]
             num_humans = change[2]

@@ -92,7 +92,6 @@ class Action:
     def calculateCoup(self, state):
         #dependant on action_type
         #test if below limit lines before sending!!
-        print("Action : ", self)
         if self.action_type ==ActionType.attackHuman:
             #find human group
             grouptoAttack=self.target_group

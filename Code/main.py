@@ -11,7 +11,7 @@ import sys
 #cmd = sys.argv[1:]
 #assert len(cmd) ==2 #verifier qu'on a bien seulement 2 arguments
 #ip, port = cmd
-ip = "127.0.0.1"
+ip = "192.168.100.156"
 port =5555
 
 # Lancement du network manager
@@ -19,7 +19,7 @@ manager = NetworkManager(ip, int(port))
 
 
 #Envoi du nom
-groupname = "Jean K"
+groupname = "Waldo"
 manager.send('NME', len(groupname), groupname)
 
 

@@ -7,8 +7,15 @@ import random
 
 def getVector(fromGroup, toGroup):
     distance = [toGroup.x-fromGroup.x,toGroup.y-fromGroup.y]
-    vector= [int(distance[0]>0),int(distance[1] >0)]
-    return vector
+    if(distance[0] !=0):
+        relx = distance[0]/abs(distance[0])
+    else:
+        relx = 0
+    if(distance[1] !=0):
+        rely = distance[1]/abs(distance[1])
+    else:
+        rely = 0
+    return [int(relx), int(rely)]
 
 def getDistance(fromGroup, toGroup):
     distance = max(abs(toGroup.x - fromGroup.x), abs(toGroup.y - fromGroup.y) ) #distance de thcebytchev
