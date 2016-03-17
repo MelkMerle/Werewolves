@@ -1,4 +1,4 @@
-# coding=utf-8
+﻿# coding=utf-8
 from network_manager import NetworkManager
 import sys
 
@@ -11,7 +11,7 @@ import sys
 #cmd = sys.argv[1:]
 #assert len(cmd) ==2 #verifier qu'on a bien seulement 2 arguments
 #ip, port = cmd
-ip = "192.168.100.156"
+ip = "192.168.0.101"
 port =5555
 
 # Lancement du network manager

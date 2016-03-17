@@ -41,7 +41,7 @@ plateau.addThisGroup(myGroup)
 # plateau.addThisGroup(myGroup)
 
 plateau.print_plateau()
-missionArray = enumerate_possible_missions(plateau, Species.werewolf, 4)
+missionArray = enumerate_possible_missions(plateau, Species.werewolf, 10,10)
 
 for mission in missionArray:
     print("\nthis is a mission de note : " + str(mission.calc_mark()))

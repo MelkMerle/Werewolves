@@ -11,7 +11,7 @@ class Intelligence():
     def __init__(self, maxTime=0.8, recursiveDepth=4, branchFactor=3, max_split_rate=3):
                                 #selon l'interface desiree par l'IA
         self.startTime = time.time()
-        self.maxTime=maxTime
+        self.maxTime = maxTime
         self.mySpecie = Species.human
         self.maxRecursiveValue=recursiveDepth
         self.branchFactor = branchFactor
