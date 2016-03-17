@@ -25,7 +25,6 @@ class Action:
         if self.assignedGroup.eff==0:
             print("Warning : calc_mark tente d'evaluer les actions d'un groupe vide")
             return 0
-        winnerFinal= utils.simulateAttackAction(self,state)
         if self.action_type == ActionType.attackHuman:
             distance = utils.getDistance(self.assignedGroup,self.target_group)
             groupe_max = Group(0,0,0,self.assignedGroup.species.inverse()) #on initialise un groupe max de base, a 0
@@ -79,7 +78,6 @@ class Action:
         else :
             print("type d'action non reconnu par calc_mark", self.action_type)
         intuitive_mark = (self.possibleGain-self.possibleEnemyGain)
-        mark = 0
         if intuitive_mark>=0:
             self.mark = intuitive_mark/(utils.getDistance(self.assignedGroup,self.target_group))
         else :
