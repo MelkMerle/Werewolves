@@ -5,7 +5,7 @@ from species import Species
 import math
 import random
 
-def getVector(fromGroup, toGroup):
+def getVector(fromGroup, toGroup): #fonction utilisée dans calculateCoup pour savoir dans quelle direction on va aller
     distance = [toGroup.x-fromGroup.x,toGroup.y-fromGroup.y]
     if(distance[0] !=0):
         relx = distance[0]/abs(distance[0])
@@ -17,18 +17,18 @@ def getVector(fromGroup, toGroup):
         rely = 0
     return [int(relx), int(rely)]
 
-def getDistance(fromGroup, toGroup):
-    distance = max(abs(toGroup.x - fromGroup.x), abs(toGroup.y - fromGroup.y) ) #distance de thcebytchev
+def getDistance(fromGroup, toGroup): #distance de thcebytchev
+    distance = max(abs(toGroup.x - fromGroup.x), abs(toGroup.y - fromGroup.y) )
     return distance
 
-def distance(pos1, pos2):
-    return math.sqrt((pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2)
+def distance(pos1, pos2): #distance de tchebytchev aussi mais entre deux positions arbitraires et non entre deux groupes
+    return max(abs(pos1[0]-pos2[0]), abs(pos1[1]-pos2[1]))
 
 def mergeGroups (group1,group2):
     nouveau_groupe = Group(int((group1.x+group2.x)/2),int((group1.y+group2.y)/2),group1.eff+group2.eff,group1.species)
     return nouveau_groupe
 
-def simulateBattle(groupAtt,groupDef):
+def simulateBattle(groupAtt,groupDef): #outil utiliser pour calculer le résultat d'une bataille aléatoire (de façon déterministe : P>0,5 implique victoire, P<= 0,5 implique défaite)
 
     # attaque d'un groupe d'humain avec suffisamment de monde
     if groupDef.species == Species.human and groupAtt.eff >= groupDef.eff:
@@ -66,7 +66,7 @@ def simulateBattle(groupAtt,groupDef):
         group_return = Group(groupDef.x, groupDef.y, eff2, groupDef.species)
         return group_return
 
-def simulateAttackAction (action, state):
+def simulateAttackAction (action, state): #outil utilisé dans execute uniquement pour voir qui serait le gagnant lorsque on attaque mais en prenant en compte qu'un groupe ennemi puisse être entre les deux
     if action.action_type == ActionType.attackHuman:
             distance = getDistance(action.assignedGroup,action.target_group)
             groupe_max = Group(0,0,0,action.assignedGroup.species.inverse()) #on initialise un groupe max de base, a 0

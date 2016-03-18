@@ -4,7 +4,7 @@ from species import Species
 from action_type import ActionType
 from group import Group
 import utils
-import math
+
 
 
 

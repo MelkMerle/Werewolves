@@ -91,8 +91,8 @@ class Action:
 
     def calculateCoup(self, state):
         #depend du action_type
-        if self.action_type ==ActionType.attackHuman or ActionType.attackEnemy:
-            vector=utils.getVector(self.assignedGroup,self.target_group)
+        if self.action_type ==ActionType.attackHuman or self.action_type == ActionType.attackEnemy:
+            vector = utils.getVector(self.assignedGroup,self.target_group)
             return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0], self.assignedGroup.y+vector[1]]
 
         #run pas encore implemente, malheureusement

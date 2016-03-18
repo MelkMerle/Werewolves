@@ -11,11 +11,11 @@ class NetworkManager:
         self.game_over = 0
         # Création de la socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # Récupération en ligne de commande l'addresse ip et le port
-        #self.ip = raw_input("Adresse IP du serveur : ")
-        #self.port = int(raw_input("Port : "))
+
+        # Récupération de l'addresse ip et le port
         self.ip = ip
         self.port = port
+
         # Connexion de la socket
         try:
             self.sock.connect((self.ip, self.port))
@@ -23,9 +23,8 @@ class NetworkManager:
             print("Connection error: ", error)
 
         # Autres Initialisations
-
         self.Plateau = PlateauDeJeu() # initialisation de la map, avec 0 ligne, 0 colonnes, 0 maisons, 0 humains, 0 vampires, 0 LG
-        # le plateau de jeu en lui meme est un tableau nxm, avec à chaque case carte[x][y] = [<lettre de l'espèce>, nombre de l'espèce]
+        # le plateau de jeu est un simple tableau d'instances de la classe Groupe
         self.IA = Intelligence() # initialisation de l'IA
 
     def send(self, *messages):
@@ -68,7 +67,7 @@ class NetworkManager:
                 changement=self.recv(5)  # chaque changement a la forme [X, Y, nombre_H, nombre_V, nombre_L]
                 self.updateGroups(changement)
 
-            # calculez votre coup
+            # calculez votre coup, c'est ici le coeur de l'aglo
             coup = self.IA.chooseMission(self.Plateau)
             # calcule le coup de l'IA, qui est un tableau de
                               # Nx5 chiffres(x_dep,y_dep,nombre,x_arr,y_arr)_
@@ -86,7 +85,7 @@ class NetworkManager:
            n = self.recv(1)[0]
            for i in range(n):
                 for j in range(2):
-                    self.recv(1)[0]
+                    self.recv(1)[0] #on depile juste la socket mais c'est un ordre déprécié
 
         elif order == "HME":
             x = self.recv(1)[0]
@@ -121,12 +120,9 @@ class NetworkManager:
         elif order == "END":
             self.Plateau = PlateauDeJeu() # réinitialise le Plateau
             self.IA = Intelligence() # réinitialise l' IA
-            # ici on met fin à la partie en cours
-            # Réinitialisez votre modèle
 
         elif order == "BYE":
             self.sock.close()
-            # autres choses à faire pour la mise en fin
             self.game_over=1
         else:
             print("commande non attendue recue", order)

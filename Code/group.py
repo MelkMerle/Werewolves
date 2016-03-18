@@ -10,8 +10,5 @@ class Group:
         self.eff = eff
         self.species = species
 
-    # def __del__(self):
-    # todo
-
     def __str__(self):
         return "groupe de {}{} en ({},{})".format(self.eff, self.species.value, self.x, self.y)

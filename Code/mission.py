@@ -1,55 +1,53 @@
 # coding=utf-8                                                                                                                                                                   
-from action import Action
-from group import Group
+
 import utils
 import copy
 from action_type import ActionType
 
 class Mission:
-    def __init__(self, actions=[Action()]):  # Actions is an array of actions
+    def __init__(self, actions):  # Actions is an array of actions
         self.actions=actions
-        #self.changes inutile maintenant
-    def calc_mark(self):
+
+    def calc_mark(self):#calcul de la note ("mark") d'une mission, somme de la note de ses actions (utilisé pour élagage du facteur de branchement
         mark=0
         for action in self.actions:
             mark+=action.mark
         return mark
 
-    # todo : pourquoi renvoyer le tableau des coups et la taille de ce tableau ? c'est redondant (ou alors j'ai pas tout compris) - Antoine
     def calculateCoup(self, state):
         coupsActions = []
         coupsNombre = 0
         start_positions = []
-        print("\nCALCULATE COUP : ")
-        for action in self.actions:
-            print(action)
-            start_positions.append([action.assignedGroup.x, action.assignedGroup.y])
-        for action in self.actions: #todo eviter de se marcher dessus (case de depart = case d'arrivee)
-            coup = action.calculateCoup(state)
-            destination_position = [coup[3], coup[4]]
 
-            # Détection de chevauchement
+        for action in self.actions:
+            #print(action)
+            # ce print peut etre activé pour visualiser les actions qu'on fait a chaque tour
+            coup = action.calculateCoup(state)
+
+            #on vérifie qu'on ne "se marche pas dessus", cad une case d'arrivée déjà dans les cases de départ
+            start_positions.append([coup[0], coup[1]])
+            destination_position = [coup[3], coup[4]]
             if destination_position in start_positions:
-                print(coup)
-                coup = self.evite(coup, action, start_positions, state)
-                print('Chevauchement en ', destination_position, ', remplacé par ', [coup[3], coup[4]])
+                coup = self.evite(coup, action, start_positions, state) #auquel cas, on évite de se chevaucher
+
             if coup != None:
                 coupsActions.append(coup)
                 coupsNombre += 1
+            else :
+                print ("erreur : on essaie de calculer un coup inexistant")
 
         coups = [coupsNombre, coupsActions]
         return coups
 
     def evite(self, coup, action, start_positions, state):
-        init = [coup[0], coup[1]]
-        dest = [coup[3], coup[4]]
+        depart = [coup[0], coup[1]]
         cible = [action.target_group.x, action.target_group.y]
         possibles = []
 
         # On regarde les positions possibles
         for i in range(0, 3):
             for j in range(0, 3):
-                position = [init[0]-1+i, init[1]-1+j]
+                position = [depart[0]-1+i, depart[1]-1+j]
                 if position not in start_positions:
                     if position[0]<state.width and position[1]<state.height and position[0]>=0 and position[1]>=0:
                         possibles.append(position)
@@ -77,15 +75,16 @@ class Mission:
 
 
     def execute(self,state):
-        # for action in self.actions :
-        #     print(action)
 
+        #il ne faut pas éditer le plateau courant, donc on en fait une copie
         calculatedState = copy.deepcopy(state)
+
         for action in self.actions: #on parcourt les actions possibles
-            #print "action executee par alphabeta :", action
-            winner = utils.simulateAttackAction(action, state)
-            # pour les missions de type attackhuman, on simule l'état du plateau quand on l'aura bouffé
-            if action.action_type == ActionType.attackHuman:
+
+            # pour les missions de type attackhuman, ou attackenemy on simule l'état du plateau quand on l'aura bouffé
+            if action.action_type == ActionType.attackHuman or action.action_type == ActionType.attackEnemy:
+                winner = utils.simulateAttackAction(action, state)
+
                 #on vérifie juste si il ya un split, car si il y en a il faut effacer le groupe parent et non le "sous-groupe" qui effectue l'action
                 if action.parent_group != None:
                     calculatedState.removeGroup(action.parent_group)
@@ -94,21 +93,11 @@ class Mission:
 
                 calculatedState.removeGroup(action.target_group)
                 calculatedState.groupes.append(winner)
+            # todo très important, et en retrospect c'est un des points clefs de notre défaite:
+            #  améliorer le execute pour une mission attackEnemy, car si l'ennemi est trop loin, on va pas le bouffer car il aura bougé (chose que les humains ne font pas),
+            # il ne faut pas simuler une map comme si on l'avait bouffé mais plutot une map ou il est s'est eloigne de nous d'une case et nous nous sommes rapprochés de lui d'une case
 
-            # pour les actions de type attack enemy, pareil.
-            # todo à améliorer, car si on arrive pas a bouffer l'ennemi, c'est pas une bonne mission (par exemple distance trop grande),
-            # il ne faut pas simuler une map comme si on l'avait bouffé mais plutot une map ou il est s'est eloigne de nous
-            if action.action_type == ActionType.attackEnemy:
-                #on vérifie juste qu'il n'y a pas de split, si il y en a il faut effacer le groupe parent et pas le "sous-groupe" qui effectue l'action
-                if action.parent_group != None:
-                    calculatedState.removeGroup(action.parent_group)
-                else :
-                    calculatedState.removeGroup(action.assignedGroup)
-
-                calculatedState.removeGroup(action.target_group)
-                calculatedState.groupes.append(winner)
-
-            # pour les merge, on change le palteau comme il faut #todo implementer vraiment le merge
+            #todo implementer le merge
             if action.action_type == ActionType.merge :
                 nouveau_groupe = utils.mergeGroups(action.assignedGroup,action.target_group)
                 calculatedState.removeGroup(action.assignedGroup)
