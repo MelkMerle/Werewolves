@@ -2,7 +2,6 @@
 
 from enum import Enum
 
-
 class ActionType(Enum):
     attackEnemy = 'attackEnemy'
     attackHuman = 'attackHuman'

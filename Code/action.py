@@ -43,7 +43,7 @@ class Action:
                 self.possibleEnemyGain = -groupe_max.eff
                 self.possibleGain = (winnerFinal.eff)-self.assignedGroup.eff
 
-            elif winnerFinal.species == Species.human: # soit les humains remportent et nos deux groupes se sont faits bouffer
+            elif winnerFinal.species == Species.human: # soit les humains remportent et nos deux groupes se sont faits bouffer (on a été cons)
                 self.possibleEnemyGain = -groupe_max.eff
                 self.possibleGain = -self.assignedGroup.eff
 
@@ -72,14 +72,15 @@ class Action:
                 self.possibleGain = -self.assignedGroup.eff
                 self.possibleEnemyGain = (winnerFinal.eff-self.target_group.eff)
 
-        elif self.action_type == ActionType.run:  #todo
-            self.possibleGain = 0 #todo
+        elif self.action_type == ActionType.run:  #todo a implementer en cas de plateau vide à la fin si on est plus nombreux que les ennemis
+            self.possibleGain = 0
         else :
             print("type d'action non reconnu par calc_mark", self.action_type)
         intuitive_mark = (self.possibleGain-self.possibleEnemyGain)
+        #enfin, on divise les notes intuitives par la distance pour prendre en compte des incertitudes
         if intuitive_mark >= 0:
-            self.mark = intuitive_mark/float(utils.getDistance(self.assignedGroup,self.target_group))
-        else :
+            self.mark = intuitive_mark/float(utils.getDistance(self.assignedGroup,self.target_group)) #todo diviser par distance au carre ?
+        else : #mais on garde les notes négatives telles quelles pour leur donner plus de poids negatif
             self.mark = intuitive_mark
 
 
@@ -89,27 +90,16 @@ class Action:
 
 
     def calculateCoup(self, state):
-        #dependant on action_type
-        #test if below limit lines before sending!!
-        if self.action_type ==ActionType.attackHuman:
-            #find human group
-            grouptoAttack=self.target_group
-            vector=utils.getVector(self.assignedGroup,grouptoAttack)
-                #here if no split
+        #depend du action_type
+        if self.action_type ==ActionType.attackHuman or ActionType.attackEnemy:
+            vector=utils.getVector(self.assignedGroup,self.target_group)
             return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0], self.assignedGroup.y+vector[1]]
-        
-        if self.action_type == ActionType.attackEnemy:
-            #find  ennemy group
-            grouptoAttack=self.target_group
-            vector=utils.getVector(self.assignedGroup,grouptoAttack)
-                #here if no split
-            return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x+vector[0],self.assignedGroup.y+vector[1]]
- 
+
+        #run pas encore implemente, malheureusement
         if self.action_type == ActionType.run:
             #find closest ennemy group
             grouptoRunfrom=self.target_group
             vector=utils.getVector(self.assignedGroup,grouptoRunfrom)
-                #here if no split
             if state.width<(self.assignedGroup.x-vector[0]):
                 vector[0]+=1
             elif (self.assignedGroup.x-vector[0]) <0:
@@ -118,5 +108,6 @@ class Action:
                 vector[1]-=1 
             elif (self.assignedGroup.y-vector[1]) <0:
                 vector[1]+=1
+            #todo check qu'on ne sorte pas de la carte
 
             return [self.assignedGroup.x, self.assignedGroup.y, self.assignedGroup.eff, self.assignedGroup.x-vector[0], self.assignedGroup.y-vector[1]]

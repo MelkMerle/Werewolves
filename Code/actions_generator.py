@@ -9,7 +9,6 @@ import math
 
 
 def enumerate_possible_actions(state, group, specie, number_my_groups, max_split_rate):
-    #todo quand il n'y a plus d'humains, générer au moins une action de type run (ou merge), pour ne pas faire planter l'IA
     groups_human = state.getMembers(Species.human)
     groups_enemy = state.getMembers(specie.inverse())
     actions_total = []
@@ -18,12 +17,20 @@ def enumerate_possible_actions(state, group, specie, number_my_groups, max_split
     actions_split_per_group = []
     doublets = []
     groups_targets = []
+
     #on elague les groupes d'humains
     humanDistances = []
     for humangroup in groups_human:
         humanDistances.append(utils.getDistance(group, humangroup))
     groups_human.sort(key=dict(zip(groups_human, humanDistances)).get, reverse=False)
-    groups_human=groups_human[:len_group_me]
+    groups_human=groups_human[:len_group_me+1]
+
+    #de même pour les ennemis
+    enemyDistances = []
+    for enemy in groups_enemy:
+        enemyDistances.append(utils.getDistance(group, enemy))
+    groups_enemy.sort(key=dict(zip(groups_enemy, enemyDistances)).get, reverse=False)
+    groups_enemy=groups_human[:len_group_me+1]
 
     # actions sans split
     for group_human in groups_human:
@@ -31,6 +38,7 @@ def enumerate_possible_actions(state, group, specie, number_my_groups, max_split
         action.calc_mark(state)
         actions_simple_per_group.append(action)
         groups_targets.append(group_human)
+
     for group_enemy in groups_enemy:
         action = Action(ActionType.attackEnemy, group_enemy, group)
         action.calc_mark(state)
@@ -39,7 +47,7 @@ def enumerate_possible_actions(state, group, specie, number_my_groups, max_split
 
     # actions avec splits
     if number_my_groups <= max_split_rate: #on évite de trop se splitter
-        for i in range(1, int(len_group_me/2)+1): #todo réduire le nombre de splits possibles pour alléger le temps de calcul ? max 2 à mon avis
+        for i in range(1, int(len_group_me/2)+1):
             doublets.append([i, len_group_me-i])
 
         for doublet in doublets:

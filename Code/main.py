@@ -2,24 +2,16 @@
 from network_manager import NetworkManager
 import sys
 
-#à mettre en attributs d'une classe Map
-#lignes = 0
-#colonnes = 0
-
-
-#only for testing purposes
-#cmd = sys.argv[1:]
-#assert len(cmd) ==2 #verifier qu'on a bien seulement 2 arguments
-#ip, port = cmd
-ip = "192.168.0.101"
-port =5555
+cmd = sys.argv[1:]
+assert len(cmd) ==2  #verifier qu'on a bien seulement 2 arguments
+ip, port = cmd
 
 # Lancement du network manager
 manager = NetworkManager(ip, int(port))
 
 
 #Envoi du nom
-groupname = "Waldo"
+groupname = "Agar.ia"
 manager.send('NME', len(groupname), groupname)
 
 
@@ -30,4 +22,3 @@ while True:
         print("Bye bye.")
         break
 
-# faut-il faire quelque chose pour que le programme quitte ?
